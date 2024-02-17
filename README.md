@@ -10,7 +10,7 @@ Welcome to our MERN (MongoDB, Express.js, React.js, Node.js) based POS (Point of
 - [Jayawardana N.G.U.D]()
 - [Imalka T.A.D.D](https://github.com/XdulanX)
 - [Wijesinghe M.A.T.N]()
-- [Jayawardana L.P.G.K]()
+- [Jayawardana L.P.G.K](https://github.com/KavinJ3344)
 - [Hewavitharana U.I]()
 
 ## Features
