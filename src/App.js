@@ -3,6 +3,7 @@ import {logger} from "./utills/loggerfile"
 import cors from "cors"
 import MongoConnect from "./configs/DB_Connection"
 import "dotenv/config"
+import order_route from "./api/routes/order_route"
 
 
 
@@ -17,12 +18,15 @@ app.use((req,res,next) => {
     logger.warn(req.method,req.path)
     next()
 })
+app.use('/order',order_route)
 
 app.listen(PORT , ()=>{
     logger.info("Connected via Port " + PORT)
     MongoConnect()
     
 })
+
+
 
 
 
