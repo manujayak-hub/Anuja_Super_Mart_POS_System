@@ -3,11 +3,13 @@ import {logger} from "./utills/loggerfile"
 import cors from "cors"
 import MongoConnect from "./configs/DB_Connection"
 import "dotenv/config"
+import analyticRoute from "./api/routes/analytic_route"
 
 
-
+// express app
 const app = express()
 const PORT = process.env.PORT
+
 
 app.use(cors())
 
@@ -17,6 +19,8 @@ app.use((req,res,next) => {
     logger.warn(req.method,req.path)
     next()
 })
+
+app.use('/analytics', analyticRoute)
 
 app.listen(PORT , ()=>{
     logger.info("Connected via Port " + PORT)
