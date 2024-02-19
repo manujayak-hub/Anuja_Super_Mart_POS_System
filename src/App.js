@@ -2,27 +2,32 @@ import express from "express"
 import {logger} from "./utills/loggerfile"
 import cors from "cors"
 import MongoConnect from "./configs/DB_Connection"
+import transactionRoutes from "./api/routes/transactionsRoutes"
 import "dotenv/config"
+
 
 
 
 const app = express()
 const PORT = process.env.PORT
 
+
 app.use(cors())
 
-app.use(express.json({limit:'20mb'}))
+
+//middleware
+app.use(express.json())
 
 app.use((req,res,next) => {
-    logger.warn(req.method,req.path)
-    next()
+console.log(req.path,req.method)
+next()
 })
+
+//routes
+app.use('/transactions', transactionRoutes)
 
 app.listen(PORT , ()=>{
     logger.info("Connected via Port " + PORT)
     MongoConnect()
     
 })
-
-
-
