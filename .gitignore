@@ -3,3 +3,17 @@
 
 #enviroment
 .env
+
+# production
+/build
+
+# runtime data
+/.pnp
+.pnp.js
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
