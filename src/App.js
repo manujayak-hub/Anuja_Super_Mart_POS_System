@@ -2,12 +2,14 @@ import express from "express"
 import {logger} from "./utills/loggerfile"
 import cors from "cors"
 import MongoConnect from "./configs/DB_Connection"
+import cusRoute from "./api/routes/customer_routes"
 import invRoute from './api/routes/Inventory_routes'
-import "dotenv/config"
 import analyticRoute from "./api/routes/analytic_route"
+import "dotenv/config"
 
 
-// express app
+
+
 const app = express()
 const PORT = process.env.PORT
 
@@ -21,6 +23,8 @@ app.use((req,res,next) => {
     next()
 })
 
+//customer
+app.use('/customer', cusRoute)
 //analytics
 app.use('/analytics', analyticRoute)
 //inventory
