@@ -2,6 +2,7 @@ import express from "express"
 import {logger} from "./utills/loggerfile"
 import cors from "cors"
 import MongoConnect from "./configs/DB_Connection"
+import invRoute from './api/routes/Inventory_routes'
 import "dotenv/config"
 
 
@@ -17,6 +18,8 @@ app.use((req,res,next) => {
     logger.warn(req.method,req.path)
     next()
 })
+
+app.use('/inventory', invRoute )
 
 app.listen(PORT , ()=>{
     logger.info("Connected via Port " + PORT)
