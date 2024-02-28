@@ -2,6 +2,8 @@ import express from "express"
 import {logger} from "./utills/loggerfile"
 import cors from "cors"
 import MongoConnect from "./configs/DB_Connection"
+
+import transactionRoutes from "./api/routes/transactionsRoutes"
 import ctask_route from "./api/routes/ctask_route"
 import Discount_route from "./api/routes/Discount_route"
 import employee_route from "./api/routes/employee_route"
@@ -9,9 +11,8 @@ import cusRoute from "./api/routes/customer_routes"
 import invRoute from './api/routes/Inventory_routes'
 import analyticRoute from "./api/routes/analytic_route"
 import order_route from "./api/routes/order_route"
+
 import "dotenv/config"
-
-
 
 
 
@@ -23,13 +24,17 @@ const PORT = process.env.PORT
 
 app.use(cors())
 
-app.use(express.json({limit:'20mb'}))
+
+//middleware
+app.use(express.json())
 
 app.use((req,res,next) => {
-    logger.warn(req.method,req.path)
-    next()
+console.log(req.path,req.method)
+next()
 })
 
+//routes
+app.use('/transactions', transactionRoutes)
 //Supplier_Task
 app.use('/ctask', ctask_route)
 //discount
@@ -46,15 +51,8 @@ app.use('/analytics', analyticRoute)
 app.use('/inventory', invRoute )
 
 
-
-
 app.listen(PORT , ()=>{
     logger.info("Connected via Port " + PORT)
     MongoConnect()
-    
+
 })
-
-
-
-
-

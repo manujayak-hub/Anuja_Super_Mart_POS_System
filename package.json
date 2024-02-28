@@ -8,8 +8,9 @@
   "license": "MIT",
   "private": false,
   "scripts": {
+
     "start": "nodemon --exec babel-node ./src/app.js"
-    
+
   },
   "devDependencies": {
     "@babel/core": "^7.23.9",
