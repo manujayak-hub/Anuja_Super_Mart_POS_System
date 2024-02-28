@@ -4,11 +4,13 @@ import cors from "cors"
 import MongoConnect from "./configs/DB_Connection"
 import invRoute from './api/routes/Inventory_routes'
 import "dotenv/config"
+import analyticRoute from "./api/routes/analytic_route"
 
 
-
+// express app
 const app = express()
 const PORT = process.env.PORT
+
 
 app.use(cors())
 
@@ -19,7 +21,11 @@ app.use((req,res,next) => {
     next()
 })
 
+//analytics
+app.use('/analytics', analyticRoute)
+//inventory
 app.use('/inventory', invRoute )
+
 
 app.listen(PORT , ()=>{
     logger.info("Connected via Port " + PORT)
