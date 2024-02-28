@@ -6,6 +6,7 @@ import cusRoute from "./api/routes/customer_routes"
 import invRoute from './api/routes/Inventory_routes'
 import analyticRoute from "./api/routes/analytic_route"
 import "dotenv/config"
+import order_route from "./api/routes/order_route"
 
 
 
@@ -22,6 +23,7 @@ app.use((req,res,next) => {
     logger.warn(req.method,req.path)
     next()
 })
+app.use('/order',order_route)
 
 //customer
 app.use('/customer', cusRoute)
@@ -36,6 +38,8 @@ app.listen(PORT , ()=>{
     MongoConnect()
     
 })
+
+
 
 
 
