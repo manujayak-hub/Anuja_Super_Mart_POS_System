@@ -41,3 +41,5 @@ Welcome to our MERN (MongoDB, Express.js, React.js, Node.js) based POS (Point of
    npm install
    cd ../backend
    npm install
+
+
