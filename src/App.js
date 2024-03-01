@@ -11,6 +11,7 @@ import cusRoute from "./api/routes/customer_routes"
 import invRoute from './api/routes/Inventory_routes'
 import analyticRoute from "./api/routes/analytic_route"
 import order_route from "./api/routes/order_route"
+import User_route from "./api/routes/user_routes"
 
 import "dotenv/config"
 
@@ -49,6 +50,8 @@ app.use('/customer', cusRoute)
 app.use('/analytics', analyticRoute)
 //inventory
 app.use('/inventory', invRoute )
+//Authentication
+app.use('/auth',User_route)
 
 
 app.listen(PORT , ()=>{
