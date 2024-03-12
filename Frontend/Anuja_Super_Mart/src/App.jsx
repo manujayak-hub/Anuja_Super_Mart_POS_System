@@ -4,6 +4,7 @@ import About from './pages/About'
 import Contact from './pages/Contact'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
+import InventoryDash from './pages/inventory_Pages/inventoryDash'
 import { useStore } from './stores/authStore'
 
 
@@ -21,7 +22,7 @@ function App() {
             <Route path="contact" element={<Contact/>} />
             <Route path="Login" element={<Login/>} />
             <Route path="Signup" element={<Signup/>}/>
-            
+            <Route path="inventory" element={<InventoryDash/>} />
             {user && <Route exact path="/About" render={() => <About />} />}
 
           </Route>
@@ -31,4 +32,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
