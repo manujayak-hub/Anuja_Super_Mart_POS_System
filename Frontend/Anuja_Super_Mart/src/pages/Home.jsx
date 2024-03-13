@@ -10,6 +10,7 @@ const Home = () => {
             
             <h1>Your Title Goes Here</h1>
             <p>Your description or tagline goes here.</p>
+            
             <a href="#learn-more" class="btn">Learn More</a>
         </div>
        </>
