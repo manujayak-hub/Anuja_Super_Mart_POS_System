@@ -1,0 +1,29 @@
+.navbar {
+    width: 200px; /* Adjust width as needed */
+    height: 100%; /* Make it full height */
+    background-color: #333; /* Change color as needed */
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto; /* Enable vertical scrolling if needed */
+  }
+  
+  .navbar nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .navbar nav ul li {
+    padding: 10px;
+  }
+  
+  .navbar nav ul li a {
+    color: #fff; /* Change color as needed */
+    text-decoration: none;
+  }
+  
+  .navbar nav ul li a:hover {
+    background-color: #555; /* Change color as needed */
+  }
+  
