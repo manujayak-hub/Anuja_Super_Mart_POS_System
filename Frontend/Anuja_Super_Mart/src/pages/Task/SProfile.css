@@ -1,0 +1,60 @@
+/* SProfile.css */
+
+/* Page border */
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 600px; /* Adjust max-width as needed */
+  margin: 20px auto; /* Center the content */
+  padding: 20px;
+}
+
+/* Additional styling for the Supplier Profile */
+h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+div {
+  margin-bottom: 15px;
+}
+
+label {
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+button.submit-btn {
+  padding: 10px 40px; /* Expanded padding */
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  margin-bottom: 100px; /* Add 100px margin */
+}
+
+button.delete-btn {
+  padding: 10px 40px; /* Expanded padding */
+  border: none;
+  border-radius: 5px;
+  background-color: #dc3545; /* Adjust color for delete button */
+  color: #fff;
+  cursor: pointer;
+  margin-left: 10px; /* Add space between submit and delete button */
+}
+
+button:hover {
+  background-color: #0056b3;
+}

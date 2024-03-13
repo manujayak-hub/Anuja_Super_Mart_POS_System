@@ -4,6 +4,9 @@ import About from './pages/About'
 import Contact from './pages/Contact'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
+import Form from './pages/Task/Form';
+import SProfile from './pages/Task/SProfile';
+import SDetails from './pages/Task/SDetails';
 import Categories from './pages/Customer_pages/Categories';
 import { useStore } from './stores/authStore'
 import Dash from './components/AccountantComponents/Sidebar'
@@ -31,8 +34,11 @@ function App() {
             <Route index element={<Home />} />
             <Route path="About" element={<About/>} />
             <Route path="contact" element={<Contact/>} />
-            <Route path="Login" element={<Login/>} />
+            <Route path="Login" element={<Login/>}/>
             <Route path="Signup" element={<Signup/>}/>
+            <Route path="Form" element={<Form/>}/>
+            <Route path="SProfile" element={<SProfile/>}/>
+            <Route path="SDetails" element={<SDetails/>}/>
             <Route path="Categories" element={<Categories/>} />
             <Route path="Dash" element={<Dash/>}/>
             <Route path="Transactions" element={<TransactionsList/>}/>
