@@ -4,6 +4,7 @@ import About from './pages/About'
 import Contact from './pages/Contact'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
+import Categories from './pages/Customer_pages/Categories';
 import { useStore } from './stores/authStore'
 
 
@@ -21,7 +22,8 @@ function App() {
             <Route path="contact" element={<Contact/>} />
             <Route path="Login" element={<Login/>} />
             <Route path="Signup" element={<Signup/>}/>
-            
+            <Route path="Categories" element={<Categories/>} />
+
             {user && <Route exact path="/About" render={() => <About />} />}
 
           </Route>
