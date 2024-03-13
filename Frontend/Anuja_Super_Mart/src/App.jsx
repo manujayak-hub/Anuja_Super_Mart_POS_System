@@ -6,6 +6,17 @@ import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Categories from './pages/Customer_pages/Categories';
 import { useStore } from './stores/authStore'
+import Menu from './pages/OrderProcess/Menu'
+import List from './pages/OrderProcess/List'
+import Customer from './pages/SalesAnalytics/Customer'
+import Report from './pages/SalesAnalytics/Report'
+import InventoryDash from './pages/inventory_Pages/inventoryDash'
+import Hamper from './pages/Discount/Hamper'
+import TotalSaving from './pages/Discount/TotalSaving'
+import ItemList from './pages/Discount/ItemList'
+import ButtonComponent from './components/Discount/ButtonComponent'
+
+
 
 
 function App() {
@@ -23,7 +34,16 @@ function App() {
             <Route path="Login" element={<Login/>} />
             <Route path="Signup" element={<Signup/>}/>
             <Route path="Categories" element={<Categories/>} />
-
+            <Route path="Menu" element={<Menu/>} />
+            <Route path="List" element={<List/>} />
+            <Route path="Customer" element={<Customer/>}/>
+            <Route path="Report" element={<Report/>}/>
+            <Route path="Promoting" element={<ItemList/>}/>
+            <Route path="Hamper" element={<Hamper/>}/>
+            <Route path="ItemList" element={<ItemList/>}/>
+            <Route path="TotalSaving" element={<TotalSaving/>}/>
+            <Route path="ButtonComponent" element={<ButtonComponent/>}/>
+            <Route path="inventory" element={<InventoryDash/>} />
             {user && <Route exact path="/About" render={() => <About />} />}
 
           </Route>
@@ -33,4 +53,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
