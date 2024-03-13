@@ -4,7 +4,15 @@ import About from './pages/About'
 import Contact from './pages/Contact'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
+
+
 import { useStore } from './stores/authStore'
+import Customer from './pages/SalesAnalytics/Customer'
+import Report from './pages/SalesAnalytics/Report'
+
+
+
+
 
 
 function App() {
@@ -21,7 +29,12 @@ function App() {
             <Route path="contact" element={<Contact/>} />
             <Route path="Login" element={<Login/>} />
             <Route path="Signup" element={<Signup/>}/>
+            <Route path="Customer" element={<Customer/>}/>
+            <Route path="Report" element={<Report/>}/>
+
             
+
+
             {user && <Route exact path="/About" render={() => <About />} />}
 
           </Route>
