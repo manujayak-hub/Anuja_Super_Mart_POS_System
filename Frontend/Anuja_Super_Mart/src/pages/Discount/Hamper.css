@@ -1,0 +1,45 @@
+/* Apply styles to the container */
+.hamper-container {
+  display: flex; /* Display items horizontally */
+  justify-content: center; /* Center the items horizontally */
+  flex-wrap: wrap; /* Allow items to wrap to the next line if necessary */
+  gap: 30px; /* Spacing between hampers */
+  margin-top: 30px; /* Add some top margin for spacing */
+}
+
+/* Apply styles to each hamper */
+.hamper {
+  background-color: #fff;
+  border-radius: 20px;
+  border: 3px solid #FD204F;
+  padding: 20px;
+  width: 300px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for transform and box-shadow */
+}
+
+/* Style the heading of each hamper */
+.hamper h2.yellow {
+  font-size: 26px; /* Larger font size */
+  margin-top: 0;
+  color: #f0ad4e; /* Yellow text color */
+  text-align: center; /* Center align the heading */
+}
+
+/* Style the list items inside each hamper */
+.hamper ul {
+  padding: 0;
+  margin-top: 20px;
+}
+
+.hamper ul li {
+  list-style-type: none;
+  margin-bottom: 10px;
+  color: #555; /* Text color */
+}
+
+/* Add hover effect to each hamper */
+.hamper:hover {
+  transform: translateY(-5px); /* Move the hamper up slightly on hover */
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
+}
