@@ -14,6 +14,24 @@ const Header = () => {
 
         </ul>
       </nav>
+
+      {/* import { useStore } from './store';
+
+const SomeComponent = () => {
+  const user = useStore(state => state.user);
+
+  return (
+    <div>
+      {user ? (
+        <p>Welcome, {user.username}!</p>
+      ) : (
+        <p>Please log in</p>
+      )}
+    </div>
+  );
+};
+ */}
+ 
     </header>
   );
 }
