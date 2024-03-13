@@ -4,6 +4,7 @@ import About from './pages/About'
 import Contact from './pages/Contact'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
+import Categories from './pages/Customer_pages/Categories';
 import { useStore } from './stores/authStore'
 import Dash from './components/AccountantComponents/Sidebar'
 import TransactionsList from './pages/Accountant/Transactions'
@@ -32,6 +33,7 @@ function App() {
             <Route path="contact" element={<Contact/>} />
             <Route path="Login" element={<Login/>} />
             <Route path="Signup" element={<Signup/>}/>
+            <Route path="Categories" element={<Categories/>} />
             <Route path="Dash" element={<Dash/>}/>
             <Route path="Transactions" element={<TransactionsList/>}/>
             <Route path="Menu" element={<Menu/>} />
