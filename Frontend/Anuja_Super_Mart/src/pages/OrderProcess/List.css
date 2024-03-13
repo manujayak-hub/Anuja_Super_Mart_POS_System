@@ -1,0 +1,33 @@
+/* Styles for the div container */
+div {
+    margin: 20px;
+}
+
+/* Styles for the table */
+table {
+    width: 80%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+    position:relative;
+    margin-left: 200px;
+     
+}
+
+/* Styles for table headers */
+th {
+    background-color: #f2f2f2;
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+/* Styles for table cells */
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+/* Styles for loading paragraph */
+p {
+    font-style: italic;
+}
