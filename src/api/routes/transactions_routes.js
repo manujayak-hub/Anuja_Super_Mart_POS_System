@@ -1,7 +1,5 @@
 import  express  from "express"
 
-
-
 const transactionrouter =  express.Router()
 const {
     createTransaction,getallTransactions,getbyIdTransaction,deleteTransaction,updateTransaction

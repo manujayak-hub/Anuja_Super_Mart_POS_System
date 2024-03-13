@@ -3,7 +3,7 @@ import {logger} from "./utills/loggerfile"
 import cors from "cors"
 import MongoConnect from "./configs/DB_Connection"
 
-import transactionRoutes from "./api/routes/transactionsRoutes"
+import transaction_routes from "./api/routes/transactions_routes"
 import ctask_route from "./api/routes/ctask_route"
 import Discount_route from "./api/routes/Discount_route"
 import employee_route from "./api/routes/employee_route"
@@ -36,7 +36,7 @@ next()
 })
 
 //routes
-app.use('/transactions', transactionRoutes)
+app.use('/transactions', transaction_routes)
 //Supplier_Task
 app.use('/ctask', ctask_route)
 //discount
