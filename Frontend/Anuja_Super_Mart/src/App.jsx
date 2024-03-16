@@ -15,11 +15,13 @@ import Menu from './pages/OrderProcess/Menu'
 import List from './pages/OrderProcess/List'
 import Customer from './pages/SalesAnalytics/Customer'
 import Report from './pages/SalesAnalytics/Report'
-import InventoryDash from './pages/inventory_Pages/inventoryDash'
 import Hamper from './pages/Discount/Hamper'
 import TotalSaving from './pages/Discount/TotalSaving'
 import ItemList from './pages/Discount/ItemList'
 import ButtonComponent from './components/Discount/ButtonComponent'
+
+import InventoryRoute from './Routes/InvRoute'
+
 
 
 function App() {
@@ -51,12 +53,13 @@ function App() {
             <Route path="ItemList" element={<ItemList/>}/>
             <Route path="TotalSaving" element={<TotalSaving/>}/>
             <Route path="ButtonComponent" element={<ButtonComponent/>}/>
-            <Route path="inventory" element={<InventoryDash/>} />
+            
             {user && <Route exact path="/About" render={() => <About />} />}
 
           </Route>
         </Routes>
      </BrowserRouter>
+     <InventoryRoute/>
     </>
   )
 }
