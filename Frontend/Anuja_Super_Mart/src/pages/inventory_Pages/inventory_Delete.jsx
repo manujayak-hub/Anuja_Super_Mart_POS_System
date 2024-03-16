@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../../api/axios';
 import useInventoryStore from '../../stores/inventoryStore';
-import Sidebar from '../../components/InventoryComponents/InvSideBar';
+import Sidebar from '../../components/InventoryComponents/InvSideBar'
 
-const InventoryDash = () => {
+const InventoryDelete = () => {
     const { inventory, setInventory, setError ,removeInventory} = useInventoryStore();
 
     useEffect(() => {
@@ -32,7 +32,7 @@ const InventoryDash = () => {
         <div className="container-fluid">
             <div className="row">
                 <div className="col-sm-2 sidenav">
-                    <Sidebar />
+                    <Sidebar/>
                 </div>
                 <div className="col-sm-10">
                     <h1>Inventory List</h1>
@@ -86,4 +86,4 @@ const InventoryDash = () => {
     );
 };
 
-export default InventoryDash;
+export default InventoryDelete;

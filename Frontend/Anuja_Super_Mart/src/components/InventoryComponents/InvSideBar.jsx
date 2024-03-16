@@ -17,12 +17,13 @@ const Sidebar = () => {
                 </div>
                 <div className="sidebar-item text-center py-1">
                     <img src="src/assets/inventory/icons8-edit-50.png" alt="Icon 3" className="img-fluid d-inline-block invIcon" />
-                    <span className="d-inline-block invText">Edit Products</span>
+                    <span className="d-inline-block invText">Add Products</span>
                 </div>
                 <div className="sidebar-item text-center py-1">
                     <img src="src/assets/inventory/icons8-delete-24.png" alt="Icon 4" className="img-fluid d-inline-block invIcon" />
-                    <span className="d-inline-block invText">Delete Products</span>
+                    <span className="d-inline-block invText">Edit & Delete Products</span>
                 </div>
+
             </div>
         </div>
     );
