@@ -3,18 +3,16 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import InventoryDash from '../pages/inventory_Pages/inventoryDash';
 import InvSideBar from '../components/InventoryComponents/InvSideBar';
 import AddItem from '../pages/inventory_Pages/Add_itemDash';
+import InvDelete from '../pages/inventory_Pages/inventory_Delete'
 
 const InventoryRoute = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Route for inventory dashboard */}
+      
         <Route path="/inventory" element={<InventoryDash />} />
-
-        {/* Route for inventory sidebar */}
         <Route path="/inventory/sidebar" element={<InvSideBar />} />
-
-        {/* Route for adding an item */}
+        <Route path="/inventory/delete" element={<InvDelete />} />
         <Route path="/inventory/add" element={<AddItem />} />
       </Routes>
     </BrowserRouter>

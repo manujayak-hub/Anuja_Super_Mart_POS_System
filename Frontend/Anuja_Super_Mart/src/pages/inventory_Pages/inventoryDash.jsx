@@ -82,8 +82,8 @@ const InventoryDash = () => {
                             </table>
                         </div>
                         <div>
-                            <p>Total Value: {totalValue}</p>
-                            <p>Expected Value: {expectedValue}</p>
+                            <p>Total Stock Value Rs: {totalValue}</p>
+                            <p>Expected Income Rs: {expectedValue}</p>
                         </div>
                     </div>
                 </div>

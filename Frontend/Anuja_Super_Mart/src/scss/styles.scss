@@ -1,2 +1,41 @@
 // Import all of Bootstrap's CSS
 @import "bootstrap/scss/bootstrap";
+
+// styles.scss
+
+// Define styles for the sidebar
+// Define styles for the sidebar
+.invSidebar {
+    .sidebar {
+        background-color: #D9D9D9;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+
+        // Define styles for sidebar items
+        .sidebar-item {
+            transition: background-color 0.3s, color 0.3s;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+
+            // Define styles for icons
+            .invIcon {
+                width: 25px; // Adjust the icon size as needed
+                height: auto;
+                margin-right: 10px;
+            }
+
+            // Define styles for text
+            .invText {
+                font-size: 15px; // Adjust the font size for text
+                flex-grow: 1;
+            }
+
+            &:hover {
+                background-color: #f0f0f0;
+                color: red;
+            }
+        }
+    }
+}
