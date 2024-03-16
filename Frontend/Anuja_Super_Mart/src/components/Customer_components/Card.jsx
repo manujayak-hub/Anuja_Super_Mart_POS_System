@@ -17,6 +17,9 @@ const Card = ({ product }) => {
         <p className="card-text">
           <strong>Quantity in Stock:</strong> {product.quantityInStock}
         </p>
+        <button className="btn btn-primary" onClick={() => addToCart(product)}>
+          Add to Cart
+        </button>
       </div>
     </div>
   );
