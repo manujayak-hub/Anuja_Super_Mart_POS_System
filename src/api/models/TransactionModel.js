@@ -17,14 +17,32 @@ const transactionSchema  = new Schema({
         type: String,
         required: true
     },
-    amount: {
+    transactionAmount: {
         type: Number,
         required: true
     },
     transactionMethod: {
         type: String,
         required: true
+    },
+    totalSales: {
+        type: Number,
+        default: 0
+    },
+    totalPayments: {
+        type: Number,
+        default: 0
+    },
+    totalUtilityBills: {
+        type: Number,
+        default: 0
+    },
+    totalRevenue: {
+        type: Number,
+        default: 0
     }
+
+
 },{ timestamps: true ,
     collection: 'Transactions'})
 
