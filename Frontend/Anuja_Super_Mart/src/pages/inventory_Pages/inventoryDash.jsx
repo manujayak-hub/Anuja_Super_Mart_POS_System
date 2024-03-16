@@ -54,7 +54,6 @@ const InventoryDash = () => {
                                        <th>supplierId</th>
                                        <th>MFDate</th>
                                        <th>EXPDate</th>
-                                       <th>imageUrl</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -70,7 +69,6 @@ const InventoryDash = () => {
                                                 <td>{item.supplierId}</td>
                                                 <td>{item.manufactureDate}</td>
                                                 <td>{item.expireDate}</td>
-                                                <td>{item.imageUrl}</td>
                                             </tr>
                                         ))
                                     ) : (

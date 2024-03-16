@@ -59,8 +59,10 @@ const AddItem = () => {
                     <div className="col-sm-2 sidenav">
                         <Sidebar />
                     </div>
-                    <div className="col-sm-10">
-
+                    <div className="col-sm-2 ">
+                    </div>
+                    <div className="col-sm-6">
+                    <h1>Add Products</h1>
                         {/* Formik form */}
                         <form onSubmit={formik.handleSubmit} className="p-3">
                             {/* Input fields for inventory item */}
@@ -144,7 +146,7 @@ const AddItem = () => {
                                     <div className="text-danger">{formik.errors.quantityInStock}</div>
                                 ) : null}
                             </div>
-                            
+
                             <div className="mb-3">
                                 <label htmlFor="category" className="form-label">Category</label>
                                 <input
@@ -160,7 +162,7 @@ const AddItem = () => {
                                     <div className="text-danger">{formik.errors.category}</div>
                                 ) : null}
                             </div>
-                            
+
                             <div className="mb-3">
                                 <label htmlFor="supplierId" className="form-label">SupplierID</label>
                                 <input
@@ -192,7 +194,7 @@ const AddItem = () => {
                                     <div className="text-danger">{formik.errors.manufactureDate}</div>
                                 ) : null}
                             </div>
-                            
+
                             <div className="mb-3">
                                 <label htmlFor="expireDate" className="form-label">expireDate</label>
                                 <input
@@ -224,10 +226,12 @@ const AddItem = () => {
                                     <div className="text-danger">{formik.errors.imageUrl}</div>
                                 ) : null}
                             </div>
-                            
-                         
+
+
                             <button type="submit" className="btn btn-primary" disabled={formik.isSubmitting}>Submit</button>
                         </form>
+                        <div className="col-sm-2 ">
+                        </div>
                     </div>
                 </div>
             </div>

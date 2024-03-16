@@ -2,10 +2,19 @@ import React, { useEffect, useState } from 'react';
 import axios from '../../api/axios';
 import useInventoryStore from '../../stores/inventoryStore';
 import Sidebar from '../../components/InventoryComponents/InvSideBar'
+import UpdateForm from '../../components/InventoryComponents/Updateform'; // Import the UpdateForm component
 
-const InventoryDelete = () => {
-    const { inventory, setInventory, setError ,removeInventory} = useInventoryStore();
+const EditInv = () => {
+    const { inventory, setError, setInventory } = useInventoryStore();
+    const [selectedProductId, setSelectedProductId] = useState(null);
+    const [selectedItem, setSelectedItem] = useState(null);
 
+    // Function to handle selecting a product ID
+    const displayUpdateForm = (productId) => {
+        setSelectedProductId(productId);
+    };
+
+    // Effect to fetch inventory data
     useEffect(() => {
         const fetchInventory = async () => {
             try {
@@ -15,16 +24,38 @@ const InventoryDelete = () => {
                 setError(error.message);
             }
         };
-
         fetchInventory();
     }, [setInventory, setError]);
 
-    const handleDelete = async (id) => {
+    // Effect to update selected item when selectedProductId changes
+    useEffect(() => {
+        if (selectedProductId) {
+            const selectedItem = inventory.find(item => item.productId === selectedProductId);
+            setSelectedItem(selectedItem);
+        } else {
+            setSelectedItem(null);
+        }
+    }, [selectedProductId, inventory]);
+
+    // Render update form if a product ID is selected
+    const renderUpdateForm = () => {
+        if (!selectedItem) return null;
+
+        return <UpdateForm initialValues={selectedItem} onSubmit={handleUpdate} />;
+    };
+
+    // Function to handle update form submission
+    const handleUpdate = async (updatedItem) => {
         try {
-            await axios.delete(`/inventory/${id}`);
-            removeInventory(id); 
+            // Make API request to update inventory item
+            await axios.patch(`/inventory/${updatedItem._id}`, updatedItem);
+            // Refresh inventory data after update
+            const response = await axios.get('/inventory');
+            setInventory(response.data);
+            // Clear selected product ID
+            setSelectedProductId(null);
         } catch (error) {
-            console.error('Error deleting inventory item:', error);
+            console.error('Error updating inventory item:', error);
         }
     };
 
@@ -32,15 +63,15 @@ const InventoryDelete = () => {
         <div className="container-fluid">
             <div className="row">
                 <div className="col-sm-2 sidenav">
-                    <Sidebar/>
+                    <Sidebar />
                 </div>
                 <div className="col-sm-10">
-                    <h1>Delete Item & edit Item</h1>
+                    <h1>Inventory List</h1>
                     <div className="table-responsive">
                         <table className="table table-hover">
                             <thead>
                                 <tr>
-                                    <th>prodId</th> 
+                                    <th>prodId</th>
                                     <th>Name</th>
                                     <th>wPrice</th>
                                     <th>rPrice</th>
@@ -49,8 +80,7 @@ const InventoryDelete = () => {
                                     <th>supplierId</th>
                                     <th>MFDate</th>
                                     <th>EXPDate</th>
-                                    <th>imageUrl</th>
-                                    <th>Action</th> 
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -66,24 +96,23 @@ const InventoryDelete = () => {
                                             <td>{item.supplierId}</td>
                                             <td>{item.manufactureDate}</td>
                                             <td>{item.expireDate}</td>
-                                            <td>{item.imageUrl}</td>
-                                            <td>
-                                                <button onClick={() => handleDelete(item._id)} className="btn btn-danger">Delete</button>
-                                            </td> 
+                                            <td> <button onClick={() => displayUpdateForm(item.productId)}>Update</button></td>
                                         </tr>
                                     ))
                                 ) : (
                                     <tr>
-                                        <td colSpan="11">No inventory items found.</td> 
+                                        <td colSpan="3">No inventory items found.</td>
                                     </tr>
                                 )}
                             </tbody>
                         </table>
                     </div>
+                    {/* Render update form */}
+                    {renderUpdateForm()}
                 </div>
             </div>
         </div>
     );
-};
+}
 
-export default InventoryDelete;
+export default EditInv;
