@@ -22,6 +22,7 @@ import ItemList from './pages/Discount/ItemList'
 import ButtonComponent from './components/Discount/ButtonComponent'
 
 
+
 function App() {
   const user = useStore(state => state.user);
   
@@ -52,6 +53,7 @@ function App() {
             <Route path="TotalSaving" element={<TotalSaving/>}/>
             <Route path="ButtonComponent" element={<ButtonComponent/>}/>
             <Route path="inventory" element={<InventoryDash/>} />
+           
             {user && <Route exact path="/About" render={() => <About />} />}
 
           </Route>

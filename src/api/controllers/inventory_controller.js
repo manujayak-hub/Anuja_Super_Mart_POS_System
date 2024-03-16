@@ -12,7 +12,7 @@ const createInventory = async (req, res) => {
         supplierId,
         manufactureDate,
         expireDate,
-        createdAt
+        imageUrl
     } = req.body;
 
     try {
@@ -26,7 +26,7 @@ const createInventory = async (req, res) => {
             supplierId,
             manufactureDate,
             expireDate,
-            createdAt
+            imageUrl
         });
         res.status(201).json(INV); // 201 for resource created successfully
     } catch (error) {
@@ -78,7 +78,7 @@ const updateInventory = async (req, res) => {
         supplierId,
         manufactureDate,
         expireDate,
-        createdAt
+        imageUrl
     } = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -96,7 +96,7 @@ const updateInventory = async (req, res) => {
             supplierId,
             manufactureDate,
             expireDate,
-            createdAt
+            imageUrl
         }, { new: true });
 
         if (!INV) {
@@ -131,4 +131,47 @@ const deleteInventory = async (req, res) => {
     }
 };
 
-module.exports = { createInventory, deleteInventory, updateInventory, getallinventory, getbyIdInventory };
+const findInventoryByCategory = async (req, res) => {
+    const { categoryName } = req.params;
+
+    try {
+        const inventoryByCategory = await Inventory.find({ category: categoryName });
+
+        res.status(200).json(inventoryByCategory);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Server Error' });
+    }
+};
+
+const findInventoryByProductId = async (req, res) => {
+    const { productId } = req.params;
+
+    try {
+        const inventoryByProductId = await Inventory.findOne({ productId });
+
+        if (!inventoryByProductId) {
+            return res.status(404).json({ error: 'Product not found' });
+        }
+
+        res.status(200).json(inventoryByProductId);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Server Error' });
+    }
+};
+
+const findInventoryByName = async (req, res) => {
+    const { itemName } = req.params;
+
+    try {
+        const inventoryByName = await Inventory.find({ productName: itemName });
+
+        res.status(200).json(inventoryByName);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Server Error' });
+    }
+};
+
+module.exports = { createInventory, deleteInventory, updateInventory, getallinventory, getbyIdInventory,findInventoryByName, findInventoryByProductId, findInventoryByCategory };
