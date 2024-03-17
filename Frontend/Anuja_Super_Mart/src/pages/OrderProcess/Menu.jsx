@@ -9,6 +9,30 @@ import './Menu.css';
 const Menu = () => {
     const [inventory, setInventory] = useState([]);
     const [orderItems, setOrderItems] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState('Electronics')
+    const categories = [
+
+        {
+        name:'Electronics',
+
+        },
+        {
+            name:'Beverage',
+    
+            },
+
+         {
+           name:'Fashion',
+        
+            },
+        
+            {
+                name:'Cooking Essentials',
+        
+                },    
+
+
+    ]
 
     useEffect(() => {
         fetch('http://localhost:8000/inventory')
@@ -31,8 +55,26 @@ const Menu = () => {
             <Header2/>
             <OrderSec orderItems={orderItems} removeFromOrder={removeFromOrder} />
             <MenuNav/> 
+
+            <div>
+                {categories.map((category) =>(
+                    <div key={category.name} className= {`d-flex category ${ selectedCategory === category.name && "category-active"  }`}
+                    
+                    onClick={()=> setSelectedCategory(category.name)}
+                    >
+                       
+                       
+                        <h4>{category.name}</h4>
+                        </div>
+
+                   
+                    
+
+                    
+                   ) )}
+            </div>
             <div className="inventory-container">
-                {inventory.map(item => (
+                {inventory.filter(i =>i.category ===selectedCategory).map(item => (
                     <MenuCard key={item.id} item={item} addToOrder={addToOrder} />
                 ))}
             </div>
