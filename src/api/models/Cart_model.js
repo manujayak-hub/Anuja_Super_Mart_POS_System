@@ -2,12 +2,12 @@ import mongoose from "mongoose";
 
 const Schema = mongoose. Schema
 const CartSchema = new Schema({
-    OrderID: {type: String, required:true},
-    ItemID: {type: String, required:true},
-    ItemName: {type: String, required:true},
-    Quantity: {type: String, required:true},
-    TotalAmount: {type: String, required:true},
-    PickupTime: {type: String, required:true}
+    OrderID: {type: String},
+    ItemID: {type: String},
+    ItemName: {type: String},
+    Quantity: {type: String},
+    TotalAmount: {type: String},
+    PickupTime: {type: String}
 },{
     timestamps: true,
     collection: 'Cart'

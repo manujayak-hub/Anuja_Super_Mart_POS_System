@@ -52,7 +52,10 @@ const BabyProducts = () => {
         ))}
       </div>
       {/* Pass orderItems and removeFromOrder function to Cart component */}
-      <Cart orderItems={orderItems} removeFromOrder={removeFromOrder} />
+      <Cart orderItems={orderItems} 
+      removeFromOrder={removeFromOrder}
+      setOrderItems={setOrderItems} 
+      />
     </div>
   );
 };
