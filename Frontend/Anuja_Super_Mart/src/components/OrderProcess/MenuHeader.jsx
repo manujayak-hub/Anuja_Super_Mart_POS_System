@@ -15,7 +15,7 @@ const  Header2 = () => {
         </h1>
         </div>
         <div name="Categories">
-            <button>Baby Products</button>
+            <button >Baby Products</button>
             <button>Bevarage</button>
             <button>Snacks</button>
             <button>Cooking Essentails</button>

@@ -1,14 +1,15 @@
 /* CSS for the order section */
 .OrderSec {
     position: fixed;
-    top: 0;
+    bottom: 0;
     right: 0;
     width: 300px; /* Adjust the width of the order section as needed */
-    height: 100vh; /* Make the section cover the full height of the viewport */
+    height: auto; /* Remove fixed height to allow content to expand */
     background-color: #ffffff; /* Background color for the section */
     border-left: 1px solid #ccc; /* Border separating the order section from the rest of the page */
     padding: 20px; /* Add padding to the section */
     box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    height: 100%;
 }
 
 /* CSS for the order header */
@@ -21,9 +22,11 @@ div[name="itemlist"] {
     margin-bottom: 20px; /* Adjust spacing between item list and total, balance, and button */
 }
 
-/* CSS for the total, balance, and button */
-.OrderSec > div:last-child {
-    margin-bottom: 20px; /* Adjust spacing between total, balance, and button and the bottom of the section */
+/* CSS for the totalprice */
+.totalprice {
+    text-align: right;
+    margin-top: auto; /* Push the totalprice to the bottom */
+    padding: 2px; /* Add padding to the totalprice */
 }
 
 /* CSS for the button */
@@ -33,8 +36,9 @@ div[name="itemlist"] {
     border: none; /* Remove button border */
     padding: 10px 20px; /* Add padding to the button */
     cursor: pointer; /* Change cursor to pointer on hover */
+    margin-right: 2%;
 }
 
 .OrderSec button:hover {
-    background-color: #FD204F; /* Change button background color on hover */
+    background-color: #605a5b; /* Change button background color on hover */
 }

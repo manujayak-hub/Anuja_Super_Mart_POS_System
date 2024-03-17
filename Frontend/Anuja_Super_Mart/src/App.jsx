@@ -53,6 +53,7 @@ function App() {
             <Route path="ButtonComponent" element={<ButtonComponent/>}/>
             <Route path="inventory" element={<InventoryDash/>} />
             {user && <Route exact path="/About" render={() => <About />} />}
+            
 
           </Route>
         </Routes>
