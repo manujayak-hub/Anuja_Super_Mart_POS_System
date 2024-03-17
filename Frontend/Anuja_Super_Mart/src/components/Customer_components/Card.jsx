@@ -2,7 +2,10 @@
 
 import React from 'react';
 
-const Card = ({ product }) => {
+const Card = ({ product, addToOrder }) => {
+  const { productName, wholesalePrice } = product;
+
+
   return (
     <div className="card">
 
@@ -17,7 +20,7 @@ const Card = ({ product }) => {
         <p className="card-text">
           <strong>Quantity in Stock:</strong> {product.quantityInStock}
         </p>
-        <button className="btn btn-primary" onClick={() => addToCart(product)}>
+        <button className="btn btn-primary" onClick={() => addToOrder(product)}>
           Add to Cart
         </button>
       </div>
