@@ -1,0 +1,36 @@
+body {
+    margin: 0; /* Remove default body margin */
+    padding: 0; /* Remove default body padding */
+    overflow-x: hidden; /* Hide horizontal overflow */
+}
+
+.transaction-list-container {
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    align-items: center; /* Center horizontally */
+    max-width: 1200px; /* Set maximum width for the table container */
+    margin: 0 auto; /* Center the table container horizontally */
+}
+.table {
+    width: 100%;
+    max-width: 100%;
+    font-size: 14px; /* Adjust font size */
+    table-layout: fixed; /* Ensure table cells have equal width */
+}
+
+.table th,
+.table td {
+    padding: 6px; /* Adjust padding */
+    text-align: left;
+    overflow: hidden; /* Hide overflowing content */
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+/* Ensure buttons are displayed side by side */
+.actions-container {
+    display: flex;
+}
+
+.actions-container button {
+    margin-right: 5px;
+}

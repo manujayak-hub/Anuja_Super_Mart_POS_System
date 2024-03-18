@@ -4,9 +4,9 @@ const Schema = mongoose.Schema
 
 const transactionSchema  = new Schema({
     transactionID: {
-        type: String,
-        required: true,
-        unique: true
+        type: String, 
+        required: true, 
+        unique: true 
     },
     transactionDateTime: {
         type: Date,

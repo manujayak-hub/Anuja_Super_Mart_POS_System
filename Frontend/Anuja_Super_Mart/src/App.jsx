@@ -5,8 +5,9 @@ import Contact from './pages/Contact'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import { useStore } from './stores/authStore'
-import Dash from './components/AccountantComponents/Sidebar'
+import TransactionForm from './pages/Accountant/Add_new_form'
 import TransactionsList from './pages/Accountant/Transactions'
+import Dash from'./pages/Accountant/Accountantdash'
 import Menu from './pages/OrderProcess/Menu'
 import List from './pages/OrderProcess/List'
 import Customer from './pages/SalesAnalytics/Customer'
@@ -16,6 +17,12 @@ import Hamper from './pages/Discount/Hamper'
 import TotalSaving from './pages/Discount/TotalSaving'
 import ItemList from './pages/Discount/ItemList'
 import ButtonComponent from './components/Discount/ButtonComponent'
+
+
+// import CreateTransaction from './pages/Accountant/accountant_create'
+// import ReadTransactions from './pages/Accountant/retrieve'
+// import UpdateTransaction from './pages/Accountant/accountant_update'
+// import DeleteTransaction from './pages/Accountant/accountant_delete'
 
 
 function App() {
@@ -32,7 +39,8 @@ function App() {
             <Route path="contact" element={<Contact/>} />
             <Route path="Login" element={<Login/>} />
             <Route path="Signup" element={<Signup/>}/>
-            <Route path="Dash" element={<Dash/>}/>
+            <Route path="TransactionForm" element={<TransactionForm/>}/>  
+            <Route path="AccountantDash" element={<Dash/>}/>
             <Route path="Transactions" element={<TransactionsList/>}/>
             <Route path="Menu" element={<Menu/>} />
             <Route path="List" element={<List/>} />
@@ -44,6 +52,14 @@ function App() {
             <Route path="TotalSaving" element={<TotalSaving/>}/>
             <Route path="ButtonComponent" element={<ButtonComponent/>}/>
             <Route path="inventory" element={<InventoryDash/>} />
+
+            {/* <Route path="CreateTransaction" element={<CreateTransaction/>}/>
+            <Route path="UpdateTransaction" UpdateTransaction={<UpdateTransaction/>}/>
+            <Route path="DeleteTransaction" element={<DeleteTransaction/>}/>
+            <Route path="ReadTransactions" element={<ReadTransactions/>}/>
+ */}
+
+
             {user && <Route exact path="/About" render={() => <About />} />}
 
           </Route>
