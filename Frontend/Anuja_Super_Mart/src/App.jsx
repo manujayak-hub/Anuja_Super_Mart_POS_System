@@ -60,7 +60,6 @@ function App() {
             <Route path="ItemList" element={<ItemList/>}/>
             <Route path="TotalSaving" element={<TotalSaving/>}/>
             <Route path="ButtonComponent" element={<ButtonComponent/>}/>
-            <Route path="inventory" element={<InventoryDash/>} />
             <Route path="emp_list" element={<Emp_list/>} />
 
             

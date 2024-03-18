@@ -1,10 +1,8 @@
-// BabyProducts.js
-
 import React, { useEffect, useState } from 'react';
 import axios from '../../api/axios';
 import Card from '../Customer_components/Card'; // Import the Card component
 
-const BabyProducts = () => {
+const Beverages = () => {
   const [inventory, setInventory] = useState([]);
 
   useEffect(() => {
@@ -25,6 +23,12 @@ const BabyProducts = () => {
 
   console.log("Current Inventory:", inventory); // Log the current inventory
 
+  const addToOrder = (product) => {
+    // Define the logic to add the product to the order/cart
+    console.log('Adding product to ordfsbfbser:', product);
+    // You can implement the functionality to add the product to the order/cart here
+  };
+
   return (
     <div>
       <center>
@@ -33,7 +37,7 @@ const BabyProducts = () => {
       <div className="products">
         {inventory.map((product) => (
           <div key={product.productId} className="product">
-            <Card product={product} />
+            <Card product={product} addToOrder={addToOrder} />
           </div>
         ))}
       </div>
@@ -41,4 +45,4 @@ const BabyProducts = () => {
   );
 };
 
-export default BabyProducts;
+export default Beverages;
