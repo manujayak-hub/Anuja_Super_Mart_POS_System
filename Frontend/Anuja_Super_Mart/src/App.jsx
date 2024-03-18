@@ -19,6 +19,12 @@ import Hamper from './pages/Discount/Hamper'
 import TotalSaving from './pages/Discount/TotalSaving'
 import ItemList from './pages/Discount/ItemList'
 import ButtonComponent from './components/Discount/ButtonComponent'
+import Emp_list from './pages/Emp_pages/emp_list'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+
+
+
 
 import InventoryRoute from './Routes/InvRoute'
 
@@ -53,6 +59,9 @@ function App() {
             <Route path="ItemList" element={<ItemList/>}/>
             <Route path="TotalSaving" element={<TotalSaving/>}/>
             <Route path="ButtonComponent" element={<ButtonComponent/>}/>
+            <Route path="inventory" element={<InventoryDash/>} />
+            <Route path="emp_list" element={<Emp_list/>} />
+
             
             {user && <Route exact path="/About" render={() => <About />} />}
 
