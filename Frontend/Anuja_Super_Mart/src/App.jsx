@@ -64,6 +64,7 @@ function App() {
 
             
             {user && <Route exact path="/About" render={() => <About />} />}
+            
 
           </Route>
         </Routes>
