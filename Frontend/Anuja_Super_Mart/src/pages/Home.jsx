@@ -6,6 +6,7 @@ const Home = () => {
     return (
         <>
             <Navbar />
+
             <div className="Hero">
 
                 <h1>Your Title Goes Here</h1>
