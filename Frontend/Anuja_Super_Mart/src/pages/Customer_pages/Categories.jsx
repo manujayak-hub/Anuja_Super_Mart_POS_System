@@ -5,7 +5,7 @@ import Snacks from '../../components/Customer_components/Snacks';
 import CookingEssential from '../../components/Customer_components/CookingEssential';
 import DairyProducts from '../../components/Customer_components/DairyProducts';
 import PersonalCare from '../../components/Customer_components/PersonalCare';
-
+import Navbar from './NavBar';
 
 function Categories() {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -16,6 +16,7 @@ function Categories() {
 
   return (
     <div className="container mt-5">
+      <Navbar/>
       <h1 className="text-center mb-4">Categories</h1>
       <div className="row justify-content-center mb-4">
         <div className="col-6 col-md-4">
