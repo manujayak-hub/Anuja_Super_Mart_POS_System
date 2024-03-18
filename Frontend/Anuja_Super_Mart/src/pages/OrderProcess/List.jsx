@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import MenuNav from "../../components/OrderProcess/MenuNavbar";
-import './List.css';
+import './List.scss';
 
 function List() {
     const [inventory, setInventory] = useState([]);

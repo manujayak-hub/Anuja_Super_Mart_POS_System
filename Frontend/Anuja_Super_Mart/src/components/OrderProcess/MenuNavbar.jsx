@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from 'react-router-dom';
-import './MenuNavbar.css';
+import './MenuNavbar.scss';
 
 const MenuNav = () => {
     return ( <>

@@ -1,37 +1,29 @@
 // Menu.js
+
 import React, { useState, useEffect } from 'react';
 import Header2 from "../../components/OrderProcess/MenuHeader";
 import OrderSec from "../../components/Orderbill/OrderSec";
 import MenuNav from "../../components/OrderProcess/MenuNavbar";
 import MenuCard from "../../components/OrderProcess/MenuCard";
-import './Menu.css';
+import './Menu.scss'; // Import SCSS file
 
 const Menu = () => {
     const [inventory, setInventory] = useState([]);
     const [orderItems, setOrderItems] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('Electronics')
     const categories = [
-
         {
-        name:'Electronics',
-
+            name:'Electronics',
         },
         {
-            name:'Beverage',
-    
-            },
-
-         {
-           name:'Fashion',
-        
-            },
-        
-            {
-                name:'Cooking Essentials',
-        
-                },    
-
-
+            name:'Beverages',
+        },
+        {
+            name:'Fashion',
+        },
+        {
+            name:'Cooking Essentials',
+        },
     ]
 
     useEffect(() => {
@@ -56,25 +48,17 @@ const Menu = () => {
             <OrderSec orderItems={orderItems} removeFromOrder={removeFromOrder} />
             <MenuNav/> 
 
-            <div>
+            <div className="menu-categories">
                 {categories.map((category) =>(
-                    <div key={category.name} className= {`d-flex category ${ selectedCategory === category.name && "category-active"  }`}
-                    
-                    onClick={()=> setSelectedCategory(category.name)}
+                    <div key={category.name} className={`category-container ${selectedCategory === category.name ? "category-active" : ""}`}
+                        onClick={() => setSelectedCategory(category.name)}
                     >
-                       
-                       
-                        <h4>{category.name}</h4>
-                        </div>
-
-                   
-                    
-
-                    
-                   ) )}
+                        <h4 className="category-name">{category.name}</h4>
+                    </div>
+                ))}
             </div>
             <div className="inventory-container">
-                {inventory.filter(i =>i.category ===selectedCategory).map(item => (
+                {inventory.filter(i => i.category === selectedCategory).map(item => (
                     <MenuCard key={item.id} item={item} addToOrder={addToOrder} />
                 ))}
             </div>

@@ -1,0 +1,42 @@
+// MenuNavbar.scss
+
+// Define the height of the website
+html, body {
+    height: 500%; /* Set height to 100% */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+  }
+  
+  // Unique class for the navbar container
+  .navbar {
+    background-color: #333; /* Add background color */
+    height: 500%; /* Set height to 100% */
+    width: 15%; /* Set width to 20% */
+    position: fixed; /* Fix the navbar position */
+    top: 0; /* Align navbar to the top */
+    left: 0; /* Align navbar to the left */
+  }
+  
+  // Unique class for the navigation list
+  .navbar nav ul {
+    list-style-type: none; /* Remove default list style */
+    padding: 0; /* Remove default padding */
+  }
+  
+  // Unique class for the navigation items
+  .navbar nav ul li {
+    padding: 10px; /* Add padding to each item */
+  }
+  
+  // Unique class for the navigation links
+  .navbar nav ul li a {
+    color: #fff; /* Add text color */
+    text-decoration: none; /* Remove default underline */
+    font-weight: bold; /* Add font weight */
+  }
+  
+  // Style the navigation links on hover
+  .navbar nav ul li a:hover {
+    color: #FD204F; /* Change text color on hover */
+  }
+  
