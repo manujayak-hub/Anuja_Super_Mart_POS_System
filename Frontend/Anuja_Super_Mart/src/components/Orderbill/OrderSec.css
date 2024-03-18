@@ -38,9 +38,19 @@ div[name="itemlist"] {
     padding: 10px 20px; /* Add padding to the button */
     cursor: pointer; /* Change cursor to pointer on hover */
     margin-right: 2%;
+    
 }
 
 .OrderSec button:hover {
     background-color: #605a5b; /* Change button background color on hover */
 }
+.addorder {
+    position: fixed;
+    bottom: 20px;
+    left: 90%;
+    transform: translateX(-50%);
+  }
+  .remove{
+    right: 2%;
+  }
 

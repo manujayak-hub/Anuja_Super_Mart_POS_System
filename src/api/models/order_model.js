@@ -9,7 +9,8 @@ const orderSchema = new Schema({
     ItemID: {type: String},
     ItemName: {type: String},
     Quantity: {type: String},
-    TotalAmount: {type: String}
+    TotalAmount: {type: String},
+    date:{type:String}
     
 
 },{
