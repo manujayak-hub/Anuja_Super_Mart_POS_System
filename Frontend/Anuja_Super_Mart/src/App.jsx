@@ -21,21 +21,8 @@ import TotalSaving from './pages/Discount/TotalSaving'
 import ItemList from './pages/Discount/ItemList'
 import ButtonComponent from './components/Discount/ButtonComponent'
 import Emp_list from './pages/Emp_pages/emp_list'
-import 'bootstrap/dist/css/bootstrap.min.css';
-
-
-
-
-
 import InventoryRoute from './Routes/InvRoute'
-
-
-
-
-// import CreateTransaction from './pages/Accountant/accountant_create'
-// import ReadTransactions from './pages/Accountant/retrieve'
-// import UpdateTransaction from './pages/Accountant/accountant_update'
-// import DeleteTransaction from './pages/Accountant/accountant_delete'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 function App() {
@@ -72,16 +59,6 @@ function App() {
             <Route path="ItemList" element={<ItemList/>}/>
             <Route path="TotalSaving" element={<TotalSaving/>}/>
             <Route path="ButtonComponent" element={<ButtonComponent/>}/>
-            <Route path="inventory" element={<InventoryDash/>} />
-
-
-            {/* <Route path="CreateTransaction" element={<CreateTransaction/>}/>
-            <Route path="UpdateTransaction" UpdateTransaction={<UpdateTransaction/>}/>
-            <Route path="DeleteTransaction" element={<DeleteTransaction/>}/>
-            <Route path="ReadTransactions" element={<ReadTransactions/>}/>*/}
-
-
-
             <Route path="emp_list" element={<Emp_list/>} />
 
             
