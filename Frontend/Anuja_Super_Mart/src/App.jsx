@@ -4,6 +4,10 @@ import About from './pages/About'
 import Contact from './pages/Contact'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
+import Form from './pages/Task/Form';
+import SProfile from './pages/Task/SProfile';
+import SDetails from './pages/Task/SDetails';
+import Categories from './pages/Customer_pages/Categories';
 import { useStore } from './stores/authStore'
 import TransactionForm from './pages/Accountant/Add_new_form'
 import TransactionsList from './pages/Accountant/Transactions'
@@ -12,11 +16,20 @@ import Menu from './pages/OrderProcess/Menu'
 import List from './pages/OrderProcess/List'
 import Customer from './pages/SalesAnalytics/Customer'
 import Report from './pages/SalesAnalytics/Report'
-import InventoryDash from './pages/inventory_Pages/inventoryDash'
 import Hamper from './pages/Discount/Hamper'
 import TotalSaving from './pages/Discount/TotalSaving'
 import ItemList from './pages/Discount/ItemList'
 import ButtonComponent from './components/Discount/ButtonComponent'
+import Emp_list from './pages/Emp_pages/emp_list'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+
+
+
+
+import InventoryRoute from './Routes/InvRoute'
+
+
 
 
 // import CreateTransaction from './pages/Accountant/accountant_create'
@@ -37,10 +50,18 @@ function App() {
             <Route index element={<Home />} />
             <Route path="About" element={<About/>} />
             <Route path="contact" element={<Contact/>} />
-            <Route path="Login" element={<Login/>} />
+            <Route path="Login" element={<Login/>}/>
             <Route path="Signup" element={<Signup/>}/>
+
             <Route path="TransactionForm" element={<TransactionForm/>}/>  
             <Route path="AccountantDash" element={<Dash/>}/>
+
+            <Route path="Form" element={<Form/>}/>
+            <Route path="SProfile" element={<SProfile/>}/>
+            <Route path="SDetails" element={<SDetails/>}/>
+            <Route path="Categories" element={<Categories/>} />
+            <Route path="Dash" element={<Dash/>}/>
+
             <Route path="Transactions" element={<TransactionsList/>}/>
             <Route path="Menu" element={<Menu/>} />
             <Route path="List" element={<List/>} />
@@ -53,18 +74,26 @@ function App() {
             <Route path="ButtonComponent" element={<ButtonComponent/>}/>
             <Route path="inventory" element={<InventoryDash/>} />
 
+
             {/* <Route path="CreateTransaction" element={<CreateTransaction/>}/>
             <Route path="UpdateTransaction" UpdateTransaction={<UpdateTransaction/>}/>
             <Route path="DeleteTransaction" element={<DeleteTransaction/>}/>
-            <Route path="ReadTransactions" element={<ReadTransactions/>}/>
- */}
+            <Route path="ReadTransactions" element={<ReadTransactions/>}/>*/}
+
+
+
+            <Route path="emp_list" element={<Emp_list/>} />
+
+            
 
 
             {user && <Route exact path="/About" render={() => <About />} />}
+            
 
           </Route>
         </Routes>
      </BrowserRouter>
+     <InventoryRoute/>
     </>
   )
 }

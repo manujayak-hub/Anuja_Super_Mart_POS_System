@@ -8,14 +8,13 @@ import ctask_route from "./api/routes/ctask_route"
 import Discount_route from "./api/routes/Discount_route"
 import employee_route from "./api/routes/employee_route"
 import cusRoute from "./api/routes/customer_routes"
+import CartRoute from "./api/routes/Cart_route"
 import invRoute from './api/routes/Inventory_routes'
 import analyticRoute from "./api/routes/analytic_route"
 import order_route from "./api/routes/order_route"
 import User_route from "./api/routes/user_routes"
 
 import "dotenv/config"
-
-
 
 
 
@@ -48,6 +47,8 @@ app.use('/emp', employee_route)
 app.use('/order',order_route)
 //customer
 app.use('/customer', cusRoute)
+//Cart
+app.use('/Cart',CartRoute)
 //analytics
 app.use('/analytics', analyticRoute)
 //inventory

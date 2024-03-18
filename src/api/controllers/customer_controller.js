@@ -56,7 +56,7 @@ const updateCustomers =async (req,res) => {
         return res.status(400).json({error:'Invalid ID Format'})
       }
 
-    const CUS =await Customer.findOneAndUpdate({_id:id},
+    const CUS = await Customer.findOneAndUpdate({_id:id},
         {name, number}, 
         { new: true } 
     )
@@ -66,7 +66,6 @@ const updateCustomers =async (req,res) => {
       }
 
     res.status(200).json(CUS)
-
 
 }
 
