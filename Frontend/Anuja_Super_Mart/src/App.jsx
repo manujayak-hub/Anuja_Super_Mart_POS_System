@@ -30,6 +30,7 @@ import InventoryRoute from './Routes/InvRoute'
 
 
 
+
 function App() {
   const user = useStore(state => state.user);
   
@@ -63,6 +64,7 @@ function App() {
             <Route path="emp_list" element={<Emp_list/>} />
 
             
+
             {user && <Route exact path="/About" render={() => <About />} />}
             
 
