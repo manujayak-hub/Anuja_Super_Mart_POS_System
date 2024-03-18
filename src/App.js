@@ -5,13 +5,16 @@ import MongoConnect from "./configs/DB_Connection"
 
 import transactionRoutes from "./api/routes/transactionsRoutes"
 import ctask_route from "./api/routes/ctask_route"
-import Discount_route from "./api/routes/Discount_route"
 import employee_route from "./api/routes/employee_route"
 import cusRoute from "./api/routes/customer_routes"
 import invRoute from './api/routes/Inventory_routes'
 import analyticRoute from "./api/routes/analytic_route"
 import order_route from "./api/routes/order_route"
 import User_route from "./api/routes/user_routes"
+
+import productRoute from "./api/routes/product.route"
+
+
 
 import "dotenv/config"
 
@@ -40,8 +43,8 @@ next()
 app.use('/transactions', transactionRoutes)
 //Supplier_Task
 app.use('/ctask', ctask_route)
-//discount
-app.use('/Discount',Discount_route)
+
+
 //employee
 app.use('/emp', employee_route)
 //cashier
@@ -54,7 +57,8 @@ app.use('/analytics', analyticRoute)
 app.use('/inventory', invRoute )
 //Authentication
 app.use('/auth',User_route)
-
+//products
+app.use("/products", productRoute)
 
 app.listen(PORT , ()=>{
     logger.info("Connected via Port " + PORT)
