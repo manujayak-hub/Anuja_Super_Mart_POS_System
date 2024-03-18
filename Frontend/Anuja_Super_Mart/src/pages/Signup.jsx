@@ -2,52 +2,93 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useStore } from '../stores/authStore';
 import axios from '../api/axios';
-import Nav from '../components/Nav'
+import Nav from '../components/Nav';
 
 const Signup = () => {
-    const [fname, setfname] = useState('');
-    const [lname, setlname] = useState('');
-    const [mobile, setmobile] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [successMessage, setSuccessMessage] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
-    const setUser = useStore(state => state.setUser);
+  const [fname, setfname] = useState('');
+  const [lname, setlname] = useState('');
+  const [mobile, setmobile] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const setUser = useStore(state => state.setUser);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const res = await axios.post('/auth/signup', { fname, lname, mobile, email, password });
-            setUser(res.data.token);
-            setSuccessMessage('Signup successful'); // Set success message
-            setErrorMessage(''); // Clear error message
-            console.log(res.data); // Handle successful signup
-        } catch (error) {
-            setErrorMessage('Signup failed. Please try again.'); // Set error message
-            setSuccessMessage(''); // Clear success message
-            console.error(error.response.data); // Handle error
-        }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Email validation
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      setErrorMessage('Invalid email format. Please enter a valid email address.');
+      return;
     }
 
-    return (
-        <>
-            <Nav />
-            <div>
-                <h2>Signup</h2>
-                {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-                {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
+    // Phone number validation
+    const phonePattern = /^\d{10}$/;
+    if (!phonePattern.test(mobile)) {
+      setErrorMessage('Invalid phone number format. Please enter a 10-digit mobile number.');
+      return;
+    }
+
+    try {
+      const res = await axios.post('/auth/signup', { fname, lname, mobile, email, password });
+      setUser(res.data.token);
+      setSuccessMessage('Signup successful');
+      setErrorMessage('');
+      console.log(res.data);
+    } catch (error) {
+      setErrorMessage('Signup failed. Please try again.');
+      setSuccessMessage('');
+      console.error(error.response.data);
+    }
+  };
+
+  return (
+    <>
+      <Nav />
+      <div className="container mt-5">
+        <div className="row justify-content-center">
+          <div className="col-md-6">
+            <div className="card">
+              <div className="card-body">
+                <h2 className="card-title mb-4">Signup</h2>
+                {errorMessage && <p className="text-danger">{errorMessage}</p>}
+                {successMessage && (
+                  <div className="alert alert-success" role="alert">
+                    {successMessage}
+                  </div>
+                )}
                 <form onSubmit={handleSubmit}>
-                    <input type="text" placeholder="first name" value={fname} onChange={(e) => setfname(e.target.value)} /><br/>
-                    <input type="text" placeholder="last name" value={lname} onChange={(e) => setlname(e.target.value)} /><br/>
-                    <input type="tel" placeholder="077589663" value={mobile} onChange={(e) => setmobile(e.target.value)} /><br/>
-                    <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} /><br/>
-                    <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} /><br/>
-                    <button type="submit">Sign Up</button>
+                  <div className="mb-3">
+                    <input type="text" className="form-control" placeholder="First Name" value={fname} onChange={(e) => setfname(e.target.value)} required />
+                  </div>
+                  <div className="mb-3">
+                    <input type="text" className="form-control" placeholder="Last Name" value={lname} onChange={(e) => setlname(e.target.value)} required />
+                  </div>
+                  <div className="mb-3">
+                    <input type="tel" className="form-control" placeholder="Mobile" value={mobile} onChange={(e) => setmobile(e.target.value)} required />
+                  </div>
+                  <div className="mb-3">
+                    <input type="email" className="form-control" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                  </div>
+                  <div className="mb-3">
+                    <input type="password" className="form-control" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                  </div>
+                  <center>
+                    <button type="submit" className="btn btn-primary">Sign Up</button>
+                  </center>
                 </form>
-                <Link to="/login">Already have an account? Login</Link>
+                <div className="mt-3">
+                  <Link to="/login">Already have an account? Login</Link>
+                </div>
+              </div>
             </div>
-        </>
-    );
-}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
 
 export default Signup;

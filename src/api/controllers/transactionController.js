@@ -3,10 +3,10 @@ import mongoose from 'mongoose'
 
 const createTransaction = async (req ,res) => {
 
-    const {transactionID, transactionDateTime, transactionType,amount,transactionMethod} = req.body
+    const {transactionID, transactionDateTime, transactionType,transactionAmount,transactionMethod} = req.body
 
     try {
-        const transaction = await Transactions.create({transactionID, transactionDateTime, transactionType,amount,transactionMethod})
+        const transaction = await Transactions.create({transactionID, transactionDateTime, transactionType,transactionAmount,transactionMethod})
         res.status(200).json(transaction)
 
     } catch (error) {
@@ -52,14 +52,14 @@ const getbyIdTransaction= async (req,res) => {
 const updateTransaction =async (req,res) => {
     var {id} = req.params
 
-    const {transactionID, transactionDateTime, transactionType,amount,transactionMethod} = req.body
+    const {transactionID, transactionDateTime, transactionType,transactionAmount,transactionMethod} = req.body
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(400).json({error:'Invalid ID Format'})
       }
 
     const transaction =await Transactions.findOneAndUpdate({_id:id},
-        {transactionID, transactionDateTime, transactionType,amount,transactionMethod}, 
+        {transactionID, transactionDateTime, transactionType,transactionAmount,transactionMethod}, 
         { new: true } // To return the updated document
     )
 

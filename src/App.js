@@ -3,10 +3,11 @@ import {logger} from "./utills/loggerfile"
 import cors from "cors"
 import MongoConnect from "./configs/DB_Connection"
 
-import transactionRoutes from "./api/routes/transactionsRoutes"
+import transaction_routes from "./api/routes/transactions_routes"
 import ctask_route from "./api/routes/ctask_route"
 import employee_route from "./api/routes/employee_route"
 import cusRoute from "./api/routes/customer_routes"
+import CartRoute from "./api/routes/Cart_route"
 import invRoute from './api/routes/Inventory_routes'
 import analyticRoute from "./api/routes/analytic_route"
 import order_route from "./api/routes/order_route"
@@ -17,8 +18,6 @@ import productRoute from "./api/routes/product.route"
 
 
 import "dotenv/config"
-
-
 
 
 
@@ -40,7 +39,7 @@ next()
 })
 
 //routes
-app.use('/transactions', transactionRoutes)
+app.use('/transactions', transaction_routes)
 //Supplier_Task
 app.use('/ctask', ctask_route)
 
@@ -51,6 +50,8 @@ app.use('/emp', employee_route)
 app.use('/order',order_route)
 //customer
 app.use('/customer', cusRoute)
+//Cart
+app.use('/Cart',CartRoute)
 //analytics
 app.use('/analytics', analyticRoute)
 //inventory
