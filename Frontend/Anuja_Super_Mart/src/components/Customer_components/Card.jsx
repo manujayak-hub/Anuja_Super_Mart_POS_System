@@ -25,7 +25,7 @@ const Card = ({ product, addToOrder }) => {
   };
 
   return (
-    <div className="card">
+    <div className="card" style={{ width: '15rem' }}>
       <div className="card-body">
         <h5 className="card-title">{productName}</h5>
         <p className="card-text">

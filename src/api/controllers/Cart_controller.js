@@ -2,8 +2,6 @@ import Cart from '../models/Cart_model'
 import mongoose from 'mongoose'
 
 
-
-
 const createCart = async (req ,res) =>{
 
     const {OrderID,ItemID,ItemName,Quantity,TotalAmount,PickupTime} = req.body
@@ -68,7 +66,6 @@ const updateCart  =async (req,res) => {
       }
 
     res.status(200).json(OD)
-
 }
 
 const deleteCart = async (req, res) => {
