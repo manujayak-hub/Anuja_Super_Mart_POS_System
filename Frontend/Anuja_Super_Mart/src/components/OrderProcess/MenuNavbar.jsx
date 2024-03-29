@@ -12,7 +12,7 @@ const MenuNav = () => {
           <li><Link to="/List">List</Link></li>
           <li><Link to="/">Add Customer</Link></li>
           <li><Link to="/">Pickup Orders</Link></li>
-          <li><Link to="/">Order Retrival</Link></li>
+          <li><Link to="/OrderRetrieve">Order Retrival</Link></li>
 
         </ul>
       </nav>
