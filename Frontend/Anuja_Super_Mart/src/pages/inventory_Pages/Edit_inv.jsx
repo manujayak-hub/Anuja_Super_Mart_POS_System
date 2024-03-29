@@ -3,27 +3,32 @@ import axios from '../../api/axios';
 import useInventoryStore from '../../stores/inventoryStore';
 import Sidebar from '../../components/InventoryComponents/InvSideBar'
 import UpdateForm from '../../components/InventoryComponents/Updateform'; // Import the UpdateForm component
+import searchicon from '../../assets/inventory/icons8-search-50.png'
+import crossicon from '../../assets/inventory/icons8-cross-50.png'
+
 
 const EditInv = () => {
     const { inventory, setError, setInventory } = useInventoryStore();
     const [selectedProductId, setSelectedProductId] = useState(null);
     const [selectedItem, setSelectedItem] = useState(null);
+    const [searchQuery, setSearchQuery] = useState('');
+
 
     // Function to handle selecting a product ID
     const displayUpdateForm = (productId) => {
         setSelectedProductId(productId);
     };
 
+    const fetchInventory = async () => {
+        try {
+            const response = await axios.get('/inventory');
+            setInventory(response.data);
+        } catch (error) {
+            setError(error.message);
+        }
+    };
     // Effect to fetch inventory data
     useEffect(() => {
-        const fetchInventory = async () => {
-            try {
-                const response = await axios.get('/inventory');
-                setInventory(response.data);
-            } catch (error) {
-                setError(error.message);
-            }
-        };
         fetchInventory();
     }, [setInventory, setError]);
 
@@ -59,6 +64,34 @@ const EditInv = () => {
         }
     };
 
+    const handleSearch = async () => {
+        if (searchQuery.trim() !== '') {
+            try {
+                // Fetch all inventory items
+                const response = await axios.get('/inventory');
+                const allInventory = response.data;
+
+                // Filter inventory items locally based on the search query
+                const filteredInventory = allInventory.filter(item =>
+                    item.productName.toLowerCase().includes(searchQuery.toLowerCase())
+                );
+
+                setInventory(filteredInventory);
+            } catch (error) {
+                setError(error.message);
+            }
+        } else {
+            fetchInventory(); // If search query is empty, fetch all inventory items
+        }
+    };
+
+    const handleClearSearch = () => {
+        setSearchQuery('');
+        fetchInventory(); // Reset search and fetch all inventory items
+    };
+
+
+
     return (
         <div className="container-fluid">
             <div className="row">
@@ -67,6 +100,21 @@ const EditInv = () => {
                 </div>
                 <div className="col-sm-10">
                     <h1>Inventory List</h1>
+                    <div className="search-bar col-sm-8">
+                        <input
+                            type="text"
+                            placeholder="Search by product name"
+                            value={searchQuery}
+                            onChange={e => setSearchQuery(e.target.value)}
+                        />
+                        <a onClick={handleSearch} className="icon-container">
+                            <img src={searchicon} className="img-fluid icon" alt="Search Icon" />
+                        </a>
+                        {/* Clear search icon */}
+                        <a onClick={handleClearSearch} className="icon-container">
+                            <img src={crossicon} className="img-fluid icon" alt="Cross Icon" />
+                        </a>
+                    </div>
                     <div className="table-responsive">
                         <table className="table table-hover">
                             <thead>
