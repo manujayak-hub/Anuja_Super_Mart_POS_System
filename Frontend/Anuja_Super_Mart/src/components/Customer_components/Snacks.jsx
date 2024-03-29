@@ -1,7 +1,6 @@
-// BabyProducts.js
 import React, { useEffect, useState } from 'react';
 import axios from '../../api/axios';
-import Card from '../Customer_components/Card';
+import Card from '../Customer_components/Card'; // Import the Card component
 
 const Snacks = () => {
   const [inventory, setInventory] = useState([]);
@@ -12,7 +11,7 @@ const Snacks = () => {
         const category = "Snacks";
         const response = await axios.get(`/inventory/category/${category}`);
         const inventoryData = response.data;
-        console.log("Inventory data from API:", inventoryData);
+        console.log("Inventory data from API:", inventoryData); // Log the fetched data
         setInventory(inventoryData);
       } catch (error) {
         console.error('Error fetching baby products:', error);
@@ -33,7 +32,7 @@ const Snacks = () => {
   return (
     <div>
       <center>
-        <h1>Baby products</h1>
+        <h1>Snacks</h1>
       </center>
       <div className="products">
         {inventory.map((product) => (
@@ -46,5 +45,4 @@ const Snacks = () => {
   );
 };
 
-  
 export default Snacks;

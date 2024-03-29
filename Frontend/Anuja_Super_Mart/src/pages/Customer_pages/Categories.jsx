@@ -83,6 +83,8 @@ function Categories() {
         </div>
       </div>
     </div>
+
+    
   );
 }
 

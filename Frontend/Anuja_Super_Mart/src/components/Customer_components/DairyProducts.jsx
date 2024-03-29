@@ -1,7 +1,6 @@
-// BabyProducts.js
 import React, { useEffect, useState } from 'react';
 import axios from '../../api/axios';
-import Card from '../Customer_components/Card';
+import Card from '../Customer_components/Card'; // Import the Card component
 
 const DairyProducts = () => {
   const [inventory, setInventory] = useState([]);
@@ -9,10 +8,10 @@ const DairyProducts = () => {
   useEffect(() => {
     const fetchInventoryByCategory = async () => {
       try {
-        const category = "Dairy_Products";
+        const category = "Dairy Products";
         const response = await axios.get(`/inventory/category/${category}`);
         const inventoryData = response.data;
-        console.log("Inventory data from API:", inventoryData);
+        console.log("Inventory data from API:", inventoryData); // Log the fetched data
         setInventory(inventoryData);
       } catch (error) {
         console.error('Error fetching baby products:', error);
@@ -46,5 +45,4 @@ const DairyProducts = () => {
   );
 };
 
-  
 export default DairyProducts;

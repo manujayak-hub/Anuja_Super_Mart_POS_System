@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../../api/axios';
+import CheckoutPage from '../Customer_pages/CheckoutPage';
 
 function NavBar() {
   const [cartOpen, setCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState([]);
+  const [checkoutClicked, setCheckoutClicked] = useState(false); // State to track checkout click
+  const [totalValue, setTotalValue] = useState(0);
 
   const toggleCart = () => {
     setCartOpen(!cartOpen);
@@ -43,14 +46,26 @@ function NavBar() {
     fetchCartItems();
   }, []);
 
-  // Calculate total amount of all items in the cart
-  const totalAmount = cartItems.reduce((total, item) => total + (item.Quantity * item.Price), 0);
+  useEffect(() => {
+    // Calculate total amount of all items in the cart
+    const total = cartItems.reduce((acc, item) => {
+      return acc + (item.TotalAmount || (item.Price * item.Quantity));
+    }, 0);
+
+    // Update the state with the calculated total
+    setTotalValue(total);
+  }, [cartItems]);
+
+  const handleCheckout = () => {
+    // Set checkoutClicked to true to render CheckoutPage
+    setCheckoutClicked(true);
+  };
 
   return (
     <header>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container">
-          <span className="navbar-brand">Your Shop Name</span>
+          <span className="navbar-brand">Anuja Super Mart</span>
 
           <div className="navbar-right">
             <button
@@ -106,7 +121,7 @@ function NavBar() {
                       -
                     </button>
                   </p>
-                  <p><strong>Total Amount:</strong> ${item.TotalAmount}</p>
+                  <p><strong>Price:</strong> ${item.TotalAmount || (item.Price * item.Quantity)}</p>
                 </div>
                 <button className="btn btn-danger btn-sm" onClick={() => removeFromCart(index, item._id)}>
                   Remove
@@ -117,9 +132,18 @@ function NavBar() {
         </div>
         {/* Display Total Amount */}
         <div className="offcanvas-footer">
-          <p><strong>Total:</strong> ${totalAmount.toFixed(2)}</p>
+          <p><strong>Total:</strong> {typeof totalValue === 'number' ? `$${totalValue.toFixed(2)}` : '$0.00'}</p>
+          <button
+            className="btn btn-success"
+            onClick={handleCheckout}
+          >
+            Checkout
+          </button>
         </div>
       </div>
+
+      {/* Conditional rendering of CheckoutPage */}
+      {checkoutClicked && <CheckoutPage cartItems={cartItems} />}
     </header>
   );
 }
