@@ -8,8 +8,8 @@ const InvProfile = () => {
                 <div className="col-sm-2 sidenav">
                     <Sidebar />
                 </div>
-                <div className="container mt-4 mb-4 p-3 d-flex justify-content-center">
-                    <div className="card p-4">
+                <div className=" col-sm-10">
+                    <div className="my-3">
                         <div className="image d-flex flex-column justify-content-center align-items-center">
                             <button className="btn btn-secondary">
                                 <img src="https://i.imgur.com/wvxPV9S.png" height="100" width="100" alt="Profile" />
