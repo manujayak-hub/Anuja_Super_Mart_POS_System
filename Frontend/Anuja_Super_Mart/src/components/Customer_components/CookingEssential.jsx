@@ -8,7 +8,7 @@ const CookingEssential = () => {
   useEffect(() => {
     const fetchInventoryByCategory = async () => {
       try {
-        const category = "Cooking Essential";
+        const category = "Cooking_Essential";
         const response = await axios.get(`/inventory/category/${category}`);
         const inventoryData = response.data;
         console.log("Inventory data from API:", inventoryData); // Log the fetched data
@@ -32,7 +32,7 @@ const CookingEssential = () => {
   return (
     <div>
       <center>
-        <h1>Cooking Essential</h1>
+        <h1></h1>
       </center>
       <div className="products">
         {inventory.map((product) => (

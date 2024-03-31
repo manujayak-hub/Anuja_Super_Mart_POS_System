@@ -33,7 +33,7 @@ const BabyProducts = () => {
   return (
     <div>
       <center>
-        <h1>Baby products</h1>
+        <h1></h1>
       </center>
       <div className="products">
         {inventory.map((product) => (

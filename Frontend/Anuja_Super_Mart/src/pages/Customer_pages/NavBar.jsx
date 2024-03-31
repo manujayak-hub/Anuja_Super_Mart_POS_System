@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../../api/axios';
+import { Link } from 'react-router-dom';
 import CheckoutPage from '../Customer_pages/CheckoutPage';
+import './NavBar.scss'; // Import SCSS file
 
 function NavBar() {
   const [cartOpen, setCartOpen] = useState(false);
@@ -64,20 +66,77 @@ function NavBar() {
   return (
     <header>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div className="container">
-          <span className="navbar-brand">Anuja Super Mart</span>
-
-          <div className="navbar-right">
-            <button
-              className="btn btn-dark"
-              type="button"
-              onClick={toggleCart}
-              data-bs-toggle="offcanvas"
-              data-bs-target="#offcanvasCart"
-              aria-controls="offcanvasCart"
-            >
-              Cart ({cartItems.length})
-            </button>
+        <div className="container"> 
+          <Link className="navbar-brand" to="/">Anuja Super Mart</Link>
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <ul className="navbar-nav me-auto">
+              <li className="nav-item">
+                <Link className="nav-link" to="/">Home</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/about">About</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/contact">Contact</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/categories">Categories</Link>
+              </li>
+            </ul>
+            <div className="navbar-right">
+              {/* Cart Icon Button */}
+              <button
+                className="btn btn-dark"
+                type="button"
+                onClick={toggleCart}
+                data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasCart"
+                aria-controls="offcanvasCart"
+              >
+                <i className="bi bi-cart-fill"></i> {/* Bootstrap Cart Icon */}
+                <span className="badge bg-danger">{cartItems.length}</span> {/* Cart Item Count */}
+              </button>
+            </div>
+            
+            <div className="navbar-right dropdown">
+              {/* Profile Dropdown */}
+              <a
+                className="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdownMenuLink"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <img
+                  src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (31).webp"
+                  className="rounded-circle"
+                  height="22"
+                  alt="Portrait of a Woman"
+                  loading="lazy"
+                />
+              </a>
+              <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li>
+                  <Link className="dropdown-item" to="/profile">My Profile</Link>
+                </li>
+                <li>
+                  <Link className="dropdown-item" to="/logout">Logout</Link>
+                </li>
+              </ul>
+            </div>
+            <div className="navbar-right">
+              <input
+                type="search"
+                className="form-control rounded me-2"
+                placeholder="Search"
+                aria-label="Search"
+                aria-describedby="search-addon"
+              />
+            </div>
           </div>
         </div>
       </nav>
@@ -141,7 +200,6 @@ function NavBar() {
           </button>
         </div>
       </div>
-
       {/* Conditional rendering of CheckoutPage */}
       {checkoutClicked && <CheckoutPage cartItems={cartItems} />}
     </header>

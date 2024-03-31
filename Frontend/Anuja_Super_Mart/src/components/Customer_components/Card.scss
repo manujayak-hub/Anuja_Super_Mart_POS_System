@@ -1,0 +1,28 @@
+.custom-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+    .card-body {
+      padding: 20px;
+  
+      .card-title {
+        font-size: 1.25rem;
+        margin-bottom: 10px;
+        text-align: center; /* Center align the card title */
+        font-family: 'Arial', sans-serif; /* Change font family */
+        color: #050505; /* Change font color */
+        text-transform: capitalize; /* Capitalize the title */
+      }
+  
+      .card-text {
+        margin-bottom: 5px;
+      }
+  
+      .custom-btn {
+        width: 100%;
+      }
+    }
+  }
+  

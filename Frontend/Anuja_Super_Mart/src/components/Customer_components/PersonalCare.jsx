@@ -32,7 +32,7 @@ const PersonalCare = () => {
   return (
     <div>
       <center>
-        <h1>Personal Care</h1>
+        <h1></h1>
       </center>
       <div className="products">
         {inventory.map((product) => (

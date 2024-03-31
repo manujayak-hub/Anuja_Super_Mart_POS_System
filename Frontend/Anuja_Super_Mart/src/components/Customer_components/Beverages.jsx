@@ -32,7 +32,7 @@ const Beverages = () => {
   return (
     <div>
       <center>
-        <h1>Beverages</h1>
+        <h1></h1>
       </center>
       <div className="products">
         {inventory.map((product) => (

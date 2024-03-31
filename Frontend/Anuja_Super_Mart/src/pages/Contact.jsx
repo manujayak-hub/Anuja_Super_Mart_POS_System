@@ -67,21 +67,21 @@ const Contact = () => {
                   <i className="fas fa-map-marker-alt fa-2x text-primary me-4"></i>
                   <div>
                     <h4>Address</h4>
-                    <p className="mb-2">123 Street New York.USA</p>
+                    <p className="mb-2">"Anuja Super Mart", Nattandiya Road, Marawila</p>
                   </div>
                 </div>
                 <div className="d-flex p-4 rounded mb-4 bg-white">
                   <i className="fas fa-envelope fa-2x text-primary me-4"></i>
                   <div>
                     <h4>Mail Us</h4>
-                    <p className="mb-2">info@example.com</p>
+                    <p className="mb-2">AnujaSuper@gmail.com</p>
                   </div>
                 </div>
                 <div className="d-flex p-4 rounded bg-white">
                   <i className="fa fa-phone-alt fa-2x text-primary me-4"></i>
                   <div>
                     <h4>Telephone</h4>
-                    <p className="mb-2">(+012) 3456 7890</p>
+                    <p className="mb-2">032 225 3234</p>
                   </div>
                 </div>
               </div>
@@ -90,14 +90,15 @@ const Contact = () => {
         </div>
       </Container>
 
+    
       <div className="container-fluid bg-dark text-white-50 footer pt-5 mt-5">
       <div className="container py-5">
         <div className="pb-4 mb-4" style={{ borderBottom: '1px solid rgba(226, 175, 24, 0.5)' }}>
           <div className="row g-4">
             <div className="col-lg-3">
               <a href="#">
-                <h1 className="text-primary mb-0">Fruitables</h1>
-                <p className="text-secondary mb-0">Fresh products</p>
+                <h1 className="text-primary mb-0">Anuja Super Mart</h1>
+                <p className="text-secondary mb-0">Best products</p>
               </a>
             </div>
             <div className="col-lg-6">
@@ -116,31 +117,15 @@ const Contact = () => {
                 </button>
               </div>
             </div>
-            <div className="col-lg-3">
-              <div className="d-flex justify-content-end pt-3">
-                <a className="btn btn-outline-secondary me-2 btn-md-square rounded-circle" href="#">
-                  <i className="fab fa-twitter"></i>
-                </a>
-                <a className="btn btn-outline-secondary me-2 btn-md-square rounded-circle" href="#">
-                  <i className="fab fa-facebook-f"></i>
-                </a>
-                <a className="btn btn-outline-secondary me-2 btn-md-square rounded-circle" href="#">
-                  <i className="fab fa-youtube"></i>
-                </a>
-                <a className="btn btn-outline-secondary btn-md-square rounded-circle" href="#">
-                  <i className="fab fa-linkedin-in"></i>
-                </a>
-              </div>
-            </div>
           </div>
         </div>
+        
         <div className="row g-5">
           <div className="col-lg-3 col-md-6">
             <div className="footer-item">
               <h4 className="text-light mb-3">Why People Like us!</h4>
               <p className="mb-4">
-                typesetting, remaining essentially unchanged. It was popularised in the 1960s with the like Aldus
-                PageMaker including of Lorem Ipsum.
+              Anuja Supe Mart: Trusted for over a decade in Marawila, Sri Lanka. We're loved for quality, service, and a friendly smile!
               </p>
               <a href="#" className="btn border-secondary py-2 px-4 rounded-pill text-primary">
                 Read More
@@ -196,11 +181,9 @@ const Contact = () => {
           <div className="col-lg-3 col-md-6">
             <div className="footer-item">
               <h4 className="text-light mb-3">Contact</h4>
-              <p>Address: 1429 Netus Rd, NY 48247</p>
-              <p>Email: Example@gmail.com</p>
-              <p>Phone: +0123 4567 8910</p>
-              <p>Payment Accepted</p>
-              <img src="img/payment.png" className="img-fluid" alt="" />
+              <p>Address: "Anuja Super Mart", Nattandiya Road, Marawila</p>
+              <p>Email: AnujaSuper@gmail.com</p>
+              <p>Phone: 032 225 3234</p>
             </div>
           </div>
         </div>
