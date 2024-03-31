@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from '../../api/axios';
 import useTransactionStore from '../../stores/accountantStore';
+import Sidebar from '../../components/AccountantComponents/Sidebar';
 
 const TransactionForm = () => {
   const formik = useFormik({
@@ -35,85 +36,107 @@ const TransactionForm = () => {
   });
 
   return (
-    <div className="container">
-      <h2>Transaction Form</h2>
-      <form onSubmit={formik.handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="transactionID" className="form-label">Transaction ID</label>
-          <input
-            type="text"
-            className="form-control"
-            id="transactionID"
-            {...formik.getFieldProps('transactionID')}
-            value={formik.values.transactionID}  
-          />
-          {formik.touched.transactionID && formik.errors.transactionID ? (
-            <div className="text-danger">{formik.errors.transactionID}</div>
-          ) : null}
+    <div>
+      <Sidebar />
+      <div
+        style={{
+          width: 'calc(100vw - 240px)',
+          margin: '20px auto',
+          backgroundColor: 'white',
+          
+        }}
+        className="transaction-list-container"
+      >
+        <h1 className="text-danger">Add Transaction</h1>
+        <div style={{ borderRadius: '8px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }} className="card">
+          <div style={{ padding: '100px' , width: 'calc(70vw - 240px)'}} className="card-body">
+            <form onSubmit={formik.handleSubmit}>
+              <div className="mb-3">
+                <label style={{ fontWeight: 'bold', color: 'black' }} htmlFor="transactionID" className="form-label">Transaction ID</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="transactionID"
+                  {...formik.getFieldProps('transactionID')}
+                  value={formik.values.transactionID}  
+                />
+                {formik.touched.transactionID && formik.errors.transactionID ? (
+                  <div className="text-danger">{formik.errors.transactionID}</div>
+                ) : null}
+              </div>
+              <div className="mb-3">
+                <label style={{ fontWeight: 'bold', color: 'black' }} htmlFor="transactionDateTime" className="form-label">Transaction Date and Time</label>
+                <input
+                  type="date"
+                  className="form-control"
+                  id="transactionDateTime"
+                  {...formik.getFieldProps('transactionDateTime')}
+                  value={formik.values.transactionDateTime}  
+                />
+                {formik.touched.transactionDateTime && formik.errors.transactionDateTime ? (
+                  <div className="text-danger">{formik.errors.transactionDateTime}</div>
+                ) : null}
+              </div>
+              <div className="mb-3">
+                <label style={{ fontWeight: 'bold', color: 'black' }} htmlFor="transactionType" className="form-label">Transaction Type</label>
+                <select
+                  className="form-select"
+                  id="transactionType"
+                  {...formik.getFieldProps('transactionType')}
+                  value={formik.values.transactionType}  
+                >
+                  <option value="">Select Transaction Type</option>
+                  <option value="inventory">Inventory</option>
+                  <option value="sales">Sales</option>
+                  <option value="utility">Utility</option>
+                  <option value="salary">Salary</option>
+                  <option value="other">Other</option>
+                </select>
+                {formik.touched.transactionType && formik.errors.transactionType ? (
+                  <div className="text-danger">{formik.errors.transactionType}</div>
+                ) : null}
+              </div>
+              <div className="mb-3">
+                <label style={{ fontWeight: 'bold', color: 'black' }} htmlFor="transactionAmount" className="form-label">Transaction Amount</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  id="transactionAmount"
+                  {...formik.getFieldProps('transactionAmount')}
+                  value={formik.values.transactionAmount}  
+                />
+                {formik.touched.transactionAmount && formik.errors.transactionAmount ? (
+                  <div className="text-danger">{formik.errors.transactionAmount}</div>
+                ) : null}
+              </div>
+              <div className="mb-3">
+                <label style={{ fontWeight: 'bold', color: 'black' }} htmlFor="transactionMethod" className="form-label">Transaction Method</label>
+                <select
+                  className="form-select"
+                  id="transactionMethod"
+                  {...formik.getFieldProps('transactionMethod')}
+                  value={formik.values.transactionMethod}  
+                >
+                  <option value="">Select Transaction Method</option>
+                  <option value="cash">Cash</option>
+                  <option value="credit">Credit</option>
+                </select>
+                {formik.touched.transactionMethod && formik.errors.transactionMethod ? (
+                  <div className="text-danger">{formik.errors.transactionMethod}</div>
+                ) : null}
+              </div>
+              <button
+                type="submit"
+                className="btn btn-primary"
+                disabled={formik.isSubmitting}
+                style={{ marginTop: '10px', width: '100%', backgroundColor: 'red', borderColor: 'red' }}
+              >
+                Submit
+              </button>
+            </form>
+          </div>
         </div>
-        <div className="mb-3">
-          <label htmlFor="transactionDateTime" className="form-label">Transaction Date and Time</label>
-          <input
-            type="date"
-            className="form-control"
-            id="transactionDateTime"
-            {...formik.getFieldProps('transactionDateTime')}
-            value={formik.values.transactionDateTime}  
-          />
-          {formik.touched.transactionDateTime && formik.errors.transactionDateTime ? (
-            <div className="text-danger">{formik.errors.transactionDateTime}</div>
-          ) : null}
-        </div>
-        <div className="mb-3">
-          <label htmlFor="transactionType" className="form-label">Transaction Type</label>
-          <select
-            className="form-select"
-            id="transactionType"
-            {...formik.getFieldProps('transactionType')}
-            value={formik.values.transactionType}  
-          >
-            <option value="">Select Transaction Type</option>
-            <option value="inventory">Inventory</option>
-            <option value="sales">Sales</option>
-            <option value="utility">Utility</option>
-            <option value="salary">Salary</option>
-            <option value="other">Other</option>
-          </select>
-          {formik.touched.transactionType && formik.errors.transactionType ? (
-            <div className="text-danger">{formik.errors.transactionType}</div>
-          ) : null}
-        </div>
-        <div className="mb-3">
-          <label htmlFor="transactionAmount" className="form-label">Transaction Amount</label>
-          <input
-            type="number"
-            className="form-control"
-            id="transactionAmount"
-            {...formik.getFieldProps('transactionAmount')}
-            value={formik.values.transactionAmount}  
-          />
-          {formik.touched.transactionAmount && formik.errors.transactionAmount ? (
-            <div className="text-danger">{formik.errors.transactionAmount}</div>
-          ) : null}
-        </div>
-        <div className="mb-3">
-          <label htmlFor="transactionMethod" className="form-label">Transaction Method</label>
-          <select
-            className="form-select"
-            id="transactionMethod"
-            {...formik.getFieldProps('transactionMethod')}
-            value={formik.values.transactionMethod}  
-          >
-            <option value="">Select Transaction Method</option>
-            <option value="cash">Cash</option>
-            <option value="credit">Credit</option>
-          </select>
-          {formik.touched.transactionMethod && formik.errors.transactionMethod ? (
-            <div className="text-danger">{formik.errors.transactionMethod}</div>
-          ) : null}
-        </div>
-        <button type="submit" className="btn btn-primary" disabled={formik.isSubmitting}>Submit</button>
-      </form>
+      </div>
     </div>
   );
 }

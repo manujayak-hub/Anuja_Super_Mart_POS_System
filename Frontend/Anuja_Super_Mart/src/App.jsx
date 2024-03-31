@@ -32,10 +32,7 @@ import InventoryRoute from './Routes/InvRoute'
 
 
 
-// import CreateTransaction from './pages/Accountant/accountant_create'
-// import ReadTransactions from './pages/Accountant/retrieve'
-// import UpdateTransaction from './pages/Accountant/accountant_update'
-// import DeleteTransaction from './pages/Accountant/accountant_delete'
+
 
 
 function App() {
@@ -72,13 +69,10 @@ function App() {
             <Route path="ItemList" element={<ItemList/>}/>
             <Route path="TotalSaving" element={<TotalSaving/>}/>
             <Route path="ButtonComponent" element={<ButtonComponent/>}/>
-            <Route path="inventory" element={<InventoryDash/>} />
+           
 
 
-            {/* <Route path="CreateTransaction" element={<CreateTransaction/>}/>
-            <Route path="UpdateTransaction" UpdateTransaction={<UpdateTransaction/>}/>
-            <Route path="DeleteTransaction" element={<DeleteTransaction/>}/>
-            <Route path="ReadTransactions" element={<ReadTransactions/>}/>*/}
+            
 
 
 
