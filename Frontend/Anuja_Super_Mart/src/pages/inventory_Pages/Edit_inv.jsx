@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from '../../api/axios';
 import useInventoryStore from '../../stores/inventoryStore';
 import Sidebar from '../../components/InventoryComponents/InvSideBar'
+import InvSupNav from '../../components/InventoryComponents/invSupNav'
 import UpdateForm from '../../components/InventoryComponents/Updateform'; // Import the UpdateForm component
 import searchicon from '../../assets/inventory/icons8-search-50.png'
 import crossicon from '../../assets/inventory/icons8-cross-50.png'
@@ -100,6 +101,7 @@ const EditInv = () => {
                 </div>
                 <div className="col-sm-10">
                     <h1>Inventory List</h1>
+                    <InvSupNav/>
                     <div className="search-bar col-sm-8">
                         <input
                             type="text"

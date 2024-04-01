@@ -1,6 +1,6 @@
 import React from 'react';
 import Sidebar from '../../components/InventoryComponents/InvSideBar';
-import LogoutButton from '../../components/logout';
+import InvSupNav from '../../components/InventoryComponents/invSupNav'
 
 const InvProfile = () => {
     // Assume user details are passed as props or retrieved from the session
@@ -18,6 +18,7 @@ const InvProfile = () => {
                     <Sidebar />
                 </div>
                 <div className="col-sm-10">
+                    <InvSupNav/>
                     <div className="row-sm-2">
                     <div className="card p-8">
                         <div className="card-body">
@@ -31,7 +32,6 @@ const InvProfile = () => {
                                     <p><strong>Mobile No:</strong> {user.mobile}</p>
                                 </div>
                             </div>
-                            <LogoutButton />
                         </div>
                     </div>
                     </div>

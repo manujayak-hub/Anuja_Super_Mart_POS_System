@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from '../../api/axios';
 import useInventoryStore from '../../stores/inventoryStore';
 import Sidebar from '../../components/InventoryComponents/InvSideBar'
+import InvSupNav from '../../components/InventoryComponents/invSupNav'
 import searchicon from '../../assets/inventory/icons8-search-50.png'
 import crossicon from '../../assets/inventory/icons8-cross-50.png'
 
@@ -66,6 +67,7 @@ const InventoryDelete = () => {
                     <Sidebar />
                 </div>
                 <div className="col-sm-10">
+                <InvSupNav/>
                     <h1>Delete Item & edit Item</h1>
                     <div className="search-bar col-sm-8">
                         <input

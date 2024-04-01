@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import axios from '../../api/axios';
 import useInventoryStore from '../../stores/inventoryStore';
 import Sidebar from '../../components/InventoryComponents/InvSideBar'
+import InvSupNav from '../../components/InventoryComponents/invSupNav'
 import DatePicker from 'react-datepicker'; // Import DatePicker
 import 'react-datepicker/dist/react-datepicker.css'; // Import DatePicker CSS
 
@@ -64,7 +65,9 @@ const AddItem = () => {
                     <div className="col-sm-2 ">
                     </div>
                     <div className="col-sm-6">
+                    <InvSupNav/>
                     <h1>Add Products</h1>
+                    
                         {/* Formik form */}
                         <form onSubmit={formik.handleSubmit} className="p-3">
                             {/* Input fields for inventory item */}
