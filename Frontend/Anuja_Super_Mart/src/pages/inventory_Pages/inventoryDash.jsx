@@ -5,6 +5,9 @@ import Sidebar from '../../components/InventoryComponents/InvSideBar'
 import InvSupNav from '../../components/InventoryComponents/invSupNav'
 import searchicon from '../../assets/inventory/icons8-search-50.png'
 import crossicon from '../../assets/inventory/icons8-cross-50.png'
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const InventoryDash = () => {
     const { inventory, setInventory, setError, filterInventoryByName, filterInventoryByProductId } = useInventoryStore();
@@ -62,7 +65,75 @@ const InventoryDash = () => {
         fetchInventory(); // Reset search and fetch all inventory items
     };
 
+    // Function to generate and download PDF report
+    const generatePDF = () => {
+        const inventoryData = inventory.map(item => ({
+            ProductId: item.productId,
+            ProductName: item.productName,
+            WholesalePrice: item.wholesalePrice,
+            RetailPrice: item.retailPrice,
+            QuantityInStock: item.quantityInStock,
+            Category: item.category,
+            SupplierId: item.supplierId,
+            ManufactureDate: item.manufactureDate,
+            ExpireDate: item.expireDate
+        }));
 
+        const docDefinition = {
+            pageSize: 'A4',
+            pageOrientation: 'landscape',
+            content: [
+                { text: 'Inventory Report', style: 'header' },
+                {
+                    table: {
+                        headerRows: 1,
+                        widths: ['auto', '*', 50, 50, 50, '*', '*', 'auto', 'auto'], 
+                        body: [
+                            [
+                                { text: 'Product ID', style: 'tableHeader' },
+                                { text: 'Product Name', style: 'tableHeader' },
+                                { text: 'Wholesale Price', style: 'tableHeader' },
+                                { text: 'Retail Price', style: 'tableHeader' },
+                                { text: 'Quantity In Stock', style: 'tableHeader' },
+                                { text: 'Category', style: 'tableHeader' },
+                                { text: 'Supplier ID', style: 'tableHeader' },
+                                { text: 'Manufacture Date', style: 'tableHeader' },
+                                { text: 'Expire Date', style: 'tableHeader' },
+                            ],
+                            ...inventoryData.map(item => [
+                                item.ProductId,
+                                item.ProductName,
+                                item.WholesalePrice,
+                                item.RetailPrice,
+                                item.QuantityInStock,
+                                item.Category,
+                                item.SupplierId,
+                                item.ManufactureDate,
+                                item.ExpireDate
+                            ])
+                        ]
+                    }
+                }
+            ],
+            styles: {
+                header: {
+                    fontSize: 8,
+                    bold: true,
+                    alignment: 'left',
+                    margin: [0, 0, 0, 10]
+                },
+                tableHeader: {
+                    bold: true,
+                    fontSize: 8,
+                    color: 'black'
+                }
+            }
+        };
+        
+
+        const pdfDocGenerator = pdfMake.createPdf(docDefinition);
+        pdfDocGenerator.download('Inventory_Report.pdf');
+    };
 
     return (
         <>
@@ -132,6 +203,7 @@ const InventoryDash = () => {
                         <div>
                             <p>Total Stock Value Rs: {totalValue}</p>
                             <p>Expected Income Rs: {expectedValue}</p>
+                            <button onClick={generatePDF}>Generate PDF Report</button>
                         </div>
                     </div>
                 </div>
