@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import MenuNav from "../../components/OrderProcess/MenuNavbar";
-import ProductUpdateForm from "../../components/OrderProcess/ProductUpdateForm"; 
 import useOrderStore from "../../stores/useOrderStore";
 import axios from '../../api/axios';
 import "./OrderRetrieve.scss";
+import OrderEditForm from "../../components/OrderProcess/OrderEditForm";
 
 const OrderRetrieve = () => {
     const [isLoading, setIsLoading] = useState(false);
+    const [editOrder, setEditOrder] = useState(null); // State to manage the order being edited
+    const [deleteConfirmation, setDeleteConfirmation] = useState(false); // State to manage delete confirmation
     const { orders, error, setOrders, removeOrder, updateOrder } = useOrderStore();
 
     useEffect(() => {
@@ -26,18 +28,26 @@ const OrderRetrieve = () => {
     }, []);
 
     const handleDeleteOrder = async (orderId) => {
-        try {
-            await axios.delete(`/order/${orderId}`);
-            removeOrder(orderId);
-        } catch (error) {
-            setError(error);
+        const isConfirmed = window.confirm("Are you sure you want to delete?");
+        if (isConfirmed) {
+            try {
+                await axios.delete(`/order/${orderId}`);
+                removeOrder(orderId);
+            } catch (error) {
+                setError(error);
+            }
         }
+    };
+
+    const handleEditOrder = (order) => {
+        setEditOrder(order); // Set the order to be edited
     };
 
     const handleUpdateOrder = async (updatedOrder) => {
         try {
             await axios.put(`/order/${updatedOrder._id}`, updatedOrder);
             updateOrder(updatedOrder);
+            setEditOrder(null); // Reset editOrder state after successful update
         } catch (error) {
             setError(error);
         }
@@ -46,31 +56,33 @@ const OrderRetrieve = () => {
     return (
         <div className="OrderRetrieveContainer">
             <MenuNav />
-            <div className="Header">
-                <h1>Order Retrieve</h1>
-            </div>
+            <div className="header1" style={{ textAlign: "center", color: "red" }}>
+    <h1>Order List</h1>
+</div>
             <div className="OrderPageContainer">
-                <div className="OrderList">
-                    {isLoading ? (
-                        <p className="LoadingMessage">Loading...</p>
-                    ) : error ? (
-                        <p className="ErrorMessage">Error: {error.message}</p>
-                    ) : (
-                        <>
-                            {orders.map(order => (
+                <div className="OrderListContainer">
+                    <div className="OrderList">
+                        {isLoading ? (
+                            <p className="LoadingMessage">Loading...</p>
+                        ) : error ? (
+                            <p className="ErrorMessage">Error: {error.message}</p>
+                        ) : (
+                            orders.map(order => (
                                 <div key={order._id} className="OrderItem">
                                     <p>Order ID: {order.orderId}</p>
                                     <p>Customer ID: {order.customerId}</p>
-                                    <p>Total Amount: {order.TotalAmount}</p>
+                                    <p>Total Amount: {order.totalAmount}</p>
                                     <button onClick={() => handleDeleteOrder(order._id)}>Delete</button>
-                                    <button onClick={() => handleUpdateOrder(order)}>Edit</button>
+                                    <button onClick={() => handleEditOrder(order)}>Edit</button>
                                 </div>
-                            ))}
-                        </>
-                    )}
+                            ))
+                        )}
+                    </div>
                 </div>
-                <div className="ProductUpdateContainer">
-                    <ProductUpdateForm />
+                <div className="OrderEditFormContainer">
+                    {editOrder && (
+                        <OrderEditForm order={editOrder} onUpdate={handleUpdateOrder} />
+                    )}
                 </div>
             </div>
         </div>

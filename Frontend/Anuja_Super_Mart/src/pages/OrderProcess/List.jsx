@@ -40,6 +40,7 @@ function List() {
                                 <th>ProductID</th>
                                 <th>Product Name</th>
                                 <th>Wholesale Price</th>
+                                <th>Available</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -48,6 +49,7 @@ function List() {
                                     <td>{inventory.productId}</td>
                                     <td>{inventory.productName}</td>
                                     <td>{inventory.wholesalePrice}</td>
+                                    <td>{inventory.quantityInStock}</td>
                                 </tr>
                             ))}
                         </tbody>

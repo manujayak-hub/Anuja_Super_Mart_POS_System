@@ -10,19 +10,25 @@ import './Menu.scss'; // Import SCSS file
 const Menu = () => {
     const [inventory, setInventory] = useState([]);
     const [orderItems, setOrderItems] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState('Electronics')
+    const [selectedCategory, setSelectedCategory] = useState('Beverages')
     const categories = [
         {
-            name:'Electronics',
+            name:'baby_products',
         },
         {
             name:'Beverages',
         },
         {
-            name:'Fashion',
+            name:'PersonalCare',
         },
         {
-            name:'Cooking Essentials',
+            name:'Cooking_Essential',
+        },
+        {
+            name:'Dairy_products',
+        },
+        {
+            name:'Snacks',
         },
     ]
 

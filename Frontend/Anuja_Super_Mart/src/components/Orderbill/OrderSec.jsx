@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import './OrderSec.css';
+import './OrderSec.scss';
 import useOrderStore from "../../stores/useOrderStore";
 import axios from '../../api/axios'
 
