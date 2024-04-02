@@ -1,13 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './OrderSec.scss';
 import useOrderStore from "../../stores/useOrderStore";
-import axios from '../../api/axios'
+import axios from '../../api/axios';
 
 const OrderSec = ({ orderItems, removeFromOrder }) => {
     const [message, setMessage] = useState(""); 
     const [selectedItems, setSelectedItems] = useState([]); 
-    const [orderIdCounter, setOrderIdCounter] = useState(1); 
+    const [orderIdCounter, setOrderIdCounter] = useState(() => {
+        const storedOrderIdCounter = localStorage.getItem("orderIdCounter");
+        return storedOrderIdCounter ? parseInt(storedOrderIdCounter) : 1;
+    }); 
     const [customerId, setCustomerId] = useState(""); 
+
+    useEffect(() => {
+        localStorage.setItem("orderIdCounter", orderIdCounter.toString());
+    }, [orderIdCounter]);
 
     const generateOrderId = () => {
         const orderId = `on${String(orderIdCounter).padStart(3, '0')}`;
@@ -35,7 +42,6 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
             const orderId = generateOrderId(); 
             const currentDate = getCurrentDate(); 
 
-            // Create the new order object
             const newOrder = await axios.post("/order", {
                 orderId: orderId,
                 customerId: customerId,
@@ -46,7 +52,6 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
                 date: currentDate 
             });
 
-            
             await useOrderStore.getState().addOrder(newOrder);
             setMessage("Order placed successfully.");
            

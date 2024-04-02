@@ -7,9 +7,9 @@ import OrderEditForm from "../../components/OrderProcess/OrderEditForm";
 
 const OrderRetrieve = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const [editOrder, setEditOrder] = useState(null); // State to manage the order being edited
-    const [deleteConfirmation, setDeleteConfirmation] = useState(false); // State to manage delete confirmation
-    const { orders, error, setOrders, removeOrder, updateOrder } = useOrderStore();
+    const [editOrder, setEditOrder] = useState(null);
+    const [error, setError] = useState(null);
+    const { orders, setOrders, removeOrder, updateOrder } = useOrderStore();
 
     useEffect(() => {
         const fetchOrders = async () => {
@@ -40,14 +40,14 @@ const OrderRetrieve = () => {
     };
 
     const handleEditOrder = (order) => {
-        setEditOrder(order); // Set the order to be edited
+        setEditOrder(order);
     };
 
     const handleUpdateOrder = async (updatedOrder) => {
         try {
             await axios.put(`/order/${updatedOrder._id}`, updatedOrder);
             updateOrder(updatedOrder);
-            setEditOrder(null); // Reset editOrder state after successful update
+            setEditOrder(null);
         } catch (error) {
             setError(error);
         }
@@ -57,8 +57,8 @@ const OrderRetrieve = () => {
         <div className="OrderRetrieveContainer">
             <MenuNav />
             <div className="header1" style={{ textAlign: "center", color: "red" }}>
-    <h1>Order List</h1>
-</div>
+                <h1>Order List</h1>
+            </div>
             <div className="OrderPageContainer">
                 <div className="OrderListContainer">
                     <div className="OrderList">
@@ -71,9 +71,12 @@ const OrderRetrieve = () => {
                                 <div key={order._id} className="OrderItem">
                                     <p>Order ID: {order.orderId}</p>
                                     <p>Customer ID: {order.customerId}</p>
-                                    <p>Total Amount: {order.totalAmount}</p>
-                                    <button onClick={() => handleDeleteOrder(order._id)}>Delete</button>
-                                    <button onClick={() => handleEditOrder(order)}>Edit</button>
+                                    <p>Date: {order.date}</p>
+                                    <p>Items: {order.ItemName}</p> {/* Display item names */}
+                                    <p>Total Amount: {order.TotalAmount}</p>
+                                    <button onClick={() => handleDeleteOrder(order._id)} style={{  color: 'red', marginLeft:'500px' }}>Delete</button>
+                                    <button onClick={() => handleEditOrder(order)} style={{  color: 'red', marginLeft:'10px' }}>Edit</button>
+
                                 </div>
                             ))
                         )}

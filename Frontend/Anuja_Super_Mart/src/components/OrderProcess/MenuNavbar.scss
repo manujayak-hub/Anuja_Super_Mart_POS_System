@@ -5,7 +5,8 @@
   left: 0;
   height: 100vh; /* Full height of the viewport */
   width: 15%; /* Adjust the width as needed */
-  background-color: #333; /* Sidebar background color */
+  background-color: #D9D9D9;
+         /* Sidebar background color */
   padding-top: 20px; /* Add some top padding */
 
   z-index: 1; /* Ensure the sidebar is above other elements */
@@ -19,12 +20,12 @@
 
 // Unique class for the navigation items
 .sidebar nav ul li {
-  padding: 45px; /* Add padding to each item */
+  padding: 20px; /* Add padding to each item */
 }
 
 // Unique class for the navigation links
 .sidebar nav ul li a {
-  color: #fff; /* Text color */
+  color: #737373; /* Text color */
   text-decoration: none; /* Remove default underline */
   font-weight: bold; /* Bold font */
   font-size: larger;

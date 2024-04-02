@@ -34,9 +34,13 @@
         background-color: #FD204F; /* Button background color */
         color: white; /* Button text color */
         border: none; /* Remove button border */
-        padding: 10px 20px; /* Add padding to the button */
+        padding: 5px 10px; /* Add padding to the button */
         cursor: pointer; /* Change cursor to pointer on hover */
-        margin-right: 2%;
+        margin-right: 5%;
+        margin-left: 10%;
+        
+        
+        
     
         &:hover {
             background-color: #605a5b; /* Change button background color on hover */

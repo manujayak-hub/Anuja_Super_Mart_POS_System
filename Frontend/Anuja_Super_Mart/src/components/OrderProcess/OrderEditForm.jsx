@@ -34,8 +34,16 @@ const OrderEditForm = ({ order }) => {
                 <input type="text" name="customerId" value={updatedOrder.customerId} onChange={handleChange} />
             </label>
             <label>
+                Date:
+                <input type="text" name="date" value={updatedOrder.date} onChange={handleChange} />
+            </label>
+            <label>
+                Items:
+                <input type="text" name="ItemName" value={updatedOrder.ItemName} onChange={handleChange} />
+            </label>
+            <label>
                 Total Amount:
-                <input type="text" name="totalAmount" value={updatedOrder.totalAmount} onChange={handleChange} />
+                <input type="text" name="totalAmount" value={updatedOrder.TotalAmount} onChange={handleChange} />
             </label>
             <button type="submit">Update</button>
             {/* Display update status message */}
