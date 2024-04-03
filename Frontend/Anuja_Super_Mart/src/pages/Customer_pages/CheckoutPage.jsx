@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from '../../api/axios'; // Import Axios for making HTTP requests
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+
+
+// Register fonts - You can use any font you prefer
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 function CheckoutPage({ cartItems }) {
   const [pickupSuccess, setPickupSuccess] = useState(false);
@@ -46,6 +52,77 @@ function CheckoutPage({ cartItems }) {
       // Handle errors appropriately, e.g., show an error message to the user
     }
   };
+
+  const generatePDF = () => {
+    const total = cartItems.reduce((acc, item) => acc + item.Quantity * item.ItemPrice, 0);
+  
+    const docDefinition = {
+      content: [
+        {
+          text: 'Checkout Items',
+          style: 'header',
+          alignment: 'center'
+        },
+        {
+          style: 'table',
+          table: {
+            headerRows: 1,
+            widths: ['*', 'auto', 'auto'],
+            body: [
+              [
+                { text: 'Item Name', style: 'tableHeader' },
+                { text: 'Quantity', style: 'tableHeader' },
+                { text: 'Price', style: 'tableHeader' }
+              ],
+              ...cartItems.map(item => [
+                item.ItemName,
+                item.Quantity,
+                { text: `Rs. ${item.Quantity * item.ItemPrice}`, alignment: 'right' }
+              ])
+            ]
+          },
+          layout: {
+            fillColor: function (rowIndex, node, columnIndex) {
+              return (rowIndex % 2 === 0) ? '#f2f2f2' : null; // Alternate row background color
+            }
+          }
+        },
+        {
+          text: `Total: Rs. ${total}`,
+          style: 'total',
+          alignment: 'right'
+        }
+      ],
+      styles: {
+        header: {
+          fontSize: 24,
+          bold: true,
+          margin: [0, 0, 0, 20],
+          color: '#333'
+        },
+        table: {
+          margin: [0, 10, 0, 10]
+        },
+        tableHeader: {
+          bold: true,
+          fontSize: 12,
+          color: '#333'
+        },
+        total: {
+          fontSize: 16,
+          bold: true,
+          margin: [0, 20, 0, 0],
+          color: '#333'
+        }
+      }
+    };
+  
+    pdfMake.createPdf(docDefinition).download('checkout_items.pdf');
+  };
+
+  
+  
+
 
   return (
     <section className="h-100 h-custom" style={{ backgroundColor: '#d2c9ff' }}>
@@ -127,6 +204,11 @@ function CheckoutPage({ cartItems }) {
 
                       <button type="button" className="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark" onClick={handlePickup}>
                         Add to Pick Up
+                      </button>
+
+                      {/* "Download PDF" button */}
+                      <button type="button" className="btn btn-danger btn-block btn-lg" data-mdb-ripple-color="dark" onClick={generatePDF}>
+                        Download PDF
                       </button>
 
                       {pickupSuccess && <p className="text-success mt-3">Items added to pickup successfully!</p>}

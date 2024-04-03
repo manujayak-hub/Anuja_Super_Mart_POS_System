@@ -92,20 +92,18 @@ function NavBar() {
               </li>
             </ul>
             <div className="navbar-right">
-              {/* Cart Icon Button */}
-              <button
-                className="btn btn-dark"
-                type="button"
-                onClick={toggleCart}
-                data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasCart"
-                aria-controls="offcanvasCart"
-              >
-                <i className="bi bi-cart-fill"></i> {/* Bootstrap Cart Icon */}
-                <span className="badge bg-danger">{cartItems.length}</span> {/* Cart Item Count */}
-              </button>
-            </div>
-            
+            <button
+              className="btn btn-white"
+              type="button"
+              onClick={toggleCart}
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasCart"
+              aria-controls="offcanvasCart"
+            >
+              <i className="bi bi-cart"></i> {/* Updated Cart Icon */}
+              <span className="badge bg-danger">{cartItems.length}</span> {/* Cart Item Count */}
+            </button>
+          </div>
             <div className="navbar-right dropdown">
               {/* Profile Dropdown */}
               <a
@@ -133,15 +131,7 @@ function NavBar() {
                 </li>
               </ul>
             </div>
-            <div className="navbar-right">
-              <input
-                type="search"
-                className="form-control rounded me-2"
-                placeholder="Search"
-                aria-label="Search"
-                aria-describedby="search-addon"
-              />
-            </div>
+            
           </div>
         </div>
       </nav>

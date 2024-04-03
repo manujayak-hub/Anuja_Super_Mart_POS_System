@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../../api/axios';
-import Card from '../Customer_components/Card'; // Import the Card component
+import Card from '../Customer_components/Card';
 
 const CookingEssential = () => {
   const [inventory, setInventory] = useState([]);
@@ -11,7 +11,7 @@ const CookingEssential = () => {
         const category = "Cooking_Essential";
         const response = await axios.get(`/inventory/category/${category}`);
         const inventoryData = response.data;
-        console.log("Inventory data from API:", inventoryData); // Log the fetched data
+        console.log("Inventory data from API:", inventoryData);
         setInventory(inventoryData);
       } catch (error) {
         console.error('Error fetching baby products:', error);
@@ -25,7 +25,7 @@ const CookingEssential = () => {
 
   const addToOrder = (product) => {
     // Define the logic to add the product to the order/cart
-    console.log('Adding product to ordfsbfbser:', product);
+    console.log('Adding product to order:', product);
     // You can implement the functionality to add the product to the order/cart here
   };
 
@@ -34,13 +34,38 @@ const CookingEssential = () => {
       <center>
         <h1></h1>
       </center>
-      <div className="products">
+      <div className="products-container">
         {inventory.map((product) => (
           <div key={product.productId} className="product">
             <Card product={product} addToOrder={addToOrder} />
           </div>
         ))}
       </div>
+      <style jsx>{`
+        .products-container {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between; // Adjust as needed
+        }
+        
+        .product {
+          width: 30%; // Adjust the width of each product card
+          margin-bottom: 20px; // Add margin between products
+        }
+
+        // Media query for responsiveness
+        @media (max-width: 768px) {
+          .product {
+            width: 45%; // Adjust width for smaller screens
+          }
+        }
+
+        @media (max-width: 576px) {
+          .product {
+            width: 100%; // Full width for extra small screens
+          }
+        }
+      `}</style>
     </div>
   );
 };
