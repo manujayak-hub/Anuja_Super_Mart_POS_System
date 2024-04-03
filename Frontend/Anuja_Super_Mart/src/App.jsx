@@ -52,14 +52,15 @@ function App() {
 
             <Route path="TransactionForm" element={<TransactionForm/>}/>  
             <Route path="AccountantDash" element={<Dash/>}/>
-
+            <Route path="Transactions" element={<TransactionsList/>}/>
+            
             <Route path="Form" element={<Form/>}/>
             <Route path="SProfile" element={<SProfile/>}/>
             <Route path="SDetails" element={<SDetails/>}/>
             <Route path="Categories" element={<Categories/>} />
             <Route path="Dash" element={<Dash/>}/>
 
-            <Route path="Transactions" element={<TransactionsList/>}/>
+            
             <Route path="Menu" element={<Menu/>} />
             <Route path="List" element={<List/>} />
             <Route path="Customer" element={<Customer/>}/>

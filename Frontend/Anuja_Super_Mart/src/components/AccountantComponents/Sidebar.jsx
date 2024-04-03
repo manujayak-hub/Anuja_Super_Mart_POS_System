@@ -3,40 +3,43 @@ import { Nav } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import './Sidebar.css';
 
-const Sidebar = () => {
+const Sidebar = ({ handleDownloadPDF }) => {
   return (
     <Nav className="flex-column position-fixed top-0 start-0 bottom-0 sidebar">
       <div className="text-center p-3">
         <img src="src/assets/Accountant/logo.png" alt="Logo" className="img-fluid mb-3" />
       </div>
       <Nav.Item className="sidebar-item text-center py-3">
+        <Nav.Link href="/TransactionReport">
+          <img src="src/assets/Accountant/User Male.png" alt="Icon 1" className="img-fluid d-inline-block icon" />
+          <span className="d-inline-block text">User Profile</span>
+        </Nav.Link>
+      </Nav.Item>
+
+      <Nav.Item className="sidebar-item text-center py-3">
         <Nav.Link href="/TransactionForm">
           <img src="src/assets/Accountant/newTrans.png" alt="Icon 1" className="img-fluid d-inline-block icon" />
           <span className="d-inline-block text">Add Transaction</span>
         </Nav.Link>
       </Nav.Item>
-      <Nav.Item className="sidebar-item text-center py-3">
-        <Nav.Link href="/user-profile">
-          <img src="src/assets/Accountant/User Male.png" alt="Icon 1" className="img-fluid d-inline-block icon" />
-          <span className="d-inline-block text">User Profile</span>
-        </Nav.Link>
-      </Nav.Item>
+    
       <Nav.Item className="sidebar-item text-center py-3">
         <Nav.Link href="/transactions">
           <img src="src/assets/Accountant/Receipt Approved.png" alt="Icon 2" className="img-fluid d-inline-block icon" />
-          <span className="d-inline-block text">Transactions</span>
+          <span className="d-inline-block text">Transaction List</span>
         </Nav.Link>
       </Nav.Item>
-      <Nav.Item className="sidebar-item text-center py-3">
-        <Nav.Link href="/revenue">
+      {/* <Nav.Item className="sidebar-item text-center py-3">
+        <Nav.Link href="/Revenue">
           <img src="src/assets/Accountant/Sales Performance.png" alt="Icon 3" className="img-fluid d-inline-block icon" />
           <span className="d-inline-block text">Revenue</span>
         </Nav.Link>
-      </Nav.Item>
+      </Nav.Item> */}
       <Nav.Item className="sidebar-item text-center py-3">
-        <Nav.Link href="/reports">
+        {/* Pass handleDownloadPDF function as a prop */}
+        <Nav.Link onClick={handleDownloadPDF}>
           <img src="src/assets/Accountant/Bill.png" alt="Icon 4" className="img-fluid d-inline-block icon" />
-          <span className="d-inline-block text">Reports</span>
+          <span className="d-inline-block text">Report pdf</span>
         </Nav.Link>
       </Nav.Item>
     </Nav>
