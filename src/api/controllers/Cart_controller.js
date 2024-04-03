@@ -93,4 +93,15 @@ const deleteCart = async (req, res) => {
     res.status(200).json(Cart)
   }
 
-module.exports={createCart,deleteCart,updateCart,getallCart,getbyIdCart};
+  const deleteAllCart = async (req, res) => {
+    try {
+      const deletedODs = await Cart.deleteMany({}); // Delete all cart items
+      res.status(200).json(deletedODs);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
+  
+
+module.exports={createCart,deleteCart,updateCart,getallCart,getbyIdCart,deleteAllCart};

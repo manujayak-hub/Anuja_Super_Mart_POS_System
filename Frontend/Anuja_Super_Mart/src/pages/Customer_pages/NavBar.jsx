@@ -30,11 +30,13 @@ function NavBar() {
   const updateQuantity = (index, newQuantity) => {
     const newCartItems = [...cartItems];
     const item = newCartItems[index];
+    const pricePerUnit = item.ItemPrice / item.Quantity; // Calculate the price per unit
     item.Quantity = newQuantity;
-    item.ItemPrice = item.ItemPrice * newQuantity; // Calculate TotalAmount based on Price and Quantity
+    item.ItemPrice = pricePerUnit * newQuantity; // Calculate the total price based on the new quantity
     newCartItems[index] = item;
     setCartItems(newCartItems);
-};
+  };
+  
 
 
   useEffect(() => {
@@ -127,7 +129,7 @@ function NavBar() {
                   <Link className="dropdown-item" to="/profile">My Profile</Link>
                 </li>
                 <li>
-                  <Link className="dropdown-item" to="/logout">Logout</Link>
+                  <Link className="dropdown-item" to="/">Logout</Link>
                 </li>
               </ul>
             </div>

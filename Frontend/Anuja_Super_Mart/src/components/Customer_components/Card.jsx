@@ -32,7 +32,7 @@ const Card = ({ product, addToOrder }) => {
         <h5 className="card-title">{productName}</h5>
         
         <p className="card-text">
-          <strong>Retail Price:</strong> ${retailPrice}
+          <strong>Retail Price:</strong> Rs.{retailPrice}
         </p>
         <button className="btn btn-primary custom-btn" onClick={handleAddToCart}>
           Add to Cart

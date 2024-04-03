@@ -1,7 +1,52 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from '../../api/axios'; // Import Axios for making HTTP requests
 
 function CheckoutPage({ cartItems }) {
+  const [pickupSuccess, setPickupSuccess] = useState(false);
+
+  const handlePickup = async () => {
+    try {
+      // Calculate total price of all items in the cart
+      const totalPrice = cartItems.reduce((acc, item) => acc + item.ItemPrice, 0);
+
+      // Map cartItems to match the fields in the Pickup model
+      const pickupData = {
+        Pickupid: '', // Assign a unique pickup ID if needed
+        userid: '', // Assign a user ID if needed
+        items: cartItems.map(item => ({
+          itemName: item.ItemName,
+          quantity: item.Quantity,
+          itemPrice: item.ItemPrice,
+          // Add other fields as needed
+        })),
+        TotalPrice: totalPrice
+      };
+
+      // Make a POST request to the /pickup endpoint with pickupData
+      await axios.post('/pickup', pickupData);
+      
+      // Show success message
+      setPickupSuccess(true);
+      
+      // Clear cart
+      clearCart();
+    } catch (error) {
+      console.error('Error sending cart items to pickup:', error);
+      // Handle errors appropriately, e.g., show an error message to the user
+    }
+  };
+  
+  const clearCart = async () => {
+    try {
+      await axios.delete('/cart'); // Assuming you have an endpoint to clear the cart
+      console.log('Cart cleared successfully');
+    } catch (error) {
+      console.error('Error clearing cart:', error);
+      // Handle errors appropriately, e.g., show an error message to the user
+    }
+  };
+
   return (
     <section className="h-100 h-custom" style={{ backgroundColor: '#d2c9ff' }}>
       <div className="container py-5 h-100">
@@ -31,26 +76,10 @@ function CheckoutPage({ cartItems }) {
                             <h6 className="text-black mb-0">{item.ItemName}</h6>
                           </div>
                           <div className="col-md-3 col-lg-3 col-xl-2 d-flex">
-                            <button className="btn btn-link px-2" onClick={() => updateQuantity(index, item.Quantity - 1)}>
-                              <i className="fas fa-minus"></i>
-                            </button>
-
-                            <input
-                              id={`quantity-${index}`}
-                              min="0"
-                              name="quantity"
-                              value={item.Quantity}
-                              type="number"
-                              className="form-control form-control-sm"
-                              onChange={(e) => updateQuantity(index, e.target.value)}
-                            />
-
-                            <button className="btn btn-link px-2" onClick={() => updateQuantity(index, item.Quantity + 1)}>
-                              <i className="fas fa-plus"></i>
-                            </button>
+                            <h6 className="text-black mb-0">{item.Quantity}</h6>
                           </div>
                           <div className="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                            <h6 className="mb-0">€ {item.TotalAmount}</h6>
+                            <h6 className="mb-0">Rs. {item.ItemPrice}</h6>
                           </div>
                           <div className="col-md-1 col-lg-1 col-xl-1 text-end">
                             <a href="#!" className="text-muted" onClick={() => removeFromCart(index, item._id)}>
@@ -77,7 +106,7 @@ function CheckoutPage({ cartItems }) {
                       <div className="d-flex justify-content-between mb-4">
                         <h5 className="text-uppercase">items {cartItems.length}</h5>
                         {/* Calculate total price */}
-                        <h5>€ {cartItems.reduce((acc, item) => acc + item.TotalAmount, 0)}</h5>
+                        <h5>Rs. {cartItems.reduce((acc, item) => acc + item.ItemPrice, 0)}</h5>
                       </div>
                       <h5 className="text-uppercase mb-3">Give code</h5>
 
@@ -93,10 +122,14 @@ function CheckoutPage({ cartItems }) {
                       <div className="d-flex justify-content-between mb-5">
                         <h5 className="text-uppercase">Total price</h5>
                         {/* Calculate total price */}
-                        <h5>€ {cartItems.reduce((acc, item) => acc + item.TotalAmount, 0)}</h5>
+                        <h5>Rs. {cartItems.reduce((acc, item) => acc + item.ItemPrice, 0)}</h5>
                       </div>
 
-                      <button type="button" className="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark">Add to Pick Up</button>
+                      <button type="button" className="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark" onClick={handlePickup}>
+                        Add to Pick Up
+                      </button>
+
+                      {pickupSuccess && <p className="text-success mt-3">Items added to pickup successfully!</p>}
 
                     </div>
                   </div>
