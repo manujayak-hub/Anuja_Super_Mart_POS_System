@@ -29,10 +29,13 @@ function NavBar() {
 
   const updateQuantity = (index, newQuantity) => {
     const newCartItems = [...cartItems];
-    newCartItems[index].Quantity = newQuantity;
-    newCartItems[index].TotalAmount = newQuantity * newCartItems[index].Price;
+    const item = newCartItems[index];
+    item.Quantity = newQuantity;
+    item.ItemPrice = item.ItemPrice * newQuantity; // Calculate TotalAmount based on Price and Quantity
+    newCartItems[index] = item;
     setCartItems(newCartItems);
-  };
+};
+
 
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -51,7 +54,7 @@ function NavBar() {
   useEffect(() => {
     // Calculate total amount of all items in the cart
     const total = cartItems.reduce((acc, item) => {
-      return acc + (item.TotalAmount || (item.Price * item.Quantity));
+      return acc + (item.ItemPrice || (item.ItemPrice * item.Quantity));
     }, 0);
 
     // Update the state with the calculated total
@@ -180,7 +183,7 @@ function NavBar() {
                       -
                     </button>
                   </p>
-                  <p><strong>Price:</strong> ${item.TotalAmount || (item.Price * item.Quantity)}</p>
+                  <p><strong>Price:</strong> ${item.ItemPrice || (item.ItemPrice * item.Quantity)}</p>
                 </div>
                 <button className="btn btn-danger btn-sm" onClick={() => removeFromCart(index, item._id)}>
                   Remove

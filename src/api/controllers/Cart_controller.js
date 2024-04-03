@@ -2,19 +2,22 @@ import Cart from '../models/Cart_model'
 import mongoose from 'mongoose'
 
 
-const createCart = async (req ,res) =>{
+const createCart = async (req, res) => {
+  const { OrderID, ItemID, ItemName, Quantity, ItemPrice, PickupTime } = req.body;
 
-    const {OrderID,ItemID,ItemName,Quantity,TotalAmount,PickupTime} = req.body
+  if (isNaN(ItemPrice)) {
+      return res.status(400).json({ error: 'Invalid Item Price' });
+  }
 
-    try {
-        const OD = await Cart.create({OrderID,ItemID,ItemName,Quantity,TotalAmount,PickupTime})
-        res.status(200).json(OD)
+  try {
+      const OD = await Cart.create({ OrderID, ItemID, ItemName, Quantity, ItemPrice, PickupTime });
+      res.status(200).json(OD);
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Server Error' });
+  }
+};
 
-    } catch (error) {
-        res.status(400).json({error:'Server Error'})
-    }
-
-}
 
 const getallCart = async (req, res) => {
    
@@ -50,14 +53,14 @@ const getbyIdCart = async (req,res) => {
 const updateCart  =async (req,res) => {
     var {id} = req.params
 
-    const {OrderID,ItemID,ItemName,Quantity,TotalAmount,PickupTime} = req.body
+    const {OrderID,ItemID,ItemName,Quantity,ItemPrice,PickupTime} = req.body
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(400).json({error:'Invalid ID Format'})
       }
 
     const OD = await Cart.findOneAndUpdate({_id:id},
-        {OrderID,ItemID,ItemName,Quantity,TotalAmount,PickupTime}, 
+        {OrderID,ItemID,ItemName,Quantity,ItemPrice,PickupTime}, 
         { new: true } 
     )
 

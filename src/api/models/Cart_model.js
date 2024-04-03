@@ -5,8 +5,8 @@ const CartSchema = new Schema({
     OrderID: {type: String},
     ItemID: {type: String},
     ItemName: {type: String},
-    Quantity: {type: String},
-    TotalAmount: {type: String},
+    Quantity: {type: Number},
+    ItemPrice: {type: Number},
     PickupTime: {type: String}
 },{
     timestamps: true,
