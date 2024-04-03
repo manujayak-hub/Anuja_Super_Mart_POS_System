@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './PickupOrders.scss'; // Import SCSS file
 import MenuNav from '../../components/OrderProcess/MenuNavbar';
 
 const PickupOrders = () => {
@@ -22,10 +23,9 @@ const PickupOrders = () => {
   }, []);
 
   return (
-    
-    <div>
-          <MenuNav />
-        <div className='topic'><h1>Pickup Orders</h1></div>
+    <div className="pickup-orders-container"> {/* Apply the SCSS class */}
+      <MenuNav />
+      <div className='topic'><h1>Pickup Orders</h1></div>
       {/* Render your cart items here */}
       <ul>
         {cart.map(item => (

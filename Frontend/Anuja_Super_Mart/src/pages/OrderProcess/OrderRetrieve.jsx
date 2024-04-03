@@ -9,6 +9,7 @@ const OrderRetrieve = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [editOrder, setEditOrder] = useState(null);
     const [error, setError] = useState(null);
+    const [searchQuery, setSearchQuery] = useState("");
     const { orders, setOrders, removeOrder, updateOrder } = useOrderStore();
 
     useEffect(() => {
@@ -53,11 +54,22 @@ const OrderRetrieve = () => {
         }
     };
 
+    const filteredOrders = orders.filter(order =>
+        order.orderId.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     return (
         <div className="OrderRetrieveContainer">
             <MenuNav />
             <div className="header1" style={{ textAlign: "center", color: "red" }}>
                 <h1>Order List</h1>
+                <input
+                    type="text"
+                    placeholder="Search by Order ID"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    style={{ margin: '10px', padding: '5px' }}
+                />
             </div>
             <div className="OrderPageContainer">
                 <div className="OrderListContainer">
@@ -67,16 +79,15 @@ const OrderRetrieve = () => {
                         ) : error ? (
                             <p className="ErrorMessage">Error: {error.message}</p>
                         ) : (
-                            orders.map(order => (
+                            filteredOrders.map(order => (
                                 <div key={order._id} className="OrderItem">
                                     <p>Order ID: {order.orderId}</p>
                                     <p>Customer ID: {order.customerId}</p>
                                     <p>Date: {order.date}</p>
                                     <p>Items: {order.ItemName}</p> {/* Display item names */}
                                     <p>Total Amount: {order.TotalAmount}</p>
-                                    <button onClick={() => handleDeleteOrder(order._id)} style={{  color: 'red', marginLeft:'500px' }}>Delete</button>
-                                    <button onClick={() => handleEditOrder(order)} style={{  color: 'red', marginLeft:'10px' }}>Edit</button>
-
+                                    <button onClick={() => handleDeleteOrder(order._id)} style={{ color: 'red', marginLeft: '500px' }}>Delete</button>
+                                    <button onClick={() => handleEditOrder(order)} style={{ color: 'red', marginLeft: '10px' }}>Edit</button>
                                 </div>
                             ))
                         )}

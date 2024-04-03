@@ -30,7 +30,7 @@ function List() {
         <>
             <MenuNav />
             <div>
-                <h1>LIST</h1>
+                <div><h1>LIST</h1></div>
                 {isLoading ? (
                     <p>Loading...</p>
                 ) : (
