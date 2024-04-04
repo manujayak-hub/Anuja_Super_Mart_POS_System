@@ -7,26 +7,18 @@ import { Row, Col } from 'react-bootstrap';
 
 const PrintableTransactionReport = React.forwardRef(({ totalAmounts }, ref) => {
     const calculateIncome = () => {
-        // Assuming 'Sales' is the type for income
         const salesTotal = totalAmounts['Sales'] || 0;
-        // Subtracting other types from sales to get income
-        const income = salesTotal - Object.values(totalAmounts)
-            .filter((type) => type !== salesTotal)
-            .reduce((acc, curr) => acc + curr, 0);
-        return income.toFixed(2); // Assuming you want to display income with 2 decimal places
+        const totalExpenses = Object.values(totalAmounts).reduce((total, amount) => amount > 0 ? total + amount : total, 0);
+        return salesTotal - totalExpenses;
     };
+
     return (
         <div ref={ref} className="transaction-summary">
-            <div className="mb-3" style={{ paddingTop: "20px" }}> {/* Add padding above the Row */}
+            <div className="mb-3" style={{ paddingTop: "20px" }}>
                 <Row className="mb-20 pb-3">
-                    <Col className="bg-danger text-white p-3 rounded d-flex align-items-center justify-content-center">
-                        <div>
-                            <h2>Total Income</h2>
-                            <p><strong>Income:</strong> Rs.{calculateIncome()}</p>
-                        </div>
-                    </Col>
-                    <Col className="bg-secondary text-white p-3 rounded ms-5">
-                        <h3>Transaction Totals</h3>
+                    
+                    <Col className="bg-danger text-white p-3 rounded ms-8">
+                        <h3>Transaction Report</h3>
                         <ul>
                             {Object.entries(totalAmounts).map(([type, amount]) => (
                                 <li key={type}><strong>{type}:</strong> Rs.{amount.toFixed(2)}</li>
@@ -37,15 +29,12 @@ const PrintableTransactionReport = React.forwardRef(({ totalAmounts }, ref) => {
             </div>
         </div>
     );
-    
 });
 
 const TransactionReport = ({ totalAmounts }) => {
     const printableComponentRef = React.useRef();
 
-    const handlePrint = useReactToPrint({
-        content: () => printableComponentRef.current,
-    });
+    
 
     const handleDownloadPDF = () => {
         html2canvas(printableComponentRef.current).then((canvas) => {
@@ -64,14 +53,10 @@ const TransactionReport = ({ totalAmounts }) => {
             pdf.save('transaction_report.pdf');
         });
     };
-    
-    
 
     return (
         <div>
             <Sidebar handleDownloadPDF={handleDownloadPDF} />
-            <div className="d-print-none"> 
-            </div>
             <PrintableTransactionReport ref={printableComponentRef} totalAmounts={totalAmounts} />
         </div>
     );

@@ -1,33 +1,33 @@
-/* Sidebar.css */
+
 .sidebar {
-  background-color: #343a40; /* Change to the background color you prefer */
+  background-color: #343a40; 
 }
 
 .sidebar-item {
-  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for hover effect */
-  display: flex; /* Use flexbox to align items vertically */
-  align-items: center; /* Center items vertically */
-  padding: 10px; /* Adjust padding for spacing */
+  transition: background-color 0.3s ease, color 0.3s ease; 
+  display: flex; 
+  align-items: center; 
+  padding: 10px;
   width: 200px;
 }
 
 .sidebar-item:hover {
-  background-color:  #dc3545; /* Change to the hover background color you prefer */
-  color: white; /* Change font color to white on hover */
-  cursor: pointer; /* Change cursor to pointer to indicate interactivity */
+  background-color:  #dc3545; 
+  color: white; 
+  cursor: pointer; 
 }
 
 .sidebar-item:hover .text {
-  color: white; /* Change text color to white on hover */
+  color: white; 
 }
 
 .sidebar-item .icon {
-  width: 24px; /* Adjust the width of the icon as needed */
-  height: 24px; /* Adjust the height of the icon as needed */
-  margin-right: 10px; /* Adjust margin between icon and text */
+  width: 24px; 
+  height: 24px; 
+  margin-right: 10px; 
 }
 
 .sidebar-item .text {
-  font-size: 16px; /* Adjust the font size as needed */
-  color: black; /* Set default font color to black */
+  font-size: 16px; 
+  color: black; 
 }
