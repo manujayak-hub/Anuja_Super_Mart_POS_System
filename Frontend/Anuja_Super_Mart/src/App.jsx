@@ -21,6 +21,7 @@ import TotalSaving from './pages/Discount/TotalSaving'
 import ItemList from './pages/Discount/ItemList'
 import ButtonComponent from './components/Discount/ButtonComponent'
 import Emp_list from './pages/Emp_pages/emp_list'
+
 import InventoryRoute from './Routes/InvRoute'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
