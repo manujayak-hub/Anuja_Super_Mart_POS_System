@@ -4,10 +4,10 @@ import mongoose from 'mongoose'
 
 const createOrder = async( req, res) =>{
 
- const{title,name,author} = req.body
+ const{orderId,customerId,ItemID,ItemName,Quantity,TotalAmount, date} = req.body
 
  try{
-    const ORDER = await order.create({title,name,author})
+    const ORDER = await order.create({orderId,customerId,ItemID,ItemName,Quantity,TotalAmount, date})
     res.status(200).json(ORDER)
 
  }
@@ -56,13 +56,13 @@ const getbyIDOrder= async (req,res)=>{
 const updateOrder = async(req,res)=>{
 
    var{id} = req.params
-   const{title,name,author}= req.body
+   const{orderId,customerId,ItemID,ItemName,Quantity,TotalAmount, date}= req.body
    if(!mongoose.Types.ObjectId.isValid(id)){
 
     return res.status(400).json({error:'Invalid ID format'})
    }
     const ORDER = await order.findOneAndUpdate({_id:id},
-    {title,name,author},
+    {orderId,customerId,ItemID,ItemName,Quantity,TotalAmount, date},
     { new: true }// To return the update document
     )
 

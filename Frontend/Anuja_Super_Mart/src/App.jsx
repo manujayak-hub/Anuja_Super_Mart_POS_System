@@ -28,6 +28,8 @@ import Emp_Salary from './pages/Emp_pages/emp_salary'
 
 import InventoryRoute from './Routes/InvRoute'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import OrderRetrieve from './pages/OrderProcess/OrderRetrieve'
+import PickupOrders from './pages/OrderProcess/PickupOrders'
 
 
 
@@ -68,6 +70,8 @@ function App() {
             <Route path="ButtonComponent" element={<ButtonComponent/>}/>
 
             <Route path="emp_list" element={<Emp_list/>} />
+            <Route path="OrderRetrieve" element={<OrderRetrieve/>} />
+            <Route path="PickupOrders" element={<PickupOrders/>} />
 
 
             <Route path="emp_list" element={<Emp_list/>} />

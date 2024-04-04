@@ -1,0 +1,40 @@
+/* OrderRetrieve.scss */
+
+.OrderRetrieveContainer {
+    font-family: Arial, sans-serif;
+    margin-left: 20%;
+    margin-right: 35%;
+    
+  }
+  
+  .Header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .OrderList {
+    display: grid;
+    grid-gap: 20px;
+  }
+  
+  .OrderItem {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .OrderItem p {
+    margin: 5px 0;
+  }
+  
+  .LoadingMessage,
+  .ErrorMessage {
+    text-align: center;
+    color: #ff0000;
+    font-weight: bold;
+  }
+ .button{
+  background-color: #FD204F;
+ }
+  

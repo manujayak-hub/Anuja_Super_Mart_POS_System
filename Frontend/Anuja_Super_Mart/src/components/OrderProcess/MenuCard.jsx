@@ -1,5 +1,5 @@
-// MenuCard.js
 import React from 'react';
+import './MenuCard.scss'; // Import SCSS file
 
 const MenuCard = ({ item, addToOrder }) => {
     const handleAddToOrder = () => {
@@ -8,10 +8,11 @@ const MenuCard = ({ item, addToOrder }) => {
 
     return (
         <div className="inventory-card">
-            <h3>{item.productId}</h3>
-            <p>: {item.productName}</p>
-            <p>Rs: {item.wholesalePrice}</p>
-            <button onClick={handleAddToOrder}>Add</button>
+            <h3 className="product-id">{item.productId}</h3>
+            <p className="product-name">: {item.productName}</p>
+            <p className="wholesale-price">Rs: {item.wholesalePrice}</p>
+            <img  src={item.imageUrl}/>
+            <button className="add-button" onClick={handleAddToOrder}>Add</button>
         </div>
     );
 };

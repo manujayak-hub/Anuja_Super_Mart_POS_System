@@ -4,9 +4,14 @@ const Schema = mongoose.Schema
 const orderSchema = new Schema({
 
 
-title:{type:String, required:true},
-name:{type:String, required:true},
-author:{type:String, required:true},
+    orderId: {type: String},
+    customerId: {type:String},
+    ItemID: {type: String},
+    ItemName: {type: String},
+    Quantity: {type: String},
+    TotalAmount: {type: String},
+    date:{type:String}
+    
 
 },{
 
