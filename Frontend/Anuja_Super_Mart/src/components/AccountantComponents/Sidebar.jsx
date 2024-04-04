@@ -29,19 +29,20 @@ const Sidebar = ({ handleDownloadPDF }) => {
           <span className="d-inline-block text">Transaction List</span>
         </Nav.Link>
       </Nav.Item>
+      
       {/* <Nav.Item className="sidebar-item text-center py-3">
         <Nav.Link href="/Revenue">
           <img src="src/assets/Accountant/Sales Performance.png" alt="Icon 3" className="img-fluid d-inline-block icon" />
           <span className="d-inline-block text">Revenue</span>
         </Nav.Link>
       </Nav.Item> */}
-      <Nav.Item className="sidebar-item text-center py-3">
-        {/* Pass handleDownloadPDF function as a prop */}
+
+      {/* <Nav.Item className="sidebar-item text-center py-3">  
         <Nav.Link onClick={handleDownloadPDF}>
           <img src="src/assets/Accountant/Bill.png" alt="Icon 4" className="img-fluid d-inline-block icon" />
           <span className="d-inline-block text">Report pdf</span>
         </Nav.Link>
-      </Nav.Item>
+      </Nav.Item> */}
     </Nav>
   );
 };

@@ -1,46 +1,66 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../../api/axios';
-import './Transactions.css'; 
-import useTransactionStore from '../../stores/accountantStore'; 
+import './Transactions.css';
+import useTransactionStore from '../../stores/accountantStore';
 import Sidebar from '../../components/AccountantComponents/Sidebar';
 import UpdateTransaction from './UpdateTransaction';
 import TransactionReport from './TransactionReport';
+import * as XLSX from 'xlsx'; 
+import { Card } from 'react-bootstrap';
 
 const TransactionList = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [transactions, setTransactions] = useState([]);
-    const [selectedTransaction, setSelectedTransaction] = useState(null); 
+    const [selectedTransaction, setSelectedTransaction] = useState(null);
     const [searchInput, setSearchInput] = useState('');
     const [showModal, setShowModal] = useState(false);
     const [deleteTransactionId, setDeleteTransactionId] = useState(null);
     const [totalAmounts, setTotalAmounts] = useState({});
-    const transactionStore = useTransactionStore(); 
+    const [typeTotals, setTypeTotals] = useState([]); // Define typeTotals state
+    const transactionStore = useTransactionStore();
 
     useEffect(() => {
         const fetchTransactions = async () => {
             try {
                 const response = await axios.get('/transactions');
                 setTransactions(response.data);
-                calculateTotalAmounts(response.data); // Calculate total amounts
+                calculateTotalAmounts(response.data);
+                fetchTypeTotals(); // Fetch type totals
             } catch (error) {
                 setError(error.message);
             } finally {
                 setLoading(false);
             }
         };
-        
+
         fetchTransactions();
     }, []);
 
     const calculateTotalAmounts = (transactions) => {
-        const totalAmounts = {};
+        const totalAmounts = { totalExpenses: 0, totalSales: 0 };
         transactions.forEach(transaction => {
             const type = transaction.transactionType;
             const amount = parseFloat(transaction.transactionAmount);
-            totalAmounts[type] = (totalAmounts[type] || 0) + amount;
+    
+            if (type === 'sales') {
+                totalAmounts.totalSales += amount;
+            } else {
+                totalAmounts.totalExpenses += amount;
+            }
         });
-        setTotalAmounts(totalAmounts);
+    
+        const income = totalAmounts.totalSales - totalAmounts.totalExpenses;
+        setTotalAmounts({ ...totalAmounts, income });
+    };
+
+    const fetchTypeTotals = async () => {
+        try {
+            const response = await axios.get('/transactions/type-totals');
+            setTypeTotals(response.data);
+        } catch (error) {
+            console.error('Error fetching type totals:', error);
+        }
     };
 
     const handleUpdate = (transactionId) => {
@@ -58,8 +78,8 @@ const TransactionList = () => {
             await axios.delete(`/transactions/${deleteTransactionId}`);
             setTransactions(transactions.filter(transaction => transaction._id !== deleteTransactionId));
             transactionStore.removeTransaction(deleteTransactionId);
-            calculateTotalAmounts(transactions.filter(transaction => transaction._id !== deleteTransactionId)); // Update total amounts after deletion
-            saveTypeTotal('yourType'); // Save type total after deletion
+            calculateTotalAmounts(transactions.filter(transaction => transaction._id !== deleteTransactionId));
+            saveTypeTotal('yourType');
         } catch (error) {
             console.error('Error deleting transaction:', error);
         }
@@ -67,12 +87,12 @@ const TransactionList = () => {
     };
 
     const handleUpdateSuccess = (updatedTransaction) => {
-        setTransactions(transactions.map(transaction => 
+        setTransactions(transactions.map(transaction =>
             transaction._id === updatedTransaction._id ? updatedTransaction : transaction
         ));
         setSelectedTransaction(null);
-        calculateTotalAmounts(transactions); // Update total amounts after update
-        saveTypeTotal('yourType'); // Save type total after update
+        calculateTotalAmounts(transactions);
+        saveTypeTotal('yourType');
     };
 
     const handleSearch = (e) => {
@@ -88,27 +108,45 @@ const TransactionList = () => {
 
     const saveTypeTotal = async (type) => {
         try {
-            // Reset type total values to 0 in the database
             await axios.post('/transactions/reset-type-total');
-    
-            // Filter out NaN values from totalAmounts
+
             const filteredTotalAmounts = Object.fromEntries(
                 Object.entries(totalAmounts).filter(([key, value]) => !isNaN(value))
             );
-    
-            // Check if there are any valid total amounts to save
+
             if (Object.keys(filteredTotalAmounts).length === 0) {
                 console.log('No valid total amounts to save.');
                 return;
             }
-    
-            // Send POST request with both type and totalAmounts
+
             await axios.post('/transactions/save-type-total', { type, totalAmounts: filteredTotalAmounts });
             console.log('Type total saved successfully');
         } catch (error) {
             console.error('Error saving type total:', error);
         }
     };
+
+    const exportToExcel = () => {
+        const workbook = XLSX.utils.book_new();
+    
+        const filteredTransactionsWithoutColumns = filteredTransactions.map(transaction => {
+            const { totalSales, totalPayments, totalUtilityBills, totalRevenue, __v, ...filteredTransaction } = transaction;
+            return filteredTransaction;
+        });
+    
+        const worksheet = XLSX.utils.json_to_sheet(filteredTransactionsWithoutColumns);
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Transactions");
+    
+        // Add type totals to the Excel sheet
+        const typeTotalsSheet = XLSX.utils.json_to_sheet(typeTotals);
+        XLSX.utils.book_append_sheet(workbook, typeTotalsSheet, "TypeTotals");
+    
+        XLSX.writeFile(workbook, "transactions.xlsx");
+    };
+    
+    
+    
+    
 
     return (
         <div>
@@ -125,39 +163,41 @@ const TransactionList = () => {
                     />
                 </div>
                 <div className="transaction-table-wrapper">
-                <div style={{ maxHeight: "360px", overflowY: "auto" }}>
-    <table className="table table-striped">
-        <thead style={{ position: "sticky", top: "0", zIndex: "1", background: "#fff" }}>
-            <tr className="bg-danger text-white">
-                <th>Transaction ID</th>
-                <th>Date/Time</th>
-                <th>Type</th>
-                <th>Amount</th>
-                <th>Method</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {filteredTransactions.map((transaction) => (
-                <tr key={transaction._id}>
-                    <td>{transaction.transactionID}</td>
-                    <td>{transaction.transactionDateTime}</td>
-                    <td>{transaction.transactionType}</td>
-                    <td>{transaction.transactionAmount}</td>
-                    <td>{transaction.transactionMethod}</td>
-                    <td>
-                        <div className="actions-container">
-                            <button className="btn btn-info" onClick={() => handleUpdate(transaction._id)}>Update</button>
-                            <button className="btn btn-danger" onClick={() => handleDelete(transaction._id)}>Delete</button>
-                        </div>
-                    </td>
-                </tr>
-            ))}
-        </tbody>
-    </table>
-</div>
-
+                    <div style={{ maxHeight: "360px", overflowY: "auto" }}>
+                        <table className="table table-striped">
+                            <thead style={{ position: "sticky", top: "0", zIndex: "1", background: "#fff" }}>
+                                <tr className="bg-danger text-white">
+                                    <th>Transaction ID</th>
+                                    <th>Date/Time</th>
+                                    <th>Type</th>
+                                    <th>Amount</th>
+                                    <th>Method</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {filteredTransactions.map((transaction) => (
+                                    <tr key={transaction._id}>
+                                        <td>{transaction.transactionID}</td>
+                                        <td>{transaction.transactionDateTime}</td>
+                                        <td>{transaction.transactionType}</td>
+                                        <td>{transaction.transactionAmount}</td>
+                                        <td>{transaction.transactionMethod}</td>
+                                        <td>
+                                            <div className="actions-container">
+                                                <button className="btn btn-info" onClick={() => handleUpdate(transaction._id)}>Update</button>
+                                                <button className="btn btn-danger" onClick={() => handleDelete(transaction._id)}>Delete</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+
+                
+
                 {selectedTransaction && (
                     <UpdateTransaction 
                         transaction={selectedTransaction} 
@@ -176,11 +216,13 @@ const TransactionList = () => {
                     </div>
                 )}
                 <TransactionReport totalAmounts={totalAmounts} />
-                <button className="btn btn-danger" onClick={() => {
-            saveTypeTotal('yourType');
-    alert('Transaction Summary Added Successfully');
-}}>Save Summary</button>
-
+                <div style={{ display: 'inline-block' }}>
+                    <button className="btn btn-danger" style={{ marginRight: '10px' }} onClick={() => {
+                        saveTypeTotal('yourType');
+                        alert('Transaction Summary Added Successfully');
+                    }}>Save Summary</button>
+                    <button className="btn btn-primary" onClick={exportToExcel}>Export to Excel</button>
+                </div>
             </div>
         </div>
     );
