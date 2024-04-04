@@ -102,37 +102,37 @@ const Emp_list = () => {
           body {
             background-color: #D8D1D1;
           }
-          .pagination .page-link {
+          .emp_pagination .page-link {
             color: #FD204F;
           }
-          .pagination .page-link:hover {
+          .emp_pagination .page-link:hover {
             color: #fff;
             background-color: #FD204F;
             border-color: #FD204F;
           }
-          .pagination .page-item.active .page-link {
+          .emp_pagination .page-item.active .page-link {
             color: #fff;
             background-color: #FD204F;
             border-color: #FD204F;
           }
-          .search-bar-container {
+          .emp_search-bar-container {
             display: flex;
             align-items: center;
             margin-bottom: 20px;
           }
-          .search-bar {
+          .emp_search-bar {
             flex: 1;
             border-radius: 20px;
             padding: 10px;
             margin-right: 20px; /* Reduced margin for search bar */
             border: 1px solid #ccc;
           }
-          .add-employee-btn {
+          .emp_add-employee-btn {
             background-color: #FD204F;
             border-color: #FD204F;
             color: #fff;
           }
-          .add-employee-btn:hover {
+          .emp_add-employee-btn:hover {
             background-color: #FD204F;
             border-color: #FD204F;
             color: #fff;
@@ -141,15 +141,15 @@ const Emp_list = () => {
       </style>
       <SideBar/>
       <div className="content" style={{ marginLeft: '250px', marginRight: '50px', padding: '20px' }}>
-        <div className="search-bar-container">
+        <div className="emp_search-bar-container">
           <input
             type="text"
             placeholder="Search by Name or ID"
             value={searchQuery}
             onChange={handleSearch}
-            className="search-bar"
+            className="emp_search-bar"
           />
-          <Button className="add-employee-btn" onClick={handleShowAddModal}>
+          <Button className="emp_add-employee-btn" onClick={handleShowAddModal}>
             Add Employee
           </Button>
         </div>
