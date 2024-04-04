@@ -9,8 +9,9 @@ import SProfile from './pages/Task/SProfile';
 import SDetails from './pages/Task/SDetails';
 import Categories from './pages/Customer_pages/Categories';
 import { useStore } from './stores/authStore'
-import Dash from './components/AccountantComponents/Sidebar'
+import TransactionForm from './pages/Accountant/Add_new_form'
 import TransactionsList from './pages/Accountant/Transactions'
+import Dash from'./pages/Accountant/Accountantdash'
 import Menu from './pages/OrderProcess/Menu'
 import List from './pages/OrderProcess/List'
 import Customer from './pages/SalesAnalytics/Customer'
@@ -20,8 +21,9 @@ import TotalSaving from './pages/Discount/TotalSaving'
 import ItemList from './pages/Discount/ItemList'
 import ButtonComponent from './components/Discount/ButtonComponent'
 import Emp_list from './pages/Emp_pages/emp_list'
-import 'bootstrap/dist/css/bootstrap.min.css';
+
 import InventoryRoute from './Routes/InvRoute'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 
@@ -39,12 +41,18 @@ function App() {
             <Route path="contact" element={<Contact/>} />
             <Route path="Login" element={<Login/>}/>
             <Route path="Signup" element={<Signup/>}/>
+
+            <Route path="TransactionForm" element={<TransactionForm/>}/>  
+            <Route path="AccountantDash" element={<Dash/>}/>
+            <Route path="Transactions" element={<TransactionsList/>}/>
+            
             <Route path="Form" element={<Form/>}/>
             <Route path="SProfile" element={<SProfile/>}/>
             <Route path="SDetails" element={<SDetails/>}/>
             <Route path="Categories" element={<Categories/>} />
             <Route path="Dash" element={<Dash/>}/>
-            <Route path="Transactions" element={<TransactionsList/>}/>
+
+            
             <Route path="Menu" element={<Menu/>} />
             <Route path="List" element={<List/>} />
             <Route path="Customer" element={<Customer/>}/>
@@ -54,10 +62,14 @@ function App() {
             <Route path="ItemList" element={<ItemList/>}/>
             <Route path="TotalSaving" element={<TotalSaving/>}/>
             <Route path="ButtonComponent" element={<ButtonComponent/>}/>
+
             <Route path="emp_list" element={<Emp_list/>} />
 
             
+
+
             {user && <Route exact path="/About" render={() => <About />} />}
+            
 
           </Route>
         </Routes>

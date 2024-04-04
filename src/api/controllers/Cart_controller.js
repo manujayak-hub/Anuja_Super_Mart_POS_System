@@ -1,12 +1,15 @@
-import Pickup from '../models/pickup_model'
+import Cart from '../models/Cart_model'
 import mongoose from 'mongoose'
 
-const createOrders = async (req ,res) =>{
 
-    const {OrderID, Items , Time, Quantity} = req.body
+
+
+const createCart = async (req ,res) =>{
+
+    const {OrderID,ItemID,ItemName,Quantity,TotalAmount,PickupTime} = req.body
 
     try {
-        const OD = await Pickup.create({OrderID, Items , Time, Quantity})
+        const OD = await Cart.create({OrderID,ItemID,ItemName,Quantity,TotalAmount,PickupTime})
         res.status(200).json(OD)
 
     } catch (error) {
@@ -15,11 +18,11 @@ const createOrders = async (req ,res) =>{
 
 }
 
-const getallOrders = async (req, res) => {
+const getallCart = async (req, res) => {
    
 
     try {
-      const OD = await Pickup.find({});
+      const OD = await Cart.find({});
       res.status(200).json(OD);
 
   } catch (error) {
@@ -29,14 +32,14 @@ const getallOrders = async (req, res) => {
   }
 }
 
-const getbyIdOrders = async (req,res) => {
+const getbyIdCart = async (req,res) => {
 
     const {id} = req.params 
 
     if(!mongoose.Types.ObjectId.isValid(id)){
         return res.status(404).json({error:'Invalid ID Format'})
     }
-    const OD = await Pickup.findById(id)
+    const OD = await Cart.findById(id)
 
     if (!OD) {
         return res.status(404).json({error: 'No such Oder'})
@@ -46,17 +49,17 @@ const getbyIdOrders = async (req,res) => {
 
 }
 
-const updateOrders  =async (req,res) => {
+const updateCart  =async (req,res) => {
     var {id} = req.params
 
-    const {OrderID, Items , Time, Quantity} = req.body
+    const {OrderID,ItemID,ItemName,Quantity,TotalAmount,PickupTime} = req.body
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(400).json({error:'Invalid ID Format'})
       }
 
-    const OD = await Pickup.findOneAndUpdate({_id:id},
-        {OrderID, Items , Time, Quantity}, 
+    const OD = await Cart.findOneAndUpdate({_id:id},
+        {OrderID,ItemID,ItemName,Quantity,TotalAmount,PickupTime}, 
         { new: true } 
     )
 
@@ -68,7 +71,7 @@ const updateOrders  =async (req,res) => {
 
 }
 
-const deleteOrders = async (req, res) => {
+const deleteCart = async (req, res) => {
     var {id}  = req.params
   
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -76,7 +79,7 @@ const deleteOrders = async (req, res) => {
     }
   
     try {
-      const deletedOD = await Pickup.findOneAndDelete({_id: id});
+      const deletedOD = await Cart.findOneAndDelete({_id: id});
 
       if (!deletedOD) {
           return res.status(404).json({error: 'No such oder'});
@@ -87,7 +90,7 @@ const deleteOrders = async (req, res) => {
       console.error(error);
       res.status(400).json({error: 'Internal Server Error'});
   }
-    res.status(200).json(Pickup)
+    res.status(200).json(Cart)
   }
 
-module.exports={createOrders,deleteOrders,updateOrders,getallOrders,getbyIdOrders};
+module.exports={createCart,deleteCart,updateCart,getallCart,getbyIdCart};

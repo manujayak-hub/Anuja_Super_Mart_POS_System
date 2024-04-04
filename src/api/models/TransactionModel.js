@@ -4,9 +4,9 @@ const Schema = mongoose.Schema
 
 const transactionSchema  = new Schema({
     transactionID: {
-        type: String,
-        required: true,
-        unique: true
+        type: String, 
+        required: true, 
+        unique: true 
     },
     transactionDateTime: {
         type: Date,
@@ -17,19 +17,33 @@ const transactionSchema  = new Schema({
         type: String,
         required: true
     },
-    amount: {
+    transactionAmount: {
         type: Number,
         required: true
     },
     transactionMethod: {
         type: String,
         required: true
+    
     }
+
+
 },{ timestamps: true ,
     collection: 'Transactions'})
 
-
-module.exports = mongoose.model('Transactions',transactionSchema)
+    const typeTotalSchema = new Schema({
+        type: {
+            type: String,
+            required:true,
+        },
+        totalAmount: {
+            type: Number,
+            default: 0
+        }
+    });
+    
+    module.exports.TypeTotal = mongoose.model('TypeTotal', typeTotalSchema);
+    module.exports.Transactions = mongoose.model('Transactions', transactionSchema);
 
 
 

@@ -30,22 +30,41 @@ const Login = () => {
             setErrorMessage('Login failed. Please check your credentials.');
         }
     }
+  };
 
-    return (
-        <>
-            <Nav />
-            <div>
-                <h2>Login</h2>
-                {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+  return (
+    <>
+      <Nav />
+      <div className="container mt-5">
+        <div className="row justify-content-center">
+          <div className="col-md-6">
+            <div className="card">
+              <div className="card-body">
+                <h2 className="card-title mb-4">Login</h2>
+                {errorMessage && <p className="text-danger">{errorMessage}</p>}
+                {successMessage && <p className="text-success">{successMessage}</p>}
+
                 <form onSubmit={handleSubmit}>
-                    <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                    <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                    <button type="submit">Login</button>
+                  <div className="mb-3">
+                    <input type="email" className="form-control" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                  </div>
+                  <div className="mb-3">
+                    <input type="password" className="form-control" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                  </div>
+                  <center>
+                  <button type="submit" className="btn btn-primary">Login</button>
+                  </center>
                 </form>
-                <Link to="/signup">Don't have an account? Sign Up</Link>
+                <div className="mt-3">
+                  <Link to="/signup">Don't have an account? Sign Up</Link>
+                </div>
+              </div>
             </div>
-        </>
-    );
-}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
 
 export default Login;

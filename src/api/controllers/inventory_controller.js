@@ -174,4 +174,5 @@ const findInventoryByName = async (req, res) => {
     }
 };
 
+
 module.exports = { createInventory, deleteInventory, updateInventory, getallinventory, getbyIdInventory,findInventoryByName, findInventoryByProductId, findInventoryByCategory };
