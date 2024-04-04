@@ -151,7 +151,7 @@ const TransactionList = () => {
     return (
         <div>
             <Sidebar />
-            <div className="transaction-list-container">
+            <div className="transaction-list-container" style={{ backgroundColor: 'lightgray', minHeight: '100vh' }}>
                 <h1 className="text-danger">Transactions</h1>
                 <div className="mb-3">
                     <input
@@ -162,9 +162,9 @@ const TransactionList = () => {
                         onChange={handleSearch}
                     />
                 </div>
-                <div className="transaction-table-wrapper">
-                    <div style={{ maxHeight: "360px", overflowY: "auto" }}>
-                        <table className="table table-striped">
+                <div className="transaction-table-wrapper" style={{ padding: '10px 20px' }}>
+    <div style={{ maxHeight: "360px", overflowY: "auto", borderRadius: '10px' }}>
+        <table className="table table-striped" style={{ borderRadius: '10px' }}>
                             <thead style={{ position: "sticky", top: "0", zIndex: "1", background: "#fff" }}>
                                 <tr className="bg-danger text-white">
                                     <th>Transaction ID</th>

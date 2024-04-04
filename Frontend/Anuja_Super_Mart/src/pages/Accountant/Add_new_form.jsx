@@ -38,7 +38,7 @@ const TransactionForm = () => {
   });
 
   return (
-    <div style={{ display: 'flex', height: '100vh' }}>
+    <div style={{ display: 'flex', height: '100vh',backgroundColor: 'lightgray' }}>
       <Sidebar />
       <div style={{ flex: 1, padding: '20px', overflowY: 'auto' }}>
       <h1 className="text-danger" style={{ textAlign: 'center',marginLeft: '300px'}}>Add Transaction</h1>

@@ -21,7 +21,9 @@ const Login = () => {
       if (email === 'manujayak8@gmail.com') {
         navigate('/inventory'); // Navigate to /inventory for manujayak8@gmail.com
       } else if (email === 'n@gmail.com') {
-        navigate('/cashier'); // Navigate to /cashier for n@gmail.com
+        navigate('/cashier');
+      } else if (email === 'udari@gmail.com') {
+        navigate('/Transactions');  // Navigate to /cashier for n@gmail.com
       } else {
         navigate('/'); // Navigate to home for other users
       }
