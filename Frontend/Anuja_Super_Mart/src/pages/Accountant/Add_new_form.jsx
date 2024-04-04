@@ -28,7 +28,7 @@ const TransactionForm = () => {
         const response = await axios.post('/transactions', values);
         useTransactionStore.getState().addTransaction(response.data);
         resetForm();
-        setShowModal(true); // Show modal when transaction is successfully submitted
+        setShowModal(true); 
       } catch (error) {
         console.error('Error creating transaction:', error);
       } finally {
@@ -132,7 +132,7 @@ const TransactionForm = () => {
           </div>
         </div>
       </div>
-      {/* Modal */}
+     
       {showModal && (
   <div
     style={{
