@@ -1,5 +1,3 @@
-// Menu.js
-
 import React, { useState, useEffect } from 'react';
 import Header2 from "../../components/OrderProcess/MenuHeader";
 import OrderSec from "../../components/Orderbill/OrderSec";
@@ -54,16 +52,16 @@ const Menu = () => {
             <OrderSec orderItems={orderItems} removeFromOrder={removeFromOrder} />
             <MenuNav/> 
 
-            <div className="menu-categories">
+            <div className="menu-categories-custom">
                 {categories.map((category) =>(
-                    <div key={category.name} className={`category-container ${selectedCategory === category.name ? "category-active" : ""}`}
+                    <div key={category.name} className={`category-container-custom ${selectedCategory === category.name ? "category-active-custom" : ""}`}
                         onClick={() => setSelectedCategory(category.name)}
                     >
-                        <h4 className="category-name">{category.name}</h4>
+                        <h4 className="category-name-custom">{category.name}</h4>
                     </div>
                 ))}
             </div>
-            <div className="inventory-container">
+            <div className="inventory-container-custom">
                 {inventory.filter(i => i.category === selectedCategory).map(item => (
                     <MenuCard key={item.id} item={item} addToOrder={addToOrder} />
                 ))}

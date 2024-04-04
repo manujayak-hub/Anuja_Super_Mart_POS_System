@@ -29,31 +29,33 @@ function List() {
     return (
         <>
             <MenuNav />
-            <div>
-                <div><h1>LIST</h1></div>
+            <div className="list-container-custom">
+                <div className="list-heading-custom"><h1>LIST</h1></div>
                 {isLoading ? (
-                    <p>Loading...</p>
+                    <p className="loading-message-custom">Loading...</p>
                 ) : (
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ProductID</th>
-                                <th>Product Name</th>
-                                <th>Wholesale Price</th>
-                                <th>Available</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {inventory.map((inventory, index) => (
-                                <tr key={index}>
-                                    <td>{inventory.productId}</td>
-                                    <td>{inventory.productName}</td>
-                                    <td>{inventory.wholesalePrice}</td>
-                                    <td>{inventory.quantityInStock}</td>
+                    <div className="table-container-custom">
+                        <table className="table-custom">
+                            <thead>
+                                <tr>
+                                    <th className="th-custom">ProductID</th>
+                                    <th className="th-custom">Product Name</th>
+                                    <th className="th-custom">Wholesale Price</th>
+                                    <th className="th-custom">Available</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {inventory.map((item, index) => (
+                                    <tr key={index}>
+                                        <td className="td-custom">{item.productId}</td>
+                                        <td className="td-custom">{item.productName}</td>
+                                        <td className="td-custom">{item.wholesalePrice}</td>
+                                        <td className="td-custom">{item.quantityInStock}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 )}
             </div>
         </>
