@@ -108,8 +108,9 @@ const EditInv = () => {
                     <Sidebar />
                 </div>
                 <div className="col-sm-10">
+                <InvSupNav/>
                     <h1>Inventory List</h1>
-                    <InvSupNav/>
+                    
                     <div className="search-bar col-sm-8">
                         <input
                             type="text"
