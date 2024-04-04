@@ -13,7 +13,11 @@ import invRoute from './api/routes/Inventory_routes'
 import analyticRoute from "./api/routes/analytic_route"
 import order_route from "./api/routes/order_route"
 import User_route from "./api/routes/user_routes"
+import pickup_rouete from './api/routes/pickup_route'
+
+
 import ProdsupRoute from './api/routes/Prod_Supplier_route'
+
 
 import "dotenv/config"
 
@@ -62,8 +66,12 @@ app.use('/analytics', analyticRoute)
 app.use('/inventory', invRoute )
 //Authentication
 app.use('/auth',User_route)
+
+app.use('/pickup',pickup_rouete)
+
 //prod_supplier
 app.use('/supplier',ProdsupRoute)
+
 
 
 app.listen(PORT , ()=>{
