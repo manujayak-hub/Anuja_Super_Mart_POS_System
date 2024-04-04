@@ -1,0 +1,20 @@
+// NavBar.scss
+
+.cart-icon {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+  
+    .badge {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      font-size: 12px;
+      font-weight: bold;
+      background-color: #dc3545;
+      color: white;
+      border-radius: 50%;
+      padding: 4px 6px;
+    }
+  }
+  
