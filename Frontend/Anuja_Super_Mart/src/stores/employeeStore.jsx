@@ -1,21 +1,14 @@
-// employeeStore.js
 import { create } from 'zustand';
-import axios from 'axios';
 
 const useEmployeeStore = create((set) => ({
   employees: [],
-  error: null,
-  setError: (error) => set({ error }),
+  error:null,
   setEmployees: (newEmployees) => set({ employees: newEmployees }),
-  fetchEmployees: async () => {
-    try {
-      const response = await axios.get('/api/employees');
-      set({ employees: response.data });
-    } catch (error) {
-      console.error('Error fetching employees:', error);
-      set({ error: error.message });
-    }
-  },
+  addEmployee: (newEmployee) => set((state) => ({ employees: [...state.employees, newEmployee] })),
+  removeEmployee: (id) => set((state) => ({ employees: state.employees.filter(employee => employee._id !== id) })),
+  updateEmployee: (updatedEmployee) => set((state) => ({
+    employees: state.employees.map(employee => (employee._id === updatedEmployee._id ? updatedEmployee : employee))
+  })),
 }));
 
 export default useEmployeeStore;

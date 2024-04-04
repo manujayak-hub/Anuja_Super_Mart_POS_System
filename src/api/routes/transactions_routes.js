@@ -1,27 +1,38 @@
-import  express  from "express"
+import express from "express";
 
-const transactionrouter =  express.Router()
+const transactionRouter = express.Router();
+
 const {
-    createTransaction,getallTransactions,getbyIdTransaction,deleteTransaction,updateTransaction
-} = require('../controllers/transactionController')
+    createTransaction,
+    getallTransactions,
+    getbyIdTransaction,
+    deleteTransaction,
+    updateTransaction,
+    saveTypeTotal,
+    resetTypeTotal,
+    getAllTypeTotals
+} = require('../controllers/transactionController');
 
-//Get all transactions  
-transactionrouter.get('/', getallTransactions)
+// Get all transactions  
+transactionRouter.get('/', getallTransactions);
 
+// Get a single transaction
+transactionRouter.get('/:id', getbyIdTransaction);
 
-//Get a single transaction
-transactionrouter.get('/:id',getbyIdTransaction)
+// Post a new transaction
+transactionRouter.post('/', createTransaction);
 
+// Delete a transaction
+transactionRouter.delete('/:id', deleteTransaction);
 
-//Post a new transaction
-transactionrouter.post('/',createTransaction )
+// Update a transaction
+transactionRouter.patch('/:id', updateTransaction);
 
+// Save type and total - Define a unique endpoint, for example '/save-type-total'
+transactionRouter.post('/save-type-total', saveTypeTotal);
 
-//Delete a transaction
-transactionrouter.delete('/:id',deleteTransaction)
+transactionRouter.post('/reset-type-total', resetTypeTotal);
 
+transactionRouter.post('/get-type-total', getAllTypeTotals);
 
-//Update a transaction
-transactionrouter.patch('/:id',updateTransaction)
-
-module.exports = transactionrouter
+module.exports = transactionRouter;

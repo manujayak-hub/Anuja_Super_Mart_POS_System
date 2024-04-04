@@ -3,7 +3,9 @@ import Header2 from "../../components/OrderProcess/MenuHeader";
 import OrderSec from "../../components/Orderbill/OrderSec";
 import MenuNav from "../../components/OrderProcess/MenuNavbar";
 import MenuCard from "../../components/OrderProcess/MenuCard";
+
 import './Menu.scss'; // Import SCSS file
+
 
 const Menu = () => {
     const [inventory, setInventory] = useState([]);

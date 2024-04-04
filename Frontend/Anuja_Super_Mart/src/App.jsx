@@ -21,10 +21,16 @@ import TotalSaving from './pages/Discount/TotalSaving'
 import ItemList from './pages/Discount/ItemList'
 import ButtonComponent from './components/Discount/ButtonComponent'
 import Emp_list from './pages/Emp_pages/emp_list'
+
+import Emp_Dashboard from './pages/Emp_pages/emp_dashboard'
+import Emp_Attendance from './pages/Emp_pages/emp_attendance'
+import Emp_Salary from './pages/Emp_pages/emp_salary'
+
 import InventoryRoute from './Routes/InvRoute'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import OrderRetrieve from './pages/OrderProcess/OrderRetrieve'
 import PickupOrders from './pages/OrderProcess/PickupOrders'
+
 
 
 function App() {
@@ -44,14 +50,15 @@ function App() {
 
             <Route path="TransactionForm" element={<TransactionForm/>}/>  
             <Route path="AccountantDash" element={<Dash/>}/>
-
+            <Route path="Transactions" element={<TransactionsList/>}/>
+            
             <Route path="Form" element={<Form/>}/>
             <Route path="SProfile" element={<SProfile/>}/>
             <Route path="SDetails" element={<SDetails/>}/>
             <Route path="Categories" element={<Categories/>} />
             <Route path="Dash" element={<Dash/>}/>
 
-            <Route path="Transactions" element={<TransactionsList/>}/>
+            
             <Route path="Menu" element={<Menu/>} />
             <Route path="List" element={<List/>} />
             <Route path="Customer" element={<Customer/>}/>
@@ -61,10 +68,16 @@ function App() {
             <Route path="ItemList" element={<ItemList/>}/>
             <Route path="TotalSaving" element={<TotalSaving/>}/>
             <Route path="ButtonComponent" element={<ButtonComponent/>}/>
+
             <Route path="emp_list" element={<Emp_list/>} />
             <Route path="OrderRetrieve" element={<OrderRetrieve/>} />
             <Route path="PickupOrders" element={<PickupOrders/>} />
 
+
+            <Route path="emp_list" element={<Emp_list/>} />
+            <Route path="emp_dashboard" element={<Emp_Dashboard/>} />
+            <Route path="emp_attendance" element={<Emp_Attendance/>} />
+            <Route path="emp_salary" element={<Emp_Salary/>} />
             
 
 
