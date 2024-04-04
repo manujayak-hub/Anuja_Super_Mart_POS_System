@@ -85,6 +85,13 @@ const Emp_list = () => {
     setShowAddModal(false);
   };
 
+  const handleAddEmployee = (newEmployee) => {
+    // Add new employee to the employees array
+    setEmployees([...employees, newEmployee]);
+    // Close the modal
+    setShowAddModal(false);
+  };
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
@@ -117,10 +124,18 @@ const Emp_list = () => {
             flex: 1;
             border-radius: 20px;
             padding: 10px;
-            margin-right: 100px;
+            margin-right: 20px; /* Reduced margin for search bar */
             border: 1px solid #ccc;
           }
-          
+          .add-employee-btn {
+            background-color: #FD204F;
+            border-color: #FD204F;
+            color: #fff;
+          }
+          .add-employee-btn:hover {
+            background-color: #FD204F;
+            border-color: #FD204F;
+            color: #fff;
           }
         `}
       </style>
@@ -134,11 +149,9 @@ const Emp_list = () => {
             onChange={handleSearch}
             className="search-bar"
           />
-        <button type="button" className="btn btn-danger" style={{ backgroundColor: '#FD204F', borderColor: '#FD204F' }} onClick={handleShowAddModal}>
-  Add Employee
-</button>
-
-
+          <Button className="add-employee-btn" onClick={handleShowAddModal}>
+            Add Employee
+          </Button>
         </div>
         <div style={{ backgroundColor: '#FFFFFF', padding: '20px', borderRadius: '10px', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)', margin: '0px 5px' }}>
           <h1>Employee List</h1>
@@ -159,7 +172,7 @@ const Emp_list = () => {
                     <td>{employee.empID}</td>
                     <td>{employee.empName}</td>
                     <td>{employee.empRole}</td>
-                    <td>{new Date(employee.empJoinedDate).toLocaleDateString()}</td> {/* Format joined date */}
+                    <td>{new Date(employee.empJoinedDate).toLocaleDateString()}</td>{/* Format joined date */}
                     <td>
                       <button
                         type="button"
@@ -233,7 +246,7 @@ const Emp_list = () => {
           <Modal.Title>Add Employee</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <AddEmployeeForm handleClose={handleCloseAddModal} />
+          <AddEmployeeForm handleClose={handleCloseAddModal} handleAddEmployee={handleAddEmployee} />
         </Modal.Body>
       </Modal>
     </>
