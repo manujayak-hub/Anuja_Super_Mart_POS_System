@@ -3,7 +3,11 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from '../../api/axios';
 import useInventoryStore from '../../stores/inventoryStore';
-import Sidebar from '../../components/InventoryComponents/InvSideBar'
+import Sidebar from '../../components/InventoryComponents/InvSideBar';
+import InvSupNav from '../../components/InventoryComponents/invSupNav';
+import DatePicker from 'react-datepicker'; // Import DatePicker
+import 'react-datepicker/dist/react-datepicker.css'; // Import DatePicker CSS
+
 
 const AddItem = () => {
     // Define formik form values, validation schema, and submit function
@@ -16,8 +20,8 @@ const AddItem = () => {
             quantityInStock: '',
             category: '',
             supplierId: '',
-            manufactureDate: '',
-            expireDate: '',
+            manufactureDate: null,
+            expireDate: null,
             imageUrl: '',
         },
         validationSchema: Yup.object({
@@ -52,17 +56,14 @@ const AddItem = () => {
 
     return (
         <>
-
-
             <div className="container-fluid">
                 <div className="row">
-                    <div className="col-sm-2 sidenav">
+                    <div className="col-sm-2">
                         <Sidebar />
                     </div>
-                    <div className="col-sm-2 ">
-                    </div>
-                    <div className="col-sm-6">
-                    <h1>Add Products</h1>
+                    <div className="col-sm-10">
+                        <InvSupNav />
+                        <h1>Add Products</h1>
                         {/* Formik form */}
                         <form onSubmit={formik.handleSubmit} className="p-3">
                             {/* Input fields for inventory item */}
@@ -180,15 +181,15 @@ const AddItem = () => {
                             </div>
 
                             <div className="mb-3">
-                                <label htmlFor="manufactureDate" className="form-label">manufactureDate</label>
-                                <input
-                                    type="text"
+                                <label htmlFor="manufactureDate" className="form-label">Manufacture Date</label><br />
+                                <DatePicker
                                     className="form-control"
                                     id="manufactureDate"
                                     name="manufactureDate"
-                                    value={formik.values.manufactureDate}
-                                    onChange={formik.handleChange}
+                                    selected={formik.values.manufactureDate}
+                                    onChange={(date) => formik.setFieldValue('manufactureDate', date)}
                                     onBlur={formik.handleBlur}
+                                    dateFormat="MM/dd/yyyy" // Customize date format if needed
                                 />
                                 {formik.touched.manufactureDate && formik.errors.manufactureDate ? (
                                     <div className="text-danger">{formik.errors.manufactureDate}</div>
@@ -196,15 +197,15 @@ const AddItem = () => {
                             </div>
 
                             <div className="mb-3">
-                                <label htmlFor="expireDate" className="form-label">expireDate</label>
-                                <input
-                                    type="text"
+                                <label htmlFor="expireDate" className="form-label">Expire Date</label><br />
+                                <DatePicker
                                     className="form-control"
                                     id="expireDate"
                                     name="expireDate"
-                                    value={formik.values.expireDate}
-                                    onChange={formik.handleChange}
+                                    selected={formik.values.expireDate}
+                                    onChange={(date) => formik.setFieldValue('expireDate', date)}
                                     onBlur={formik.handleBlur}
+                                    dateFormat="MM/dd/yyyy" // Customize date format if needed
                                 />
                                 {formik.touched.expireDate && formik.errors.expireDate ? (
                                     <div className="text-danger">{formik.errors.expireDate}</div>

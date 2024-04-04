@@ -2,7 +2,7 @@ import express from "express"
 import {logger} from "./utills/loggerfile"
 import cors from "cors"
 import MongoConnect from "./configs/DB_Connection"
-
+import session from 'express-session';
 import transaction_routes from "./api/routes/transactions_routes"
 import ctask_route from "./api/routes/ctask_route"
 import Discount_route from "./api/routes/Discount_route"
@@ -16,18 +16,27 @@ import User_route from "./api/routes/user_routes"
 import pickup_rouete from './api/routes/pickup_route'
 
 
+import ProdsupRoute from './api/routes/Prod_Supplier_route'
+
+
 import "dotenv/config"
 
 
 
 const app = express()
 const PORT = process.env.PORT
+const SECRET = process.env.SECRET
 
 
 app.use(cors({
     origin: 'http://localhost:5173', 
 optionsSuccessStatus: 200} ))
 
+app.use(session({
+    secret: SECRET, 
+    resave: false,
+    saveUninitialized: true
+}));
 
 //middleware
 app.use(express.json())
@@ -57,8 +66,12 @@ app.use('/analytics', analyticRoute)
 app.use('/inventory', invRoute )
 //Authentication
 app.use('/auth',User_route)
-//pickup route
+
 app.use('/pickup',pickup_rouete)
+
+//prod_supplier
+app.use('/supplier',ProdsupRoute)
+
 
 
 app.listen(PORT , ()=>{
