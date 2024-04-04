@@ -4,7 +4,7 @@ import Header2 from "../../components/OrderProcess/MenuHeader";
 import OrderSec from "../../components/Orderbill/OrderSec";
 import MenuNav from "../../components/OrderProcess/MenuNavbar";
 import MenuCard from "../../components/OrderProcess/MenuCard";
-import './Menu.css';
+
 
 const Menu = () => {
     const [inventory, setInventory] = useState([]);
