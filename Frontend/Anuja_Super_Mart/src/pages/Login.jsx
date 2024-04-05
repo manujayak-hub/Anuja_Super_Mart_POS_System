@@ -15,20 +15,21 @@ const Login = () => {
     e.preventDefault();
     try {
       const res = await axios.post('/auth/login', { email, password });
-      setUser(res.data.token);
+      await setUser(res.data.token); // Wait for setUser to complete
       setErrorMessage('');
       // Redirect based on user email
       if (email === 'manujayak8@gmail.com') {
-        navigate('/inventory'); // Navigate to /inventory for manujayak8@gmail.com
+        navigate('/inventory');
       } else if (email === 'n@gmail.com') {
-        navigate('/cashier'); // Navigate to /cashier for n@gmail.com
+        navigate('/cashier');
       } else {
-        navigate('/'); // Navigate to home for other users
+        navigate('/');
       }
     } catch (error) {
       console.error('Error:', error);
       setErrorMessage('Login failed. Please check your credentials.');
     }
+  }
   }
 
   return (
