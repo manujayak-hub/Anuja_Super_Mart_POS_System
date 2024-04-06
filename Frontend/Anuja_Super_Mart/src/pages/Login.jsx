@@ -29,8 +29,7 @@ const Login = () => {
       console.error('Error:', error);
       setErrorMessage('Login failed. Please check your credentials.');
     }
-  }
-  }
+  };
 
   return (
     <>
