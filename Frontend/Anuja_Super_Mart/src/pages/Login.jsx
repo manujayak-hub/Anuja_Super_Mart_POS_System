@@ -21,10 +21,12 @@ const Login = () => {
       if (email === 'manujayak8@gmail.com') {
         navigate('/inventory');
       } else if (email === 'n@gmail.com') {
-        navigate('/cashier');
-      } else {
-        navigate('/');
-      }
+        navigate('/cashier')
+        
+      }else if (email === 'dulanimalka1@gmail.com') {
+          navigate('/emp_list');// Navigate to /cashier for n@gmail.com
+      } else{
+        navigate('/'); // Navigate to home for other users
     } catch (error) {
       console.error('Error:', error);
       setErrorMessage('Login failed. Please check your credentials.');
