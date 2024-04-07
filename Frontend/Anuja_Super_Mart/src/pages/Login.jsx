@@ -21,12 +21,12 @@ const Login = () => {
       if (email === 'manujayak8@gmail.com') {
         navigate('/inventory');
       } else if (email === 'n@gmail.com') {
-        navigate('/cashier')
-        
-      }else if (email === 'dulanimalka1@gmail.com') {
-          navigate('/emp_list');// Navigate to /cashier for n@gmail.com
-      } else{
-        navigate('/'); // Navigate to home for other users
+        navigate('/cashier');
+      } else if (email === 'dulanimalka1@gmail.com') {
+        navigate('/emp_list');
+      } else {
+        navigate('/');
+      }
     } catch (error) {
       console.error('Error:', error);
       setErrorMessage('Login failed. Please check your credentials.');
@@ -43,7 +43,6 @@ const Login = () => {
               <div className="card-body">
                 <h2 className="card-title mb-4">Login</h2>
                 {errorMessage && <p className="text-danger">{errorMessage}</p>}
-                {/* Remove reference to successMessage */}
                 <form onSubmit={handleSubmit}>
                   <div className="mb-3">
                     <input type="email" className="form-control" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
