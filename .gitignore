@@ -17,3 +17,5 @@
 # Windows
 Thumbs.db
 ehthumbs.db
+
+yarn.lock
