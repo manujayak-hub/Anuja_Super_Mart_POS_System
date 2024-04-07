@@ -27,6 +27,7 @@ const Login = () => {
           navigate('/emp_list');// Navigate to /cashier for n@gmail.com
       } else{
         navigate('/'); // Navigate to home for other users
+      }
     } catch (error) {
       console.error('Error:', error);
       setErrorMessage('Login failed. Please check your credentials.');

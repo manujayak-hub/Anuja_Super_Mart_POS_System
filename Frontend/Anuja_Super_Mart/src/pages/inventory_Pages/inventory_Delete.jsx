@@ -1,15 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../../api/axios';
 import useInventoryStore from '../../stores/inventoryStore';
-import Sidebar from '../../components/InventoryComponents/InvSideBar'
-import InvSupNav from '../../components/InventoryComponents/invSupNav'
-import searchicon from '../../assets/inventory/icons8-search-50.png'
+import Sidebar from '../../components/InventoryComponents/InvSideBar';
+import InvSupNav from '../../components/InventoryComponents/invSupNav';
 import crossicon from '../../assets/inventory/icons8-cross-50.png'
-
+import { Pagination, Modal, Button, Table } from 'react-bootstrap';
+import '../../styles/inventorydelete.scss';
 
 const InventoryDelete = () => {
     const { inventory, setInventory, setError, removeInventory } = useInventoryStore();
     const [searchQuery, setSearchQuery] = useState('');
+    const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+    const [selectedProductId, setSelectedProductId] = useState(null);
+    const [filteredInventory, setFilteredInventory] = useState([]);
+    const itemsPerPage = 10;
+    const [currentPage, setCurrentPage] = useState(1);
+
+    useEffect(() => {
+        fetchInventory();
+    }, []);
 
     const fetchInventory = async () => {
         try {
@@ -21,75 +30,82 @@ const InventoryDelete = () => {
     };
 
     useEffect(() => {
+        setFilteredInventory(inventory);
+    }, [inventory]);
 
-        fetchInventory();
-    }, [setInventory, setError]);
-
-    const handleDelete = async (id) => {
-        try {
-            await axios.delete(`/inventory/${id}`);
-            removeInventory(id);
-        } catch (error) {
-            console.error('Error deleting inventory item:', error);
-        }
-    };
-
-    const handleSearch = async () => {
-        if (searchQuery.trim() !== '') {
-            try {
-                // Fetch all inventory items
-                const response = await axios.get('/inventory');
-                const allInventory = response.data;
-
-                // Filter inventory items locally based on the search query
-                const filteredInventory = allInventory.filter(item =>
-                    item.productName.toLowerCase().includes(searchQuery.toLowerCase())
-                );
-
-                setInventory(filteredInventory);
-            } catch (error) {
-                setError(error.message);
-            }
+    const handleSearch = (e) => {
+        const query = e.target.value;
+        setSearchQuery(query);
+        if (query.trim() !== '') {
+            const filtered = inventory.filter(item =>
+                item.productName.toLowerCase().includes(query.toLowerCase())
+            );
+            setFilteredInventory(filtered);
         } else {
-            fetchInventory(); // If search query is empty, fetch all inventory items
+            setFilteredInventory(inventory);
         }
     };
 
     const handleClearSearch = () => {
         setSearchQuery('');
-        fetchInventory(); // Reset search and fetch all inventory items
+        setFilteredInventory(inventory);
     };
 
+    const handlePagination = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
+    const handleDeleteConfirmation = (id) => {
+        setSelectedProductId(id);
+        setShowConfirmationModal(true);
+    };
+
+    const handleConfirmDelete = async () => {
+        try {
+            await axios.delete(`/inventory/${selectedProductId}`);
+            removeInventory(selectedProductId);
+            setShowConfirmationModal(false);
+            fetchInventory(); // Refresh inventory data after deletion
+        } catch (error) {
+            console.error('Error deleting inventory item:', error);
+        }
+    };
+
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = filteredInventory.slice(indexOfFirstItem, indexOfLastItem);
+
     return (
-        <div className="container-fluid">
+        <div className="container-fluid bg-light">
             <div className="row">
                 <div className="col-sm-2 sidenav">
                     <Sidebar />
                 </div>
                 <div className="col-sm-10">
-                <InvSupNav/>
-                    <h1>Delete Item & edit Item</h1>
-                    <div className="search-bar col-sm-8">
-                        <input
-                            type="text"
-                            placeholder="Search by product name"
-                            value={searchQuery}
-                            onChange={e => setSearchQuery(e.target.value)}
-                        />
-                        <a onClick={handleSearch} className="icon-container">
-                            <img src={searchicon} className="img-fluid icon" alt="Search Icon" />
-                        </a>
-                        {/* Clear search icon */}
-                        <a onClick={handleClearSearch} className="icon-container">
-                            <img src={crossicon} className="img-fluid icon" alt="Cross Icon" />
-                        </a>
+                    <InvSupNav />
+                    <h1>Delete Inventory Products</h1>
+                    <div className="search-bar col-sm-3">
+                        <div className="input-group">
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Search by product name"
+                                value={searchQuery}
+                                onChange={handleSearch}
+                            />
+                            <div className="input-group-append">
+                                <a onClick={handleClearSearch} className="icon-container">
+                                    <img src={crossicon} className="img-fluid icon" alt="Cross Icon" />
+                                </a>
+                            </div>
+                        </div>
                     </div>
                     <div className="table-responsive">
-                        <table className="table table-hover">
+                        <Table striped bordered hover>
                             <thead>
                                 <tr>
                                     <th>prodId</th>
-                                    <th>Name</th>
+                                    <th style={{ width: '20%' }} >Name</th>
                                     <th>wPrice</th>
                                     <th>rPrice</th>
                                     <th>InStock</th>
@@ -97,13 +113,12 @@ const InventoryDelete = () => {
                                     <th>supplierId</th>
                                     <th>MFDate</th>
                                     <th>EXPDate</th>
-                                    <th>imageUrl</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {inventory.length > 0 ? (
-                                    inventory.map(item => (
+                                {currentItems.length > 0 ? (
+                                    currentItems.map(item => (
                                         <tr key={item._id}>
                                             <td>{item.productId}</td>
                                             <td>{item.productName}</td>
@@ -114,9 +129,8 @@ const InventoryDelete = () => {
                                             <td>{item.supplierId}</td>
                                             <td>{item.manufactureDate}</td>
                                             <td>{item.expireDate}</td>
-                                            <td>{item.imageUrl}</td>
                                             <td>
-                                                <button onClick={() => handleDelete(item._id)} className="btn btn-danger">Delete</button>
+                                                <Button variant="danger" size="sm" onClick={() => handleDeleteConfirmation(item._id)}>Delete</Button> {/* Small red button for Delete */}
                                             </td>
                                         </tr>
                                     ))
@@ -126,8 +140,34 @@ const InventoryDelete = () => {
                                     </tr>
                                 )}
                             </tbody>
-                        </table>
+                        </Table>
                     </div>
+                    <Pagination>
+                        {filteredInventory.length > 0 && (
+                            Array.from({ length: Math.ceil(filteredInventory.length / itemsPerPage) }).map((_, index) => (
+                                <Pagination.Item key={index + 1} onClick={() => handlePagination(index + 1)} active={index + 1 === currentPage}>
+                                    {index + 1}
+                                </Pagination.Item>
+                            ))
+                        )}
+                    </Pagination>
+                    {/* Confirmation Modal */}
+                    <Modal show={showConfirmationModal} onHide={() => setShowConfirmationModal(false)}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Confirm Deletion</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            Are you sure you want to delete this item?
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={() => setShowConfirmationModal(false)}>
+                                Cancel
+                            </Button>
+                            <Button variant="danger" onClick={handleConfirmDelete}>
+                                Delete
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
                 </div>
             </div>
         </div>

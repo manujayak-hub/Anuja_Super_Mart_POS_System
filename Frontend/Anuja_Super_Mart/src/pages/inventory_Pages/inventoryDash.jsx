@@ -199,7 +199,7 @@ const InventoryDash = () => {
                                 <thead>
                                     <tr>
                                         <th>prodId</th>
-                                        <th>Name</th>
+                                        <th style={{ width: '20%' }}>Name</th>
                                         <th>wPrice</th>
                                         <th>rPrice</th>
                                         <th>InStock</th>
