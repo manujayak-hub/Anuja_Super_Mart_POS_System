@@ -21,8 +21,11 @@ const Login = () => {
       if (email === 'manujayak8@gmail.com') {
         navigate('/inventory'); // Navigate to /inventory for manujayak8@gmail.com
       } else if (email === 'n@gmail.com') {
-        navigate('/cashier'); // Navigate to /cashier for n@gmail.com
-      } else {
+        navigate('/cashier');
+        
+      }else if (email === 'dulanimalka1@gmail.com') {
+          navigate('/emp_list');// Navigate to /cashier for n@gmail.com
+      } else{
         navigate('/'); // Navigate to home for other users
       }
     } catch (error) {
