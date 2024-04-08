@@ -40,17 +40,6 @@ const InventoryDash = () => {
         fetchInventory();
     }, [setInventory, setError]);
 
-    useEffect(() => {
-        const checkLowStock = async () => {
-            try {
-                await axios.post('/send/low');
-            } catch (error) {
-                console.error('Error checking low stock:', error);
-            }
-        };
-
-        checkLowStock();
-    }, []);
 
     useEffect(() => {
         let total = 0;
