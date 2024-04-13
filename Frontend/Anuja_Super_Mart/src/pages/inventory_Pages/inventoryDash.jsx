@@ -151,6 +151,17 @@ const InventoryDash = () => {
         pdfDocGenerator.download('Inventory_Report.pdf');
     };
     
+    const sendEmail = () => {
+        axios.get('/inventory/lowstock')
+            .then(response => {
+                // Handle success, maybe show a confirmation message
+                console.log('Email sent successfully');
+            })
+            .catch(error => {
+                // Handle error, maybe show an error message
+                console.error('Error sending email:', error);
+            });
+    };
 
     return (
         <div className="container-fluid bg-light inventory-dash-container">
@@ -223,7 +234,10 @@ const InventoryDash = () => {
                                 </div>
                             </Col>
                             <Col md="auto">
-                                <Button onClick={generatePDF} variant="primary">Generate PDF Report</Button>
+                                <Button onClick={generatePDF} variant="primary">Download PDF</Button>
+                            </Col>
+                            <Col md="auto">
+                                <Button onClick={sendEmail} variant="success">Send Email</Button>
                             </Col>
                             <Col md="auto">
                                 <Pagination>
