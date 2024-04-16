@@ -5,13 +5,13 @@ Welcome to our MERN (MongoDB, Express.js, React.js, Node.js) based POS (Point of
 
 ## Team Members
 - [Kamburugammuwa K.V.M.S](https://github.com/manujayak-hub)
-- [Yasodara S.A.D.S]()
-- [Bandara R.M.S.P]()
+- [Yasodara S.A.D.S](https://github.com/Shehanii)
+- [Bandara R.M.S.P](https://github.com/sahanpramuditha22)
 - [Jayawardana N.G.U.D](https://github.com/UdariDevindi)
 - [Imalka T.A.D.D](https://github.com/XdulanX)
-- [Wijesinghe M.A.T.N]()
+- [Wijesinghe M.A.T.N](https://github.com/Nethranjalee)
 - [Jayawardana L.P.G.K](https://github.com/KavinJ3344)
-- [Hewavitharana U.I]()
+- [Hewavitharana U.I](https://github.com/InduwariHW)
 
 ## Features
 1. **User Authentication**: Secure login and registration system for authorized access.
