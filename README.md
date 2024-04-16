@@ -32,14 +32,16 @@ Welcome to our MERN (MongoDB, Express.js, React.js, Node.js) based POS (Point of
 - **Authentication**: JSON Web Tokens (JWT)
 - **Payment Integration**: (Specify payment gateway if applicable)
 
+
 ## Installation
 1. Clone the repository: `git clone <repository-url>`
 2. Navigate to the project directory: `cd <project-folder>`
 3. Install dependencies for frontend and backend:
    ```bash
-   cd frontend
-   npm install
+   cd frontend/anujaSupuerMart
+   yarn install
    cd ../backend
-   npm install
+   yarn install
+
 
 
