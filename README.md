@@ -14,14 +14,14 @@ Welcome to our MERN (MongoDB, Express.js, React.js, Node.js) based POS (Point of
 - [Hewavitharana U.I](https://github.com/InduwariHW)
 
 ## Features
-1.Customer Management System
-2.Order Processing System 
-3.Employee Management System
-4.Promoting and Discount System
-5.Company Task Management System
-6.Revenue Management
-7.Sales and Analytics Management 
-8.Inventory Management 
+- Customer Management System
+- Order Processing System 
+- Employee Management System
+- Promoting and Discount System
+- Company Task Management System
+- Revenue Management
+- Sales and Analytics Management 
+- Inventory Management 
 
 
 ## Tech Stack
