@@ -14,23 +14,21 @@ Welcome to our MERN (MongoDB, Express.js, React.js, Node.js) based POS (Point of
 - [Hewavitharana U.I](https://github.com/InduwariHW)
 
 ## Features
-1. **User Authentication**: Secure login and registration system for authorized access.
-2. **Product Management**: Add, edit, and delete products in the inventory.
-3. **Sales Management**: Record and manage sales transactions efficiently.
-4. **Inventory Tracking**: Keep track of available stock and receive low stock alerts.
-5. **Reporting**: Generate sales reports, inventory reports, etc.
-6. **Customer Management**: Manage customer information and track purchase history.
-7. **Payment Processing**: Integration with payment gateways for seamless transactions.
-8. **Responsive Design**: Optimized for various devices for accessibility.
-9. **User Permissions**: Different access levels for administrators, managers, and staff.
-10. **Search Functionality**: Easily search for products, customers, or transactions.
+1.Customer Management System
+2.Order Processing System 
+3.Employee Management System
+4.Promoting and Discount System
+5.Company Task Management System
+6.Revenue Management
+7.Sales and Analytics Management 
+8.Inventory Management 
+
 
 ## Tech Stack
 - **Frontend**: React.js
 - **Backend**: Node.js, Express.js
 - **Database**: MongoDB
 - **Authentication**: JSON Web Tokens (JWT)
-- **Payment Integration**: (Specify payment gateway if applicable)
 
 
 ## Installation
