@@ -69,7 +69,7 @@ function App() {
             <Route path="ButtonComponent" element={<ButtonComponent/>}/>
 
 
-            <Route path="emp_list" element={<Emp_list/>} />
+           
            
 
            
