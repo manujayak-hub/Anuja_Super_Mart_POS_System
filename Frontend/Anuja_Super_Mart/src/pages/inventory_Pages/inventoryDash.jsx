@@ -7,6 +7,8 @@ import crossicon from '../../assets/inventory/icons8-cross-50.png';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Table, Pagination, Button, Row, Col } from 'react-bootstrap';
+import { ToastContainer, toast } from 'react-toastify'; // Import toast
+import 'react-toastify/dist/ReactToastify.css';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 import '../../styles/InventoryDash.scss'
@@ -27,6 +29,8 @@ const InventoryDash = () => {
 
     const paginate = pageNumber => setCurrentPage(pageNumber);
 
+
+    
     const fetchInventory = async () => {
         try {
             const response = await axios.get('/inventory');
@@ -154,15 +158,24 @@ const InventoryDash = () => {
     const sendEmail = () => {
         axios.get('/inventory/lowstock')
             .then(response => {
-                // Handle success, maybe show a confirmation message
-                console.log('Email sent successfully');
+                const lowStockItems = response.data;
+                if (lowStockItems.length > 0) {
+                    // If there are low stock items, send email
+                    const emailContent = generateEmailContent(lowStockItems);
+                    // Assuming there's a function to send email, replace this with your email sending logic
+                    sendEmailFunction(emailContent);
+                    toast.success('Email sent successfully'); // Show success message
+                } else {
+                    // If no low stock items, show message
+                    toast.info('No low stock items to send email.'); // Show info message
+                }
             })
             .catch(error => {
                 // Handle error, maybe show an error message
                 console.error('Error sending email:', error);
+                toast.error('Error sending email'); // Show error message
             });
     };
-
     return (
         <div className="container-fluid bg-light inventory-dash-container">
             <div className="container-fluid bg-light">
@@ -172,6 +185,7 @@ const InventoryDash = () => {
                     </div>
 
                     <div className="col-sm-10 ">
+                    <ToastContainer /> 
                         <InvSupNav />
                         <center><h1>Inventory List</h1></center>
                         
@@ -237,7 +251,7 @@ const InventoryDash = () => {
                                 <Button onClick={generatePDF} variant="primary">Download PDF</Button>
                             </Col>
                             <Col md="auto">
-                                <Button onClick={sendEmail} variant="success">Send Email</Button>
+                                <Button onClick={sendEmail} variant="success">Low Stock Email</Button>
                             </Col>
                             <Col md="auto">
                                 <Pagination>
