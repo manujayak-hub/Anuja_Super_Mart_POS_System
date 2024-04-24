@@ -7,7 +7,8 @@ const CartSchema = new Schema({
     ItemName: {type: String},
     Quantity: {type: Number},
     ItemPrice: {type: Number},
-    PickupTime: {type: String}
+    PickupTime: {type: String},
+    imageUrl: { type: String }
 },{
     timestamps: true,
     collection: 'Cart'

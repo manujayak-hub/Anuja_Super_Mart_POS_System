@@ -1,11 +1,3 @@
-import React, { useEffect, useState } from 'react';
-import axios from '../../api/axios';
-import EmployeeDetails from './EmployeeDetails';
-import EmployeeForm from './EmployeeForm';
-import AddEmployeeForm from './AddEmployeeForm';
-import SideBar from '../../components/EmployeeComponents/empSideBar';
-import { Modal, Button } from 'react-bootstrap';
-
 const Emp_list = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
