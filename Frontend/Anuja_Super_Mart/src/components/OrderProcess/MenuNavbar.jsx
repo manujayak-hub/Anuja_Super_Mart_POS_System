@@ -16,7 +16,6 @@ const MenuNav = () => {
         <ul>
           <li><Link to="/Menu">Menu</Link></li>
           <li><Link to="/List">List</Link></li>
-          <li><Link to="/">Add Customer</Link></li>
           <li><Link to="/PickupOrders">Pickup Orders</Link></li>
           <li><Link to="/OrderRetrieve">Order Retrival</Link></li>
 

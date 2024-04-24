@@ -70,7 +70,7 @@ function NavBar() {
 
   return (
     <header>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+      <nav className="navbar navbar-expand-lg navbar-dark" style={{ backgroundColor: '#198754' }}>
         <div className="container"> 
           <Link className="navbar-brand" to="/">Anuja Super Mart</Link>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

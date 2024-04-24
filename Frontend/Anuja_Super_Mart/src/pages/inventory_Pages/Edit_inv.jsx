@@ -1,24 +1,61 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../../api/axios';
 import useInventoryStore from '../../stores/inventoryStore';
-import Sidebar from '../../components/InventoryComponents/InvSideBar'
-import InvSupNav from '../../components/InventoryComponents/invSupNav'
-import UpdateForm from '../../components/InventoryComponents/Updateform'; // Import the UpdateForm component
-import searchicon from '../../assets/inventory/icons8-search-50.png'
-import crossicon from '../../assets/inventory/icons8-cross-50.png'
-import { Pagination, Modal, Button } from 'react-bootstrap';
+import Sidebar from '../../components/InventoryComponents/InvSideBar';
+import InvSupNav from '../../components/InventoryComponents/invSupNav';
+import UpdateForm from '../../components/InventoryComponents/Updateform';
+import crossicon from '../../assets/inventory/icons8-cross-50.png';
+import { Pagination, Modal, Button, Table } from 'react-bootstrap';
+import '../../styles/EditInv.scss';
 
 const EditInv = () => {
     const { inventory, setError, setInventory } = useInventoryStore();
-    const [selectedProductId, setSelectedProductId] = useState(null);
-    const [selectedItem, setSelectedItem] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
     const [showUpdateModal, setShowUpdateModal] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
+    const [selectedProductId, setSelectedProductId] = useState(null);
+    const [filteredInventory, setFilteredInventory] = useState([]);
     const itemsPerPage = 10;
 
-    // Function to handle selecting a product ID
-    const displayUpdateForm = (productId) => {
+    useEffect(() => {
+        fetchInventory();
+    }, []);
+
+    const fetchInventory = async () => {
+        try {
+            const response = await axios.get('/inventory');
+            setInventory(response.data);
+            setFilteredInventory(response.data); // Initialize filtered inventory with all items
+        } catch (error) {
+            setError(error.message);
+        }
+    };
+
+    const handleSearchChange = (event) => {
+        const query = event.target.value;
+        setSearchQuery(query);
+        setCurrentPage(1); // Reset current page when search query changes
+        filterInventory(query);
+    };
+
+    const filterInventory = (query) => {
+        const filtered = inventory.filter(item =>
+            item.productName.toLowerCase().includes(query.toLowerCase())
+        );
+        setFilteredInventory(filtered);
+    };
+
+    const handleClearSearch = () => {
+        setSearchQuery('');
+        setCurrentPage(1); // Reset current page when search is cleared
+        setFilteredInventory(inventory); // Reset filtered inventory to all items
+    };
+
+    const handlePagination = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
+    const handleDisplayUpdateForm = (productId) => {
         setSelectedProductId(productId);
         setShowUpdateModal(true);
     };
@@ -27,111 +64,51 @@ const EditInv = () => {
         setShowUpdateModal(false);
     };
 
-    const fetchInventory = async () => {
-        try {
-            const response = await axios.get('/inventory');
-            setInventory(response.data);
-        } catch (error) {
-            setError(error.message);
-        }
-    };
-
-    // Effect to fetch inventory data
-    useEffect(() => {
-        fetchInventory();
-    }, [setInventory, setError]);
-
-    // Effect to update selected item when selectedProductId changes
-    useEffect(() => {
-        if (selectedProductId) {
-            const selectedItem = inventory.find(item => item.productId === selectedProductId);
-            setSelectedItem(selectedItem);
-        } else {
-            setSelectedItem(null);
-        }
-    }, [selectedProductId, inventory]);
-
-    // Function to handle update form submission
     const handleUpdate = async (updatedItem) => {
         try {
-            // Make API request to update inventory item
             await axios.patch(`/inventory/${updatedItem._id}`, updatedItem);
-            // Refresh inventory data after update
-            const response = await axios.get('/inventory');
-            setInventory(response.data);
-            // Clear selected product ID
-            setSelectedProductId(null);
+            fetchInventory(); // Refresh inventory data
             setShowUpdateModal(false);
         } catch (error) {
             console.error('Error updating inventory item:', error);
         }
     };
 
-    const handleSearch = async () => {
-        if (searchQuery.trim() !== '') {
-            try {
-                // Fetch all inventory items
-                const response = await axios.get('/inventory');
-                const allInventory = response.data;
-
-                // Filter inventory items locally based on the search query
-                const filteredInventory = allInventory.filter(item =>
-                    item.productName.toLowerCase().includes(searchQuery.toLowerCase())
-                );
-
-                setInventory(filteredInventory);
-            } catch (error) {
-                setError(error.message);
-            }
-        } else {
-            fetchInventory(); // If search query is empty, fetch all inventory items
-        }
-    };
-
-    const handleClearSearch = () => {
-        setSearchQuery('');
-        fetchInventory(); // Reset search and fetch all inventory items
-    };
-
-    // Logic to calculate current items based on pagination
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = inventory.slice(indexOfFirstItem, indexOfLastItem);
-
-    // Change page
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    const currentItems = filteredInventory.slice(indexOfFirstItem, indexOfLastItem);
 
     return (
-        <div className="container-fluid">
+        <div className="container-fluid bg-light">
             <div className="row">
                 <div className="col-sm-2 sidenav">
                     <Sidebar />
                 </div>
                 <div className="col-sm-10">
-                <InvSupNav/>
-                    <h1>Inventory List</h1>
-                    
-                    <div className="search-bar col-sm-8">
-                        <input
-                            type="text"
-                            placeholder="Search by product name"
-                            value={searchQuery}
-                            onChange={e => setSearchQuery(e.target.value)}
-                        />
-                        <a onClick={handleSearch} className="icon-container">
-                            <img src={searchicon} className="img-fluid icon" alt="Search Icon" />
-                        </a>
-                        {/* Clear search icon */}
-                        <a onClick={handleClearSearch} className="icon-container">
-                            <img src={crossicon} className="img-fluid icon" alt="Cross Icon" />
-                        </a>
+                    <InvSupNav/>
+                    <h1>Change Inventory Details</h1>
+                    <div className="search-bar col-sm-3">
+                        <div className="input-group">
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Search by product name"
+                                value={searchQuery}
+                                onChange={handleSearchChange}
+                            />
+                            <div className="input-group-append">
+                                <a onClick={handleClearSearch} className="icon-container">
+                                    <img src={crossicon} className="img-fluid icon" alt="Cross Icon" />
+                                </a>
+                            </div>
+                        </div>
                     </div>
                     <div className="table-responsive">
-                        <table className="table table-hover">
+                        <Table striped bordered hover>
                             <thead>
                                 <tr>
                                     <th>prodId</th>
-                                    <th>Name</th>
+                                    <th style={{ width: '20%' }} >Name</th>
                                     <th>wPrice</th>
                                     <th>rPrice</th>
                                     <th>InStock</th>
@@ -155,37 +132,43 @@ const EditInv = () => {
                                             <td>{item.supplierId}</td>
                                             <td>{item.manufactureDate}</td>
                                             <td>{item.expireDate}</td>
-                                            <td> <button onClick={() => displayUpdateForm(item.productId)}>Update</button></td>
+                                            <td>
+                                                <Button variant="danger" size="sm" className="mr-2" onClick={() => handleDisplayUpdateForm(item.productId)}>Update</Button> {/* Small red button for Update */}
+                                              
+                                            </td>
                                         </tr>
                                     ))
                                 ) : (
                                     <tr>
-                                        <td colSpan="3">No inventory items found.</td>
+                                        <td colSpan="10">No inventory items found.</td>
                                     </tr>
                                 )}
                             </tbody>
-                        </table>
+                        </Table>
                     </div>
-                    {/* Pagination */}
                     <Pagination>
-                        {inventory.length > 0 && (
-                            Array.from({ length: Math.ceil(inventory.length / itemsPerPage) }).map((_, index) => (
-                                <Pagination.Item key={index + 1} onClick={() => paginate(index + 1)} active={index + 1 === currentPage}>
+                        {filteredInventory.length > 0 && (
+                            Array.from({ length: Math.ceil(filteredInventory.length / itemsPerPage) }).map((_, index) => (
+                                <Pagination.Item key={index + 1} onClick={() => handlePagination(index + 1)} active={index + 1 === currentPage}>
                                     {index + 1}
                                 </Pagination.Item>
                             ))
                         )}
                     </Pagination>
-                    {/* Update Modal */}
                     <Modal show={showUpdateModal} onHide={handleCloseUpdateModal}>
                         <Modal.Header closeButton>
                             <Modal.Title>Update Product</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            {selectedItem && <UpdateForm initialValues={selectedItem} onSubmit={handleUpdate} />}
+                            {selectedProductId && (
+                                <UpdateForm
+                                    initialValues={inventory.find(item => item.productId === selectedProductId)}
+                                    onSubmit={handleUpdate}
+                                />
+                            )}
                         </Modal.Body>
                         <Modal.Footer>
-                            <Button variant="secondary" onClick={handleCloseUpdateModal}>
+                            <Button variant="danger" size="sm" className="mr-2" onClick={handleCloseUpdateModal}>
                                 Close
                             </Button>
                         </Modal.Footer>

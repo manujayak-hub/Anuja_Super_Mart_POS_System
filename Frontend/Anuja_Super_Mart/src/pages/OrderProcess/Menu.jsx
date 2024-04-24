@@ -30,6 +30,10 @@ const Menu = () => {
         {
             name:'Snacks',
         },
+        {
+            name:'Other',
+        },
+        
     ]
 
     useEffect(() => {
@@ -59,7 +63,7 @@ const Menu = () => {
                     <div key={category.name} className={`category-container-custom ${selectedCategory === category.name ? "category-active-custom" : ""}`}
                         onClick={() => setSelectedCategory(category.name)}
                     >
-                        <h4 className="category-name-custom">{category.name}</h4>
+                        <h5 className="category-name-custom">{category.name}</h5>
                     </div>
                 ))}
             </div>

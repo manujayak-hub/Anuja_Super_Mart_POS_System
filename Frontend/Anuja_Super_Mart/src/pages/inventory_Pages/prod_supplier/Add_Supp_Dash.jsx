@@ -1,9 +1,10 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import useProdSupStore from '../../../stores/prodsupplierStore'
+import useProdSupStore from '../../../stores/prodsupplierStore';
 import InvSupSidebar from '../../../components/InventoryComponents/InvSideBarForSup';
-import InvSupNav from '../../../components/InventoryComponents/invSupNav'
+import InvSupNav from '../../../components/InventoryComponents/invSupNav';
+import '../../../styles/additem.scss'; // Import the shared styles
 
 const AddSupplierForm = () => {
     const { createProdsup } = useProdSupStore();
@@ -39,17 +40,16 @@ const AddSupplierForm = () => {
     });
 
     return (
-        <div className="container-fluid">
+        <div className="add-item-container bg-light"> {/* Apply shared container class */}
             <div className="row">
-                <div className="col-sm-2 sidenav">
+                <div className="col-sm-2">
                     <InvSupSidebar />
                 </div>
-                <div className="col-sm-2 "></div>
-                <div className="col-sm-6">
-                <InvSupNav/>
-                    <h1>Add Supplier</h1>
-                    
-                    <form onSubmit={formik.handleSubmit} className="p-3">
+                <div className="col-sm-10">
+                    <InvSupNav />
+                    <h1 style={{ color: 'red', textAlign: 'center' }}>Add Supplier</h1>
+                    {/* Formik form */}
+                    <form onSubmit={formik.handleSubmit} className="add-item-form p-3"> {/* Apply shared form class */}
                         <div className="mb-3">
                             <label htmlFor="SupId" className="form-label">Supplier ID</label>
                             <input
@@ -115,7 +115,7 @@ const AddSupplierForm = () => {
                         </div>
 
                         <div className="mb-3">
-                            <label htmlFor="contsappname" className="form-label">Contactble Person Name</label>
+                            <label htmlFor="contsappname" className="form-label">Contactable Person Name</label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -130,9 +130,11 @@ const AddSupplierForm = () => {
                             ) : null}
                         </div>
 
-                        <div className="mb-3">
+                        
+
+                        <div className="row">
                             <label htmlFor="supstatus" className="form-label">Supplier Status</label>
-                            <div>
+                            <div className="col-sm-6 mb-3">
                                 <input
                                     type="radio"
                                     id="active"
@@ -144,7 +146,7 @@ const AddSupplierForm = () => {
                                 />
                                 <label htmlFor="active">Active</label>
                             </div>
-                            <div>
+                            <div className="col-sm-6 mb-3">
                                 <input
                                     type="radio"
                                     id="inactive"
@@ -160,6 +162,7 @@ const AddSupplierForm = () => {
                                 <div className="text-danger">{formik.errors.supstatus}</div>
                             ) : null}
                         </div>
+                        
 
                         <div className="mb-3">
                             <label htmlFor="note" className="form-label">Special Note</label>
@@ -176,8 +179,6 @@ const AddSupplierForm = () => {
                                 <div className="text-danger">{formik.errors.note}</div>
                             ) : null}
                         </div>
-
-
 
                         <button type="submit" className="btn btn-primary" disabled={formik.isSubmitting}>Submit</button>
                     </form>

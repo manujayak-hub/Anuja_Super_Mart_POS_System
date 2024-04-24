@@ -11,7 +11,7 @@ const MenuCard = ({ item, addToOrder }) => {
             <h3 className="product-id">{item.productId}</h3>
             <p className="product-name">: {item.productName}</p>
             <p className="wholesale-price">Rs: {item.wholesalePrice}</p>
-            <img  src={item.imageUrl}/>
+            <img  src={item.imageUrl} style={{ width: "70px", height: "70px", marginLeft:"40px",marginRight:"20px"}}/>
             <button className="add-button" onClick={handleAddToOrder}>Add</button>
         </div>
     );

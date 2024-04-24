@@ -1,3 +1,4 @@
+ Dulan
 import React, { useEffect, useState } from 'react';
 import axios from '../../api/axios';
 import EmployeeDetails from './EmployeeDetails';
@@ -6,6 +7,7 @@ import AddEmployeeForm from './AddEmployeeForm';
 import SideBar from '../../components/EmployeeComponents/empSideBar';
 import Modal from 'react-bootstrap/Modal'; // Correct import for Modal
 import Button from 'react-bootstrap/Button'; // Correct import for Button
+
 
 const Emp_list = () => {
   const [loading, setLoading] = useState(true);
