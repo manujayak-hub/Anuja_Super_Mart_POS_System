@@ -93,7 +93,7 @@ function App() {
      <OrderRoute/>
 
      <EmpRoute/>
-Development
+
     </>
   )
 }
