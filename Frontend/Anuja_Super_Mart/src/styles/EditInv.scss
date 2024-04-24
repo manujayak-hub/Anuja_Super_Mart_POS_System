@@ -1,0 +1,71 @@
+// EditInv.scss
+
+.container-fluid {
+    .row {
+        
+
+        .col-sm-10 {
+            // Styles for main content
+            padding: 20px;
+
+            h1 {
+                color: red;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            .search-bar {
+                margin-bottom: 20px;
+
+                .input-group {
+                    position: relative;
+                    width: 400px; // Set the width of the search bar
+        
+                    input.form-control {
+                        border-radius: 0;
+                        height: 30px; // Set the height of the input field
+                    }
+        
+                    .icon-container {
+                        position: absolute;
+                        right: -50px; // Align the icon to the right side
+                        top: 0;
+                        bottom: 0;
+                        display: flex;
+                        align-items: center;
+                        padding: 0 10px;
+                        background-color: #f8f9fa;
+                        border: 1px solid #ced4da;
+                        cursor: pointer;
+                        height: 30px; // Set the height of the icon container
+        
+                        img.img-fluid.icon {
+                            width: 20px;
+                            height: 20px;
+                        }
+                    }
+                }
+            }
+
+            .table-responsive {
+                margin-bottom: 20px;
+            
+                tbody tr:hover {
+                  background-color: red; // Change background color of table rows on hover to red
+                  color: white; // Change text color of table rows on hover to white
+                }
+              }
+
+            .pagination {
+                margin-top: 20px;
+
+                .page-link {
+                    &:hover {
+                        background-color: rgb(1, 10, 4);
+                        border-color: rgb(0, 0, 0);
+                    }
+                }
+            }
+        }
+    }
+}

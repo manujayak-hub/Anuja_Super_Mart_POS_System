@@ -12,25 +12,12 @@ import { Pagination } from 'react-bootstrap';
 function Categories() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [showAllCategories, setShowAllCategories] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [categoriesPerPage] = useState(6);
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
     setShowAllCategories(false);
-  };
-
-  const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value);
-    setShowAllCategories(true); // Show all categories when starting a new search
-    setCurrentPage(1); // Reset to first page on new search
-  };
-
-  const filterCategories = (categories) => {
-    return categories.filter((category) =>
-      category.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
   };
 
   // Array of category objects for rendering buttons
@@ -46,7 +33,7 @@ function Categories() {
 
   const indexOfLastCategory = currentPage * categoriesPerPage;
   const indexOfFirstCategory = indexOfLastCategory - categoriesPerPage;
-  const currentCategories = filterCategories(categories).slice(
+  const currentCategories = categories.slice(
     indexOfFirstCategory,
     indexOfLastCategory
   );
@@ -63,30 +50,16 @@ function Categories() {
             <button
               key={category.id}
               type="button"
-              className={`btn btn-primary ${selectedCategory === category.id ? 'active btn-animation' : ''}`}
+              className={`btn ${selectedCategory === category.id ? 'btn-primary' : 'btn-dark'} ${selectedCategory === category.id ? 'active btn-animation' : ''}`}
               onClick={() => handleCategoryClick(category.id)}
+              style={{ backgroundColor: selectedCategory === category.id ? '#198754' : '' }}
             >
               {category.name}
             </button>
           ))}
         </div>
       </div>
-      <div className="d-flex justify-content-center mb-3">
-        <form className="d-flex input-group w-auto">
-          <input
-            type="search"
-            className="form-control rounded"
-            placeholder="Search"
-            aria-label="Search"
-            aria-describedby="search-addon"
-            value={searchTerm}
-            onChange={handleSearchChange}
-          />
-          <span className="input-group-text border-0" id="search-addon">
-            <i className="fas fa-search"></i>
-          </span>
-        </form>
-      </div>
+
       <div className="container-fluid">
       </div>
 
@@ -104,7 +77,7 @@ function Categories() {
       {showAllCategories && (
         <div className="d-flex justify-content-center mt-4">
           <Pagination>
-            {Array.from({ length: Math.ceil(filterCategories(categories).length / categoriesPerPage) }).map((_, index) => (
+            {Array.from({ length: Math.ceil(categories.length / categoriesPerPage) }).map((_, index) => (
               <Pagination.Item key={index + 1} active={index + 1 === currentPage} onClick={() => paginate(index + 1)}>
                 {index + 1}
               </Pagination.Item>

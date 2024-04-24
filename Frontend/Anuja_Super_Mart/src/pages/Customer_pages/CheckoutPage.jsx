@@ -72,23 +72,18 @@ function CheckoutPage({ cartItems }) {
               [
                 { text: 'Item Name', style: 'tableHeader' },
                 { text: 'Quantity', style: 'tableHeader' },
-                { text: 'Price', style: 'tableHeader' }
+                { text: 'Price (Rs.)', style: 'tableHeader' }
               ],
-              ...cartItems.map(item => [
-                item.ItemName,
-                item.Quantity,
-                { text: `Rs. ${item.Quantity * item.ItemPrice}`, alignment: 'right' }
+              ...cartItems.map((item, index) => [
+                { text: item.ItemName, style: index % 2 === 0 ? 'evenRow' : 'oddRow' },
+                { text: item.Quantity, style: index % 2 === 0 ? 'evenRow' : 'oddRow' },
+                { text: `Rs. ${item.Quantity * item.ItemPrice}`, style: index % 2 === 0 ? 'evenRow' : 'oddRow', alignment: 'right' }
               ])
             ]
-          },
-          layout: {
-            fillColor: function (rowIndex, node, columnIndex) {
-              return (rowIndex % 2 === 0) ? '#f2f2f2' : null; // Alternate row background color
-            }
           }
         },
         {
-          text: `Total: Rs. ${total}`,
+          text: `Total: Rs. ${total.toFixed(2)}`,
           style: 'total',
           alignment: 'right'
         }
@@ -106,7 +101,18 @@ function CheckoutPage({ cartItems }) {
         tableHeader: {
           bold: true,
           fontSize: 12,
-          color: '#333'
+          color: '#ffffff',
+          fillColor: '#333333'
+        },
+        evenRow: {
+          fillColor: '#f0f8ff', // Light Blue
+          fontSize: 10,
+          color: '#333333'
+        },
+        oddRow: {
+          fillColor: '#ffffff', // White
+          fontSize: 10,
+          color: '#333333'
         },
         total: {
           fontSize: 16,
@@ -119,13 +125,9 @@ function CheckoutPage({ cartItems }) {
   
     pdfMake.createPdf(docDefinition).download('checkout_items.pdf');
   };
-
   
-  
-
-
   return (
-    <section className="h-100 h-custom" style={{ backgroundColor: '#d2c9ff' }}>
+    <section className="h-100 h-custom" style={{ backgroundColor: '#dee2e6' }}>
       <div className="container py-5 h-100">
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="col-12">

@@ -7,7 +7,12 @@ import crossicon from '../../assets/inventory/icons8-cross-50.png';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Table, Pagination, Button, Row, Col } from 'react-bootstrap';
+import { ToastContainer, toast } from 'react-toastify'; // Import toast
+import 'react-toastify/dist/ReactToastify.css';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
+import '../../styles/InventoryDash.scss'
+
 
 const InventoryDash = () => {
     const { inventory, setInventory, setError } = useInventoryStore();
@@ -24,6 +29,8 @@ const InventoryDash = () => {
 
     const paginate = pageNumber => setCurrentPage(pageNumber);
 
+
+    
     const fetchInventory = async () => {
         try {
             const response = await axios.get('/inventory');
@@ -37,17 +44,6 @@ const InventoryDash = () => {
         fetchInventory();
     }, [setInventory, setError]);
 
-    useEffect(() => {
-        const checkLowStock = async () => {
-            try {
-                await axios.post('/send/low');
-            } catch (error) {
-                console.error('Error checking low stock:', error);
-            }
-        };
-
-        checkLowStock();
-    }, []);
 
     useEffect(() => {
         let total = 0;
@@ -79,7 +75,8 @@ const InventoryDash = () => {
 
     // Function to generate and download PDF report
     const generatePDF = () => {
-        const inventoryData = currentItems.map(item => ({
+        // Use the entire inventory instead of just the currentItems
+        const inventoryData = inventory.map(item => ({
             ProductId: item.productId,
             ProductName: item.productName,
             WholesalePrice: item.wholesalePrice,
@@ -90,7 +87,7 @@ const InventoryDash = () => {
             ManufactureDate: item.manufactureDate,
             ExpireDate: item.expireDate
         }));
-
+    
         const docDefinition = {
             pageSize: 'A4',
             pageOrientation: 'landscape',
@@ -150,93 +147,121 @@ const InventoryDash = () => {
                 }
             }
         };
-
+    
         // Create a PDF document
         const pdfDocGenerator = pdfMake.createPdf(docDefinition);
-
+    
         // Download the PDF with a given filename
         pdfDocGenerator.download('Inventory_Report.pdf');
     };
-
+    
+    const sendEmail = () => {
+        axios.get('/inventory/lowstock')
+            .then(response => {
+                const lowStockItems = response.data;
+                if (lowStockItems.length > 0) {
+                    // If there are low stock items, send email
+                    const emailContent = generateEmailContent(lowStockItems);
+                    // Assuming there's a function to send email, replace this with your email sending logic
+                    sendEmailFunction(emailContent);
+                    toast.success('Email sent successfully'); // Show success message
+                } else {
+                    // If no low stock items, show message
+                    toast.info('No low stock items to send email.'); // Show info message
+                }
+            })
+            .catch(error => {
+                // Handle error, maybe show an error message
+                console.error('Error sending email:', error);
+                toast.error('Error sending email'); // Show error message
+            });
+    };
     return (
-        <div className="container-fluid bg-light">
-            <div className="row">
-                <div className="col-sm-2 sidenav">
-                    <Sidebar />
-                </div>
+        <div className="container-fluid bg-light inventory-dash-container">
+            <div className="container-fluid bg-light">
+                <div className="row">
+                    <div className="col-sm-2 sidenav">
+                        <Sidebar />
+                    </div>
 
-                <div className="col-sm-10 ">
-                    <InvSupNav />
-                    <h1>Inventory List</h1>
-                    <div className="search-bar col-sm-3">
-                        <div className="input-group">
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Search by product name"
-                                value={searchQuery}
-                                onChange={handleSearchChange}
-                            />
-                            <div className="input-group-append">
-                                <a onClick={handleClearSearch} className="icon-container">
-                                    <img src={crossicon} className="img-fluid icon" alt="Cross Icon" />
-                                </a>
-                            </div>
-                        </div>
+                    <div className="col-sm-10 ">
+                    <ToastContainer /> 
+                        <InvSupNav />
+                        <center><h1>Inventory List</h1></center>
                         
-                    </div>
-
-
-                    <div className="table-responsive">
-                        <Table striped bordered hover>
-                            <thead>
-                                <tr>
-                                    <th>prodId</th>
-                                    <th>Name</th>
-                                    <th>wPrice</th>
-                                    <th>rPrice</th>
-                                    <th>InStock</th>
-                                    <th>category</th>
-                                    <th>supplierId</th>
-                                    <th>MFDate</th>
-                                    <th>EXPDate</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {currentItems.map(item => (
-                                    <tr key={item._id}>
-                                        <td>{item.productId}</td>
-                                        <td>{item.productName}</td>
-                                        <td>{item.wholesalePrice}</td>
-                                        <td>{item.retailPrice}</td>
-                                        <td>{item.quantityInStock}</td>
-                                        <td>{item.category}</td>
-                                        <td>{item.supplierId}</td>
-                                        <td>{item.manufactureDate}</td>
-                                        <td>{item.expireDate}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </Table>
-                    </div>
-                    <Row className="align-items-center justify-content-between">
-                        <Col md="auto">
-                            <div className="values">
-                                <p>Total Stock Value Rs: {totalValue}</p>
-                                <p>Expected Income Rs: {expectedValue}</p>
+                        <div className="search-bar col-sm-3">
+                            <div className="input-group">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Search by product name"
+                                    value={searchQuery}
+                                    onChange={handleSearchChange}
+                                />
+                                <div className="input-group-append">
+                                    <a onClick={handleClearSearch} className="icon-container">
+                                        <img src={crossicon} className="img-fluid icon" alt="Cross Icon" />
+                                    </a>
+                                </div>
                             </div>
-                        </Col>
-                        <Col md="auto">
-                            <Button onClick={generatePDF} variant="primary">Generate PDF Report</Button>
-                        </Col>
-                        <Col md="auto">
-                            <Pagination>
-                                <Pagination.Prev onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1} />
-                                <Pagination.Item>{currentPage}</Pagination.Item>
-                                <Pagination.Next onClick={() => paginate(currentPage + 1)} disabled={currentItems.length < itemsPerPage} />
-                            </Pagination>
-                        </Col>
-                    </Row>
+
+                        </div>
+
+
+                        <div className="table-responsive">
+                            <Table striped bordered hover>
+                                <thead>
+                                    <tr>
+                                        <th>prodId</th>
+                                        <th style={{ width: '20%' }}>Name</th>
+                                        <th>wPrice</th>
+                                        <th>rPrice</th>
+                                        <th>InStock</th>
+                                        <th>category</th>
+                                        <th>supplierId</th>
+                                        <th>MFDate</th>
+                                        <th>EXPDate</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {currentItems.map(item => (
+                                        <tr key={item._id}>
+                                            <td>{item.productId}</td>
+                                            <td>{item.productName}</td>
+                                            <td>{item.wholesalePrice}</td>
+                                            <td>{item.retailPrice}</td>
+                                            <td>{item.quantityInStock}</td>
+                                            <td>{item.category}</td>
+                                            <td>{item.supplierId}</td>
+                                            <td>{item.manufactureDate}</td>
+                                            <td>{item.expireDate}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </Table>
+                        </div>
+                        <Row className="align-items-center justify-content-between">
+                            <Col md="auto">
+                                <div className="values">
+                                    <p>Total Stock Value Rs: {totalValue}</p>
+                                    <p>Expected Income Rs: {expectedValue}</p>
+                                </div>
+                            </Col>
+                            <Col md="auto">
+                                <Button onClick={generatePDF} variant="primary">Download PDF</Button>
+                            </Col>
+                            <Col md="auto">
+                                <Button onClick={sendEmail} variant="success">Low Stock Email</Button>
+                            </Col>
+                            <Col md="auto">
+                                <Pagination>
+                                    <Pagination.Prev onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1} />
+                                    <Pagination.Item>{currentPage}</Pagination.Item>
+                                    <Pagination.Next onClick={() => paginate(currentPage + 1)} disabled={currentItems.length < itemsPerPage} />
+                                </Pagination>
+                            </Col>
+                        </Row>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,11 +1,3 @@
-import React, { useEffect, useState } from 'react';
-import axios from '../../api/axios';
-import EmployeeDetails from './EmployeeDetails';
-import EmployeeForm from './EmployeeForm';
-import AddEmployeeForm from './AddEmployeeForm';
-import SideBar from '../../components/EmployeeComponents/empSideBar';
-import { Modal, Button } from 'react-bootstrap';
-
 const Emp_list = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -85,60 +77,76 @@ const Emp_list = () => {
     setShowAddModal(false);
   };
 
+  const handleAddEmployee = (newEmployee) => {
+    // Add new employee to the employees array
+    setEmployees([...employees, newEmployee]);
+    // Close the modal
+    setShowAddModal(false);
+  };
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
   return (
     <>
       <style>
-        {`
-          body {
-            background-color: #D8D1D1;
-          }
-          .pagination .page-link {
-            color: #FD204F;
-          }
-          .pagination .page-link:hover {
-            color: #fff;
-            background-color: #FD204F;
-            border-color: #FD204F;
-          }
-          .pagination .page-item.active .page-link {
-            color: #fff;
-            background-color: #FD204F;
-            border-color: #FD204F;
-          }
-          .search-bar-container {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-          }
-          .search-bar {
-            flex: 1;
-            border-radius: 20px;
-            padding: 10px;
-            margin-right: 100px;
-            border: 1px solid #ccc;
-          }
-          
-          }
-        `}
-      </style>
+  {`
+    body {
+      background-color: #D8D1D1;
+    }
+    .pagination .page-link {
+      color: #FD204F !important;
+      background-color: #fff;
+      border-color: #FD204F;
+    }
+    .pagination .page-link:hover {
+      color: #fff !important;
+      background-color: #FD204F;
+      border-color: #FD204F;
+    }
+    .pagination .page-item.active .page-link {
+      color: #fff !important;
+      background-color: #FD204F;
+      border-color: #FD204F;
+    }
+    .emp_search-bar-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .emp_search-bar {
+      flex: 1;
+      border-radius: 20px;
+      padding: 10px;
+      margin-right: 20px; /* Reduced margin for search bar */
+      border: 1px solid #ccc;
+    }
+    .emp_add-employee-btn {
+      background-color: #FD204F;
+      border-color: #FD204F;
+      color: #fff;
+    }
+    .emp_add-employee-btn:hover {
+      background-color: #FD204F;
+      border-color: #FD204F;
+      color: #fff;
+    }
+  `}
+</style>
+
       <SideBar/>
       <div className="content" style={{ marginLeft: '250px', marginRight: '50px', padding: '20px' }}>
-        <div className="search-bar-container">
+        <div className="emp_search-bar-container">
           <input
             type="text"
             placeholder="Search by Name or ID"
             value={searchQuery}
             onChange={handleSearch}
-            className="search-bar"
+            className="emp_search-bar"
           />
-        <button type="button" className="btn btn-danger" style={{ backgroundColor: '#FD204F', borderColor: '#FD204F' }} onClick={handleShowAddModal}>
-  Add Employee
-</button>
-
-
+          <Button className="emp_add-employee-btn" onClick={handleShowAddModal}>
+            Add Employee
+          </Button>
         </div>
         <div style={{ backgroundColor: '#FFFFFF', padding: '20px', borderRadius: '10px', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)', margin: '0px 5px' }}>
           <h1>Employee List</h1>
@@ -159,7 +167,7 @@ const Emp_list = () => {
                     <td>{employee.empID}</td>
                     <td>{employee.empName}</td>
                     <td>{employee.empRole}</td>
-                    <td>{new Date(employee.empJoinedDate).toLocaleDateString()}</td> {/* Format joined date */}
+                    <td>{new Date(employee.empJoinedDate).toLocaleDateString()}</td>{/* Format joined date */}
                     <td>
                       <button
                         type="button"
@@ -233,7 +241,7 @@ const Emp_list = () => {
           <Modal.Title>Add Employee</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <AddEmployeeForm handleClose={handleCloseAddModal} />
+          <AddEmployeeForm handleClose={handleCloseAddModal} handleAddEmployee={handleAddEmployee} />
         </Modal.Body>
       </Modal>
     </>

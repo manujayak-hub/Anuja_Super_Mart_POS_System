@@ -3,14 +3,14 @@ import mongoose from 'mongoose'
 
 
 const createCart = async (req, res) => {
-  const { OrderID, ItemID, ItemName, Quantity, ItemPrice, PickupTime } = req.body;
+  const { OrderID, ItemID, ItemName, Quantity, ItemPrice, PickupTime, imageUrl } = req.body;
 
   if (isNaN(ItemPrice)) {
       return res.status(400).json({ error: 'Invalid Item Price' });
   }
 
   try {
-      const OD = await Cart.create({ OrderID, ItemID, ItemName, Quantity, ItemPrice, PickupTime });
+      const OD = await Cart.create({ OrderID, ItemID, ItemName, Quantity, ItemPrice, PickupTime,imageUrl});
       res.status(200).json(OD);
   } catch (error) {
       console.error(error);
@@ -53,14 +53,14 @@ const getbyIdCart = async (req,res) => {
 const updateCart  =async (req,res) => {
     var {id} = req.params
 
-    const {OrderID,ItemID,ItemName,Quantity,ItemPrice,PickupTime} = req.body
+    const {OrderID,ItemID,ItemName,Quantity,ItemPrice,PickupTime,imageUrl} = req.body
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(400).json({error:'Invalid ID Format'})
       }
 
     const OD = await Cart.findOneAndUpdate({_id:id},
-        {OrderID,ItemID,ItemName,Quantity,ItemPrice,PickupTime}, 
+        {OrderID,ItemID,ItemName,Quantity,ItemPrice,PickupTime,imageUrl}, 
         { new: true } 
     )
 
