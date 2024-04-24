@@ -11,6 +11,7 @@ import Categories from './pages/Customer_pages/Categories';
 import { useStore } from './stores/authStore'
 import TransactionForm from './pages/Accountant/Add_new_form'
 import TransactionsList from './pages/Accountant/Transactions'
+import UserProfile from './pages/Accountant/UserProfile'
 import Dash from'./pages/Accountant/Accountantdash'
 import Menu from './pages/OrderProcess/Menu'
 import List from './pages/OrderProcess/List'
@@ -51,6 +52,7 @@ function App() {
             <Route path="TransactionForm" element={<TransactionForm/>}/>  
             <Route path="AccountantDash" element={<Dash/>}/>
             <Route path="Transactions" element={<TransactionsList/>}/>
+            <Route path="UserProfile" element={<UserProfile/>}/>
             
             <Route path="Form" element={<Form/>}/>
             <Route path="SProfile" element={<SProfile/>}/>

@@ -152,8 +152,8 @@ const TransactionList = () => {
         <div>
             <Sidebar />
             <div className="transaction-list-container" style={{ backgroundColor: 'lightgray', minHeight: '100vh' }}>
-                <h1 className="text-danger">Transactions</h1>
-                <div className="mb-3">
+                <h1 className="text-danger">Accountant Dashboard</h1>
+                <div className="search-bar-container " >
                     <input
                         type="text"
                         className="form-control"
