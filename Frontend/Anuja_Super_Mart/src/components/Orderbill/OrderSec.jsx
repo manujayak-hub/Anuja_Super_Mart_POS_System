@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import './OrderSec.scss';
 import useOrderStore from "../../stores/useOrderStore";
 import axios from '../../api/axios';
+import jsPDF from 'jspdf';
 
 const OrderSec = ({ orderItems, removeFromOrder }) => {
     const [message, setMessage] = useState(""); 
@@ -54,11 +55,37 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
 
             await useOrderStore.getState().addOrder(newOrder);
             setMessage("Order placed successfully.");
-           
+
+            // Generate and download PDF receipt
+            generatePDFReceipt(orderId, currentDate);
+
         } catch (error) {
             console.error("Error placing order:", error);
             setMessage("Failed to place order.");
         }
+    };
+
+    const generatePDFReceipt = (orderId, currentDate) => {
+        const doc = new jsPDF();
+        doc.setFontSize(18);
+        doc.text("Anuja Super Mart", doc.internal.pageSize.getWidth() / 2, 10, 'center');
+
+        doc.setFontSize(14);
+        doc.text("Order Receipt", doc.internal.pageSize.getWidth() / 2, 20, 'center');
+
+        doc.setFontSize(12);
+        doc.text(`Order ID: ${orderId}`, 10, 30);
+        doc.text(`Date: ${currentDate}`, 10, 40);
+
+        let y = 50;
+        orderItems.forEach((item, index) => {
+            doc.text(`${index + 1}. ${item.productName} - Rs ${item.wholesalePrice}`, 10, y);
+            y += 10;
+        });
+
+        doc.text(`Total: Rs ${totalPrice}`, 10, y);
+
+        doc.save(`receipt_${orderId}.pdf`);
     };
 
     return (
@@ -70,7 +97,18 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
                 {orderItems.map((item, index) => (
                     <div key={index}>
                         <p>{item.productName}
-                            <button name="remove" onClick={() => handleRemoveFromOrder(index)}>Remove</button>
+                        <button 
+                           name="remove" 
+                           onClick={() => handleRemoveFromOrder(index)} 
+                           style={{ 
+                           float: 'right', 
+                           fontSize: '12px', 
+                           padding: '5px' 
+                             }}
+>
+                          Remove
+                        </button>
+
                         </p>
                         <p>Rs: {item.wholesalePrice}</p>
                     </div>

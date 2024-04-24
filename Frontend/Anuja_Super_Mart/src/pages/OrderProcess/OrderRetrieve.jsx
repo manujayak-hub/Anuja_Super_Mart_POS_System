@@ -61,7 +61,7 @@ const OrderRetrieve = () => {
     return (
         <div className="OrderRetrieveContainer">
             <MenuNav />
-            <div className="header1" style={{ textAlign: "center", color: "red" }}>
+            <div className="header1" style={{ textAlign: "center", color: "red", position: "sticky", top: "0", zIndex: "1000", backgroundColor: "#fff" }}>
                 <h1>Order List</h1>
                 <input
                     type="text"

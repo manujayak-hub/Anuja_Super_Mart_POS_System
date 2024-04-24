@@ -20,8 +20,8 @@ const Login = () => {
       // Redirect based on user email
       if (email === 'manujayak8@gmail.com') {
         navigate('/inventory'); // Navigate to /inventory for manujayak8@gmail.com
-      } else if (email === 'n@gmail.com') {
-        navigate('/cashier'); // Navigate to /cashier for n@gmail.com
+      } else if (email === 'rmsahanpramudithabandara22@gmail.com') {
+        navigate('/Menu'); // Navigate to /cashier for n@gmail.com
       } else {
         navigate('/'); // Navigate to home for other users
       }

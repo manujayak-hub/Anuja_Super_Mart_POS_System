@@ -12,8 +12,7 @@ import { useStore } from './stores/authStore'
 import TransactionForm from './pages/Accountant/Add_new_form'
 import TransactionsList from './pages/Accountant/Transactions'
 import Dash from'./pages/Accountant/Accountantdash'
-import Menu from './pages/OrderProcess/Menu'
-import List from './pages/OrderProcess/List'
+
 import Customer from './pages/SalesAnalytics/Customer'
 import Report from './pages/SalesAnalytics/Report'
 import Hamper from './pages/Discount/Hamper'
@@ -28,8 +27,8 @@ import Emp_Salary from './pages/Emp_pages/emp_salary'
 
 import InventoryRoute from './Routes/InvRoute'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import OrderRetrieve from './pages/OrderProcess/OrderRetrieve'
-import PickupOrders from './pages/OrderProcess/PickupOrders'
+import OrderRoute from './Routes/OrderRoute'
+
 
 
 
@@ -59,8 +58,7 @@ function App() {
             <Route path="Dash" element={<Dash/>}/>
 
             
-            <Route path="Menu" element={<Menu/>} />
-            <Route path="List" element={<List/>} />
+          
             <Route path="Customer" element={<Customer/>}/>
             <Route path="Report" element={<Report/>}/>
             <Route path="Promoting" element={<ItemList/>}/>
@@ -70,8 +68,7 @@ function App() {
             <Route path="ButtonComponent" element={<ButtonComponent/>}/>
 
             <Route path="emp_list" element={<Emp_list/>} />
-            <Route path="OrderRetrieve" element={<OrderRetrieve/>} />
-            <Route path="PickupOrders" element={<PickupOrders/>} />
+           
 
 
             <Route path="emp_list" element={<Emp_list/>} />
@@ -88,6 +85,7 @@ function App() {
         </Routes>
      </BrowserRouter>
      <InventoryRoute/>
+     <OrderRoute/>
     </>
   )
 }
