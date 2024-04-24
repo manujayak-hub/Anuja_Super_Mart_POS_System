@@ -21,11 +21,13 @@ const Login = () => {
       if (email === 'manujayak8@gmail.com') {
         navigate('/inventory');
       } else if (email === 'n@gmail.com') {
+
         navigate('/cashier');
       } else if (email === 'dulanimalka1@gmail.com') {
         navigate('/emp_list');
       } else {
         navigate('/');
+
       }
     } catch (error) {
       console.error('Error:', error);

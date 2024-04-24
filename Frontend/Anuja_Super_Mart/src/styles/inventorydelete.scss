@@ -1,0 +1,20 @@
+// InventoryDelete.scss
+
+.inventory-delete {
+    .search-bar {
+        margin-bottom: 20px;
+
+        input {
+            width: 80%;
+            margin-right: 10px;
+        }
+
+        .icon-container {
+            cursor: pointer;
+        }
+    }
+
+    .table-responsive {
+        margin-top: 20px;
+    }
+}
