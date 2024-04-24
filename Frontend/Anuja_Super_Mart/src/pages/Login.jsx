@@ -15,7 +15,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const res = await axios.post('/auth/login', { email, password });
-      await setUser(res.data.token); // Wait for setUser to complete
+      await setUser(res.data.token);
       setErrorMessage('');
       // Redirect based on user email
       if (email === 'manujayak8@gmail.com') {
