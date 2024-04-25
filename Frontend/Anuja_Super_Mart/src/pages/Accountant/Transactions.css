@@ -2,6 +2,7 @@ body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    
 }
 
 .transaction-list-container {
@@ -50,14 +51,13 @@ body {
 }
 
 .search-bar-container {
-    margin-left: 20px; /* Adjust the left margin as needed */
-    margin-top: 20px; /* Add top margin */
-    padding: 10px; /* Add padding */
-    border: 1px solid red; /* Set border color to red */
-    border-radius: 5px; /* Add border radius */
-    width: 200px; /* Adjust width as needed */
+    margin-left: 0px; 
+    margin-top: 20px; 
+    padding: 0px;
+    
+    width: 1100px; 
 }
-/* Transactions.css */
+
 .modal-overlay {
     position: fixed;
     top: 0;
