@@ -158,12 +158,9 @@ const InventoryDash = () => {
     const sendEmail = () => {
         axios.get('/inventory/lowstock')
             .then(response => {
-                const lowStockItems = response.data;
-                if (lowStockItems.length > 0) {
-                    // If there are low stock items, send email
-                    const emailContent = generateEmailContent(lowStockItems);
-                    // Assuming there's a function to send email, replace this with your email sending logic
-                    sendEmailFunction(emailContent);
+                const isSuccess = response.data.success;
+                if (isSuccess !== undefined && isSuccess !== null && isSuccess) {
+                    
                     toast.success('Email sent successfully'); // Show success message
                 } else {
                     // If no low stock items, show message

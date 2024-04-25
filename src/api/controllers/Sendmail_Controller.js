@@ -6,10 +6,10 @@ const sendLowInventoryEmail = async () => {
         // Find all products with quantity less than 10
         const lowInventoryProducts = await Inventory.find({ quantityInStock: { $lt: 10 } });
 
-        // If there are no low inventory products, do nothing
+        // If there are no low inventory products, return a specific value to indicate this
         if (lowInventoryProducts.length === 0) {
             console.log('No low inventory products found.');
-            return;
+            return { success: false, message: 'No low inventory products found.' };
         }
 
         // Create transporter object using SMTP transport
@@ -53,9 +53,11 @@ const sendLowInventoryEmail = async () => {
         // Send email
         await transporter.sendMail(mailOptions);
         console.log('Low inventory alert email sent successfully.');
+        return { success: true, message: 'Low inventory alert email sent successfully.' };
     } catch (error) {
         console.error('Error sending low inventory alert email:', error);
-        throw error; // Rethrow the error to be caught in the calling function
+        // Return an object with the error message
+        return { success: false, message: 'Failed to send low inventory alert email.' };
     }
 };
 
