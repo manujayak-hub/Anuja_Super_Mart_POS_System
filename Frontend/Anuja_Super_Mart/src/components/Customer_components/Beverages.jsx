@@ -4,6 +4,7 @@ import Card from '../Customer_components/Card';
 
 const Beverages = () => {
   const [inventory, setInventory] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const fetchInventoryByCategory = async () => {
@@ -14,7 +15,7 @@ const Beverages = () => {
         console.log("Inventory data from API:", inventoryData);
         setInventory(inventoryData);
       } catch (error) {
-        console.error('Error fetching baby products:', error);
+        console.error('Error fetching beverages:', error);
       }
     };
 
@@ -29,13 +30,24 @@ const Beverages = () => {
     // You can implement the functionality to add the product to the order/cart here
   };
 
+  // Filter the inventory based on search query
+  const filteredInventory = inventory.filter(product =>
+    product.productName.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div>
       <center>
-        <h1></h1>
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search for products..."
+          style={{ marginBottom: '20px', padding: '5px' }}
+        />
       </center>
       <div className="products-container">
-        {inventory.map((product) => (
+        {filteredInventory.map((product) => (
           <div key={product.productId} className="product">
             <Card product={product} addToOrder={addToOrder} />
           </div>

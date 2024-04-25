@@ -31,7 +31,7 @@ const UpdateForm = ({ initialValues, onSubmit }) => {
                 {/* Form fields for updating product */}
                 {Object.entries(initialValues).map(([key, value]) => (
                     // Hide the _id field
-                    key !== '_id' && key !== 'createdAt' && key !== 'updatedAt' && key !=='__v' && (
+                    key !== '_id' && key !== 'createdAt' && key !== 'updatedAt' && key !== '__v' && (
                         <div key={key} className="mb-3">
                             <label htmlFor={key} className="form-label">{key}</label>
                             {/* Regular input field */}
@@ -47,7 +47,8 @@ const UpdateForm = ({ initialValues, onSubmit }) => {
                         </div>
                     )
                 ))}
-                <button type="submit" className="btn btn-primary">Update</button>
+                {/* Red button with Bootstrap class */}
+                <button type="submit" className="btn btn-danger btn-sm mr-2">Update</button>
             </form>
         </div>
     );

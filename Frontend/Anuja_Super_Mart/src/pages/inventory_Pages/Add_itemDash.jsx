@@ -8,6 +8,8 @@ import InvSupNav from '../../components/InventoryComponents/invSupNav';
 import DatePicker from 'react-datepicker'; // Import DatePicker
 import 'react-datepicker/dist/react-datepicker.css'; // Import DatePicker CSS
 
+import '../../styles/additem.scss'
+
 
 const AddItem = () => {
     // Define formik form values, validation schema, and submit function
@@ -56,16 +58,16 @@ const AddItem = () => {
 
     return (
         <>
-            <div className="container-fluid">
+            <div className="add-item-container bg-light">
                 <div className="row">
                     <div className="col-sm-2">
                         <Sidebar />
                     </div>
                     <div className="col-sm-10">
                         <InvSupNav />
-                        <h1>Add Products</h1>
+                        <h1 style={{ color: 'red', textAlign: 'center' }}>Add Products</h1>
                         {/* Formik form */}
-                        <form onSubmit={formik.handleSubmit} className="p-3">
+                        <form onSubmit={formik.handleSubmit} className="add-item-form p-3">
                             {/* Input fields for inventory item */}
                             <div className="mb-3">
                                 <label htmlFor="productId" className="form-label">Product ID</label>
@@ -150,19 +152,27 @@ const AddItem = () => {
 
                             <div className="mb-3">
                                 <label htmlFor="category" className="form-label">Category</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
+                                <select
+                                    className="form-select"
                                     id="category"
                                     name="category"
                                     value={formik.values.category}
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
-                                />
+                                >
+                                    <option value="Baby_products">Baby Products</option>
+                                    <option value="Beverages">Beverages</option>
+                                    <option value="Dairy_products">Diary Products</option>
+                                    <option value="PersonalCare">Personal Care</option>
+                                    <option value="Cooking_Essential">Cooking Essential</option>
+                                    <option value="Snacks">Snacks</option>
+                                    <option value="Other">Other</option>
+                                </select>
                                 {formik.touched.category && formik.errors.category ? (
                                     <div className="text-danger">{formik.errors.category}</div>
                                 ) : null}
                             </div>
+
 
                             <div className="mb-3">
                                 <label htmlFor="supplierId" className="form-label">SupplierID</label>
@@ -180,37 +190,40 @@ const AddItem = () => {
                                 ) : null}
                             </div>
 
-                            <div className="mb-3">
-                                <label htmlFor="manufactureDate" className="form-label">Manufacture Date</label><br />
-                                <DatePicker
-                                    className="form-control"
-                                    id="manufactureDate"
-                                    name="manufactureDate"
-                                    selected={formik.values.manufactureDate}
-                                    onChange={(date) => formik.setFieldValue('manufactureDate', date)}
-                                    onBlur={formik.handleBlur}
-                                    dateFormat="MM/dd/yyyy" // Customize date format if needed
-                                />
-                                {formik.touched.manufactureDate && formik.errors.manufactureDate ? (
-                                    <div className="text-danger">{formik.errors.manufactureDate}</div>
-                                ) : null}
+                            <div className="row">
+                                <div className="col-sm-6 mb-3">
+                                    <label htmlFor="manufactureDate" className="form-label">Manufacture Date</label>
+                                    <DatePicker
+                                        className="form-control"
+                                        id="manufactureDate"
+                                        name="manufactureDate"
+                                        selected={formik.values.manufactureDate}
+                                        onChange={(date) => formik.setFieldValue('manufactureDate', date)}
+                                        onBlur={formik.handleBlur}
+                                        dateFormat="MM/dd/yyyy" // Customize date format if needed
+                                    />
+                                    {formik.touched.manufactureDate && formik.errors.manufactureDate ? (
+                                        <div className="text-danger">{formik.errors.manufactureDate}</div>
+                                    ) : null}
+                                </div>
+
+                                <div className="col-sm-6 mb-3">
+                                    <label htmlFor="expireDate" className="form-label">Expire Date</label>
+                                    <DatePicker
+                                        className="form-control"
+                                        id="expireDate"
+                                        name="expireDate"
+                                        selected={formik.values.expireDate}
+                                        onChange={(date) => formik.setFieldValue('expireDate', date)}
+                                        onBlur={formik.handleBlur}
+                                        dateFormat="MM/dd/yyyy" // Customize date format if needed
+                                    />
+                                    {formik.touched.expireDate && formik.errors.expireDate ? (
+                                        <div className="text-danger">{formik.errors.expireDate}</div>
+                                    ) : null}
+                                </div>
                             </div>
 
-                            <div className="mb-3">
-                                <label htmlFor="expireDate" className="form-label">Expire Date</label><br />
-                                <DatePicker
-                                    className="form-control"
-                                    id="expireDate"
-                                    name="expireDate"
-                                    selected={formik.values.expireDate}
-                                    onChange={(date) => formik.setFieldValue('expireDate', date)}
-                                    onBlur={formik.handleBlur}
-                                    dateFormat="MM/dd/yyyy" // Customize date format if needed
-                                />
-                                {formik.touched.expireDate && formik.errors.expireDate ? (
-                                    <div className="text-danger">{formik.errors.expireDate}</div>
-                                ) : null}
-                            </div>
 
                             <div className="mb-3">
                                 <label htmlFor="imageUrl" className="form-label">imageUrl</label>
@@ -229,7 +242,9 @@ const AddItem = () => {
                             </div>
 
 
+                            <center>
                             <button type="submit" className="btn btn-primary" disabled={formik.isSubmitting}>Submit</button>
+                            </center>
                         </form>
                         <div className="col-sm-2 ">
                         </div>

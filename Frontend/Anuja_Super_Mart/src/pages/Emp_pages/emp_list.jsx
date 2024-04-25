@@ -1,10 +1,13 @@
+
 import React, { useEffect, useState } from 'react';
 import axios from '../../api/axios';
 import EmployeeDetails from './EmployeeDetails';
 import EmployeeForm from './EmployeeForm';
 import AddEmployeeForm from './AddEmployeeForm';
 import SideBar from '../../components/EmployeeComponents/empSideBar';
-import { Modal, Button } from 'react-bootstrap';
+import Modal from 'react-bootstrap/Modal'; // Correct import for Modal
+import Button from 'react-bootstrap/Button'; // Correct import for Button
+
 
 const Emp_list = () => {
   const [loading, setLoading] = useState(true);
@@ -99,47 +102,50 @@ const Emp_list = () => {
     <>
       <style>
         {`
-          body {
-            background-color: #D8D1D1;
-          }
-          .emp_pagination .page-link {
-            color: #FD204F;
-          }
-          .emp_pagination .page-link:hover {
-            color: #fff;
-            background-color: #FD204F;
-            border-color: #FD204F;
-          }
-          .emp_pagination .page-item.active .page-link {
-            color: #fff;
-            background-color: #FD204F;
-            border-color: #FD204F;
-          }
-          .emp_search-bar-container {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-          }
-          .emp_search-bar {
-            flex: 1;
-            border-radius: 20px;
-            padding: 10px;
-            margin-right: 20px; /* Reduced margin for search bar */
-            border: 1px solid #ccc;
-          }
-          .emp_add-employee-btn {
-            background-color: #FD204F;
-            border-color: #FD204F;
-            color: #fff;
-          }
-          .emp_add-employee-btn:hover {
-            background-color: #FD204F;
-            border-color: #FD204F;
-            color: #fff;
-          }
-        `}
+    body {
+      background-color: #D8D1D1;
+    }
+    .pagination .page-link {
+      color: #FD204F !important;
+      background-color: #fff;
+      border-color: #FD204F;
+    }
+    .pagination .page-link:hover {
+      color: #fff !important;
+      background-color: #FD204F;
+      border-color: #FD204F;
+    }
+    .pagination .page-item.active .page-link {
+      color: #fff !important;
+      background-color: #FD204F;
+      border-color: #FD204F;
+    }
+    .emp_search-bar-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .emp_search-bar {
+      flex: 1;
+      border-radius: 20px;
+      padding: 10px;
+      margin-right: 20px; /* Reduced margin for search bar */
+      border: 1px solid #ccc;
+    }
+    .emp_add-employee-btn {
+      background-color: #FD204F;
+      border-color: #FD204F;
+      color: #fff;
+    }
+    .emp_add-employee-btn:hover {
+      background-color: #FD204F;
+      border-color: #FD204F;
+      color: #fff;
+    }
+  `}
       </style>
-      <SideBar/>
+
+      <SideBar />
       <div className="content" style={{ marginLeft: '250px', marginRight: '50px', padding: '20px' }}>
         <div className="emp_search-bar-container">
           <input

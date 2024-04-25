@@ -15,23 +15,33 @@ const Login = () => {
     e.preventDefault();
     try {
       const res = await axios.post('/auth/login', { email, password });
-      setUser(res.data.token);
+      await setUser(res.data.token);
       setErrorMessage('');
       // Redirect based on user email
       if (email === 'manujayak8@gmail.com') {
+
         navigate('/inventory'); // Navigate to /inventory for manujayak8@gmail.com
-      } else if (email === 'n@gmail.com') {
-        navigate('/cashier');
+
       } else if (email === 'udari@gmail.com') {
         navigate('/Transactions');  // Navigate to /cashier for n@gmail.com
+
+      } else if (email === 'rmsahanpramudithabandara22@gmail.com') {
+        navigate('/Menu'); // Navigate to /cashier for n@gmail.com
+
+        
+      } else if (email === 'dulanimalka1@gmail.com') {
+        navigate('/emp_list');
+ 
+
       } else {
-        navigate('/'); // Navigate to home for other users
+        navigate('/');
+
       }
     } catch (error) {
       console.error('Error:', error);
       setErrorMessage('Login failed. Please check your credentials.');
     }
-  }
+  };
 
   return (
     <>
@@ -43,7 +53,6 @@ const Login = () => {
               <div className="card-body">
                 <h2 className="card-title mb-4">Login</h2>
                 {errorMessage && <p className="text-danger">{errorMessage}</p>}
-                {/* Remove reference to successMessage */}
                 <form onSubmit={handleSubmit}>
                   <div className="mb-3">
                     <input type="email" className="form-control" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
