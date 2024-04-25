@@ -23,14 +23,14 @@ const PickupOrders = () => {
   }, []);
 
   return (
-    <div className="pickup-orders-container"> {/* Apply the SCSS class */}
+    <div className="pickup-orders-container"> 
       <MenuNav />
       <div className='topic'><h1>Pickup Orders</h1></div>
       {/* Render your cart items here */}
       <ul>
         {cart.map(item => (
           <li key={item.id}>
-            {/* Adjust the properties according to your cart item structure */}
+           
             {item.ItemName} - {item.Quantity}
           </li>
         ))}
