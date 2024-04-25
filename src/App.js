@@ -14,14 +14,14 @@ import analyticRoute from "./api/routes/analytic_route"
 import order_route from "./api/routes/order_route"
 import User_route from "./api/routes/user_routes"
 import pickup_rouete from './api/routes/pickup_route'
-import sproduct_route from './api/routes/sproduct_route'
+
 import stask_route from './api/routes/stask_route'
 import ssuplier_route from './api/routes/ssuplier_route'
 
 
 
 
-
+import sopRoute from "./api/routes/sproduct_routes"
 import ProdsupRoute from './api/routes/Prod_Supplier_route'
 
 
@@ -77,13 +77,13 @@ app.use('/pickup',pickup_rouete)
 
 //prod_supplier
 app.use('/supplier',ProdsupRoute)
-
+//sproduct
+app.use('/sproduct', sopRoute)
 
 
 
 app.use('/stask',stask_route)
 
-app.use('/orderproduct',sproduct_route)
 
 app.use('/Suplier',ssuplier_route)
 
