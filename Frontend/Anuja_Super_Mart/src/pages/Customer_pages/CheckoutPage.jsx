@@ -4,11 +4,11 @@ import axios from '../../api/axios'; // Import Axios for making HTTP requests
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 
-
 // Register fonts - You can use any font you prefer
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 function CheckoutPage({ cartItems }) {
+  
   const [pickupSuccess, setPickupSuccess] = useState(false);
 
   const handlePickup = async () => {
@@ -54,77 +54,116 @@ function CheckoutPage({ cartItems }) {
   };
 
   const generatePDF = () => {
-    const total = cartItems.reduce((acc, item) => acc + item.Quantity * item.ItemPrice, 0);
-  
+    const currentDate = new Date().toLocaleString(); // Get current date and time
+    const shopName = "Anuja Super Mart";
+    // Assume you have a logo image file named 'shop_logo.png' in the same directory
+
+    const total = cartItems.reduce((acc, item) => acc + item.ItemPrice, 0);
+
     const docDefinition = {
       content: [
-        {
-          text: 'Checkout Items',
-          style: 'header',
-          alignment: 'center'
-        },
-        {
-          style: 'table',
-          table: {
-            headerRows: 1,
-            widths: ['*', 'auto', 'auto'],
-            body: [
-              [
-                { text: 'Item Name', style: 'tableHeader' },
-                { text: 'Quantity', style: 'tableHeader' },
-                { text: 'Price (Rs.)', style: 'tableHeader' }
-              ],
-              ...cartItems.map((item, index) => [
-                { text: item.ItemName, style: index % 2 === 0 ? 'evenRow' : 'oddRow' },
-                { text: item.Quantity, style: index % 2 === 0 ? 'evenRow' : 'oddRow' },
-                { text: `Rs. ${item.Quantity * item.ItemPrice}`, style: index % 2 === 0 ? 'evenRow' : 'oddRow', alignment: 'right' }
-              ])
-            ]
+          {
+              text: 'Receipt',
+              style: 'header',
+              alignment: 'center',
+              margin: [0, 0, 0, 20] // Add margin to separate from border
+          },
+          {
+              text: shopName,
+              style: 'shopNameLabel',
+              alignment: 'center',
+              margin: [0, 0, 0, 10] // Add margin below shop name
+          },
+          {
+              columns: [
+                  {
+                      text: `Date: ${currentDate}`,
+                      alignment: 'left',
+                      margin: [40, 0] // Adjust margin for date
+                  },
+                  {
+                      text: `Time: ${currentDate.split(',')[1]}`, // Extract time from current date
+                      alignment: 'right',
+                      margin: [0, 0, 40, 0] // Adjust margin for time
+                  }
+              ]
+          },
+          {
+              canvas: [{ type: 'line', x1: 0, y1: 10, x2: 600, y2: 10, lineWidth: 1 }] // Add line separator
+          },
+          {
+              style: 'table',
+              table: {
+                  headerRows: 1,
+                  widths: ['*', 'auto', 'auto'],
+                  body: [
+                      [
+                          { text: 'Item Name', style: 'tableHeader' },
+                          { text: 'Quantity', style: 'tableHeader' },
+                          { text: 'Price (Rs.)', style: 'tableHeader' }
+                      ],
+                      ...cartItems.map((item, index) => [
+                          { text: item.ItemName, style: index % 2 === 0 ? 'evenRow' : 'oddRow' },
+                          { text: item.Quantity, style: index % 2 === 0 ? 'evenRow' : 'oddRow' },
+                          { text: `Rs. ${item.Quantity * item.ItemPrice}`, style: index % 2 === 0 ? 'evenRow' : 'oddRow', alignment: 'right' }
+                      ])
+                  ]
+              }
+          },
+          {
+              text: `Total: Rs. ${total.toFixed(2)}`,
+              style: 'total',
+              alignment: 'right',
+              margin: [0, 20, 0, 0] // Margin for space below the table
           }
-        },
-        {
-          text: `Total: Rs. ${total.toFixed(2)}`,
-          style: 'total',
-          alignment: 'right'
-        }
       ],
       styles: {
-        header: {
-          fontSize: 24,
-          bold: true,
-          margin: [0, 0, 0, 20],
-          color: '#333'
-        },
-        table: {
-          margin: [0, 10, 0, 10]
-        },
-        tableHeader: {
-          bold: true,
-          fontSize: 12,
-          color: '#ffffff',
-          fillColor: '#333333'
-        },
-        evenRow: {
-          fillColor: '#f0f8ff', // Light Blue
-          fontSize: 10,
-          color: '#333333'
-        },
-        oddRow: {
-          fillColor: '#ffffff', // White
-          fontSize: 10,
-          color: '#333333'
-        },
-        total: {
-          fontSize: 16,
-          bold: true,
-          margin: [0, 20, 0, 0],
-          color: '#333'
-        }
-      }
-    };
+          header: {
+              fontSize: 24,
+              bold: true,
+              margin: [0, 0, 0, 20],
+              color: '#333'
+          },
+          shopNameLabel: {
+              fontSize: 18,
+              bold: true,
+              color: 'green'
+          },
+          table: {
+              margin: [0, 10, 0, 10]
+          },
+          tableHeader: {
+              bold: true,
+              fontSize: 12,
+              color: '#ffffff',
+              fillColor: '#333333'
+          },
+          evenRow: {
+              fillColor: '#e0ffe0', // Light green
+              fontSize: 10,
+              color: '#333333'
+          },
+          oddRow: {
+              fillColor: '#ffffff', // White
+              fontSize: 10,
+              color: '#333333'
+          },
+          total: {
+              fontSize: 16,
+              bold: true,
+              margin: [0, 20, 0, 0],
+              color: '#333'
+          }
+      },
+      pageSize: 'A4', // Set page size to A4
+      pageMargins: [40, 60] // Set page margins
+  };
   
     pdfMake.createPdf(docDefinition).download('checkout_items.pdf');
   };
+
+
+  
   
   return (
     <section className="h-100 h-custom" style={{ backgroundColor: '#dee2e6' }}>
@@ -144,12 +183,6 @@ function CheckoutPage({ cartItems }) {
 
                       {cartItems.map((item, index) => (
                         <div className="row mb-4 d-flex justify-content-between align-items-center" key={index}>
-                          <div className="col-md-2 col-lg-2 col-xl-2">
-                            <img
-                              src={item.image} // Use your actual image URL here
-                              className="img-fluid rounded-3" alt={item.ItemName}
-                            />
-                          </div>
                           <div className="col-md-3 col-lg-3 col-xl-3">
                             <h6 className="text-muted">{item.Category}</h6>
                             <h6 className="text-black mb-0">{item.ItemName}</h6>
@@ -171,7 +204,7 @@ function CheckoutPage({ cartItems }) {
                       <hr className="my-4" />
                       <div className="pt-5">
                         {/* Use Link from react-router-dom for the button */}
-                        <Link to="/shop" className="text-body">
+                        <Link to="/" className="text-body">
                           <i className="fas fa-long-arrow-alt-left me-2"></i>Back to shop
                         </Link>
                       </div>
@@ -185,7 +218,7 @@ function CheckoutPage({ cartItems }) {
                       <div className="d-flex justify-content-between mb-4">
                         <h5 className="text-uppercase">items {cartItems.length}</h5>
                         {/* Calculate total price */}
-                        <h5>Rs. {cartItems.reduce((acc, item) => acc + item.ItemPrice, 0)}</h5>
+                        <h5>Rs. {cartItems.reduce((acc, item) => acc +  item.ItemPrice, 0)}</h5>
                       </div>
                       <h5 className="text-uppercase mb-3">Give code</h5>
 
@@ -212,9 +245,7 @@ function CheckoutPage({ cartItems }) {
                       <button type="button" className="btn btn-danger btn-block btn-lg" data-mdb-ripple-color="dark" onClick={generatePDF}>
                         Download PDF
                       </button>
-
                       {pickupSuccess && <p className="text-success mt-3">Items added to pickup successfully!</p>}
-
                     </div>
                   </div>
                 </div>

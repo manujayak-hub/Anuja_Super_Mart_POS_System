@@ -78,7 +78,7 @@ function Categories() {
         <div className="d-flex justify-content-center mt-4">
           <Pagination>
             {Array.from({ length: Math.ceil(categories.length / categoriesPerPage) }).map((_, index) => (
-              <Pagination.Item key={index + 1} active={index + 1 === currentPage} onClick={() => paginate(index + 1)}>
+              <Pagination.Item key={index + 1} active={index + 1 === currentPage} onClick={() => paginate(index + 1)} style={{ backgroundColor: '#198754', borderColor: '#198754' }}>
                 {index + 1}
               </Pagination.Item>
             ))}

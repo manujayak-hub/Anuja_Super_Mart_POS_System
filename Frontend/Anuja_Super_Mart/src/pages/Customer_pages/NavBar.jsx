@@ -79,30 +79,31 @@ function NavBar() {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav me-auto">
               <li className="nav-item">
-                <Link className="nav-link" to="/">Home</Link>
+                <Link className="nav-link text-white" to="/">Home</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/about">About</Link>
+                <Link className="nav-link text-white" to="/about">About</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/contact">Contact</Link>
+                <Link className="nav-link text-white" to="/contact">Contact</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/categories">Categories</Link>
+                <Link className="nav-link text-white" to="/categories">Categories</Link>
               </li>
             </ul>
             <div className="navbar-right">
             <button
-              className="btn btn-white"
-              type="button"
-              onClick={toggleCart}
-              data-bs-toggle="offcanvas"
-              data-bs-target="#offcanvasCart"
-              aria-controls="offcanvasCart"
-            >
-              <i className="bi bi-cart"></i> {/* Updated Cart Icon */}
-              <span className="badge bg-danger">{cartItems.length}</span> {/* Cart Item Count */}
-            </button>
+  className="btn btn-white"
+  type="button"
+  onClick={toggleCart}
+  data-bs-toggle="offcanvas"
+  data-bs-target="#offcanvasCart"
+  aria-controls="offcanvasCart"
+>
+<img src="/src/assets/Customer/cart.png" alt="" style={{ width: '20px', height: '20px' }} />
+  <span className="badge bg-danger">{cartItems.length}</span>
+</button>
+
           </div>
             <div className="navbar-right dropdown">
               {/* Profile Dropdown */}
@@ -175,7 +176,7 @@ function NavBar() {
                       -
                     </button>
                   </p>
-                  <p><strong>Price:</strong> ${item.ItemPrice || (item.ItemPrice * item.Quantity)}</p>
+                  <p><strong>Price:</strong> Rs.{item.ItemPrice || (item.ItemPrice * item.Quantity)}</p>
                 </div>
                 <button className="btn btn-danger btn-sm" onClick={() => removeFromCart(index, item._id)}>
                   Remove
@@ -186,7 +187,7 @@ function NavBar() {
         </div>
         {/* Display Total Amount */}
         <div className="offcanvas-footer">
-          <p><strong>Total:</strong> {typeof totalValue === 'number' ? `$${totalValue.toFixed(2)}` : '$0.00'}</p>
+          <p><strong>Total:</strong> {typeof totalValue === 'number' ? `Rs.${totalValue.toFixed(2)}` : 'Rs.0.00'}</p>
           <button
             className="btn btn-success"
             onClick={handleCheckout}

@@ -1,32 +1,28 @@
-// Define styles for a custom card
 .custom-card {
+  width: 300px; /* Set a fixed width for the card */
   border: 1px solid #ccc;
   border-radius: 8px;
   margin-bottom: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-  // Styles for the card body
-  .card-body {
-    padding: 20px;
+.custom-card .card-body {
+  padding: 20px;
+}
 
-    // Styles for the card title
-    .card-title {
-      font-size: 1.25rem;
-      margin-bottom: 10px;
-      text-align: center; // Center align the card title
-      font-family: 'Arial', sans-serif; // Change font family
-      color: #050505; // Change font color
-      text-transform: capitalize; // Capitalize the title
-    }
+.custom-card .card-title {
+  font-size: 1.25rem;
+  margin-bottom: 10px;
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  color: #050505;
+  text-transform: capitalize;
+}
 
-    // Styles for the card text
-    .card-text {
-      margin-bottom: 5px;
-    }
+.custom-card .card-text {
+  margin-bottom: 5px;
+}
 
-    // Styles for a custom button inside the card
-    .custom-btn {
-      width: 100%;
-    }
-  }
+.custom-card .custom-btn {
+  width: 100%;
 }
