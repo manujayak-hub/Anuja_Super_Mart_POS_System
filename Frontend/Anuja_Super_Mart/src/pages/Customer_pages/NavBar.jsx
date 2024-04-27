@@ -9,6 +9,7 @@ function NavBar() {
   const [cartItems, setCartItems] = useState([]);
   const [checkoutClicked, setCheckoutClicked] = useState(false); // State to track checkout click
   const [totalValue, setTotalValue] = useState(0);
+  const [removalMessage, setRemovalMessage] = useState(''); // State for removal message
 
   const toggleCart = () => {
     setCartOpen(!cartOpen);
@@ -21,6 +22,11 @@ function NavBar() {
         const newCartItems = [...cartItems];
         newCartItems.splice(index, 1);
         setCartItems(newCartItems);
+        setRemovalMessage('Item removed from cart'); // Set the removal message
+        // Clear the message after a certain time (e.g., 3 seconds)
+        setTimeout(() => {
+          setRemovalMessage('');
+        }, 3000);
       }
     } catch (error) {
       console.error('Error removing item from cart:', error);
@@ -37,8 +43,6 @@ function NavBar() {
     setCartItems(newCartItems);
   };
   
-
-
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
@@ -115,13 +119,6 @@ function NavBar() {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                <img
-                  src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (31).webp"
-                  className="rounded-circle"
-                  height="22"
-                  alt="Portrait of a Woman"
-                  loading="lazy"
-                />
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <li>
@@ -132,11 +129,10 @@ function NavBar() {
                 </li>
               </ul>
             </div>
-            
+
           </div>
         </div>
       </nav>
-
       <div
         className={`offcanvas offcanvas-end`}
         id="offcanvasCart"
@@ -151,7 +147,18 @@ function NavBar() {
             aria-label="Close"
           ></button>
         </div>
+        <style>
+  {`
+  .alert-warning {
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+    color: #8a6d3b;
+  }
+ `}
+</style>
+      
         <div className="offcanvas-body">
+        {removalMessage && <div className="alert alert-warning">{removalMessage}</div>}
           <ul className="list-group">
             {cartItems.map((item, index) => (
               <li className="list-group-item" key={index}>
