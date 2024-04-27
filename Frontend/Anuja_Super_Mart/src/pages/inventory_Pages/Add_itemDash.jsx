@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from '../../api/axios';
@@ -12,6 +12,14 @@ import '../../styles/additem.scss'
 
 
 const AddItem = () => {
+    const [showPopup, setShowPopup] = useState(false); // State for showing/hiding the popup
+    const [popupMessage, setPopupMessage] = useState(''); // State for the popup message
+
+    const handleClosePopup = () => {
+        setShowPopup(false);
+        setPopupMessage('');
+    };
+
     // Define formik form values, validation schema, and submit function
     const formik = useFormik({
         initialValues: {
@@ -40,16 +48,15 @@ const AddItem = () => {
         }),
         onSubmit: async (values, { setSubmitting, resetForm }) => {
             try {
-                // Make API request to add inventory
                 const response = await axios.post('/inventory', values);
-
-                // Update inventory store with new item
                 useInventoryStore.getState().addInventory(response.data);
-
-                // Reset form after successful submission
                 resetForm();
+                setPopupMessage('Item added successfully.');
+                setShowPopup(true);
             } catch (error) {
                 console.error('Error adding inventory:', error);
+                setPopupMessage('Failed to add item.');
+                setShowPopup(true);
             } finally {
                 setSubmitting(false);
             }
@@ -66,6 +73,19 @@ const AddItem = () => {
                     <div className="col-sm-10">
                         <InvSupNav />
                         <h1 style={{ color: 'red', textAlign: 'center' }}>Add Products</h1>
+
+                        {showPopup && (
+                            <div className="popup" style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: '9999', borderRadius: '5px', padding: '20px' }}>
+                                <div className="popup-inner">
+                                    <button className="close-btn" onClick={handleClosePopup} style={{ position: 'absolute', top: '5px', right: '10px', border: 'none', background: 'transparent', fontSize: '20px', color: '#fff', cursor: 'pointer' }}>
+                                        &times;
+                                    </button>
+                                    <p style={{ color: '#fff' }}>{popupMessage}</p>
+                                </div>
+                            </div>
+                        )}
+
+
                         {/* Formik form */}
                         <form onSubmit={formik.handleSubmit} className="add-item-form p-3">
                             {/* Input fields for inventory item */}
@@ -243,7 +263,7 @@ const AddItem = () => {
 
 
                             <center>
-                            <button type="submit" className="btn btn-primary" disabled={formik.isSubmitting}>Submit</button>
+                                <button type="submit" className="btn btn-primary" disabled={formik.isSubmitting}>Submit</button>
                             </center>
                         </form>
                         <div className="col-sm-2 ">
