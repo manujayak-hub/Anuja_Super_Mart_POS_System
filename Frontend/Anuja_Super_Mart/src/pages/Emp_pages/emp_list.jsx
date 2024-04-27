@@ -1,13 +1,11 @@
-
 import React, { useEffect, useState } from 'react';
 import axios from '../../api/axios';
 import EmployeeDetails from './EmployeeDetails';
 import EmployeeForm from './EmployeeForm';
 import AddEmployeeForm from './AddEmployeeForm';
 import SideBar from '../../components/EmployeeComponents/empSideBar';
-import Modal from 'react-bootstrap/Modal'; // Correct import for Modal
-import Button from 'react-bootstrap/Button'; // Correct import for Button
-
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 const Emp_list = () => {
   const [loading, setLoading] = useState(true);
@@ -17,10 +15,13 @@ const Emp_list = () => {
   const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [employeeToRemove, setEmployeeToRemove] = useState(null); // Employee ID to be removed
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredEmployees, setFilteredEmployees] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [employeesPerPage] = useState(10);
+  const [refreshKey, setRefreshKey] = useState(0); // Key to trigger component re-render
 
   useEffect(() => {
     const fetchEmployees = async () => {
@@ -36,7 +37,7 @@ const Emp_list = () => {
     };
 
     fetchEmployees();
-  }, []);
+  }, [refreshKey]); // Include refreshKey in dependency array
 
   // Function to handle changes in the search query
   const handleSearch = (event) => {
@@ -68,12 +69,22 @@ const Emp_list = () => {
   };
 
   const handleRemoveEmployee = (id) => {
-    axios.delete(`/emp/${id}`).then(() => {
-      setEmployees(employees.filter(employee => employee._id !== id));
-      setShowDetailsModal(false);
-    }).catch((error) => {
+    setEmployeeToRemove(id); // Set the ID of the employee to be removed
+    setShowConfirmationModal(true); // Show confirmation modal
+  };
+
+  const confirmRemoveEmployee = async () => {
+    try {
+      await axios.delete(`/emp/${employeeToRemove}`);
+      setRefreshKey(prevKey => prevKey + 1); // Increment refresh key to trigger re-render
+      setShowConfirmationModal(false); // Close confirmation modal
+    } catch (error) {
       console.error("Error removing employee:", error);
-    });
+    }
+  };
+
+  const cancelRemoveEmployee = () => {
+    setShowConfirmationModal(false); // Close confirmation modal
   };
 
   const handleCloseUpdateModal = () => {
@@ -88,11 +99,14 @@ const Emp_list = () => {
     setShowAddModal(false);
   };
 
-  const handleAddEmployee = (newEmployee) => {
-    // Add new employee to the employees array
-    setEmployees([...employees, newEmployee]);
-    // Close the modal
-    setShowAddModal(false);
+  const handleAddEmployee = async (newEmployee) => {
+    try {
+      await axios.post('/emp', newEmployee);
+      setRefreshKey(prevKey => prevKey + 1); // Increment refresh key to trigger re-render
+      setShowAddModal(false);
+    } catch (error) {
+      console.error("Error adding employee:", error);
+    }
   };
 
   if (loading) return <div>Loading...</div>;
@@ -100,49 +114,50 @@ const Emp_list = () => {
 
   return (
     <>
+      {/* Styles */}
       <style>
         {`
-    body {
-      background-color: #D8D1D1;
-    }
-    .pagination .page-link {
-      color: #FD204F !important;
-      background-color: #fff;
-      border-color: #FD204F;
-    }
-    .pagination .page-link:hover {
-      color: #fff !important;
-      background-color: #FD204F;
-      border-color: #FD204F;
-    }
-    .pagination .page-item.active .page-link {
-      color: #fff !important;
-      background-color: #FD204F;
-      border-color: #FD204F;
-    }
-    .emp_search-bar-container {
-      display: flex;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-    .emp_search-bar {
-      flex: 1;
-      border-radius: 20px;
-      padding: 10px;
-      margin-right: 20px; /* Reduced margin for search bar */
-      border: 1px solid #ccc;
-    }
-    .emp_add-employee-btn {
-      background-color: #FD204F;
-      border-color: #FD204F;
-      color: #fff;
-    }
-    .emp_add-employee-btn:hover {
-      background-color: #FD204F;
-      border-color: #FD204F;
-      color: #fff;
-    }
-  `}
+          body {
+            background-color: #D8D1D1;
+          }
+          .pagination .page-link {
+            color: #FD204F !important;
+            background-color: #fff;
+            border-color: #FD204F;
+          }
+          .pagination .page-link:hover {
+            color: #fff !important;
+            background-color: #FD204F;
+            border-color: #FD204F;
+          }
+          .pagination .page-item.active .page-link {
+            color: #fff !important;
+            background-color: #FD204F;
+            border-color: #FD204F;
+          }
+          .emp_search-bar-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+          }
+          .emp_search-bar {
+            flex: 1;
+            border-radius: 20px;
+            padding: 10px;
+            margin-right: 20px; /* Reduced margin for search bar */
+            border: 1px solid #ccc;
+          }
+          .emp_add-employee-btn {
+            background-color: #FD204F;
+            border-color: #FD204F;
+            color: #fff;
+          }
+          .emp_add-employee-btn:hover {
+            background-color: #FD204F;
+            border-color: #FD204F;
+            color: #fff;
+          }
+        `}
       </style>
 
       <SideBar />
@@ -223,6 +238,20 @@ const Emp_list = () => {
           </nav>
         </div>
       </div>
+
+      {/* Confirmation Modal */}
+      <Modal show={showConfirmationModal} onHide={cancelRemoveEmployee}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to remove this employee?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={cancelRemoveEmployee}>Cancel</Button>
+          <Button variant="danger" onClick={confirmRemoveEmployee}>Remove</Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Employee Details Modal */}
       <Modal show={showDetailsModal} onHide={() => setShowDetailsModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Employee Details</Modal.Title>
@@ -239,6 +268,7 @@ const Emp_list = () => {
           <Button variant="secondary" onClick={() => setShowDetailsModal(false)}>Close</Button>
         </Modal.Footer>
       </Modal>
+      {/* Update Employee Modal */}
       <Modal show={showUpdateModal} onHide={handleCloseUpdateModal}>
         <Modal.Header closeButton>
           <Modal.Title>Update Employee</Modal.Title>
@@ -247,6 +277,7 @@ const Emp_list = () => {
           {selectedEmployee && <EmployeeForm employee={selectedEmployee} handleClose={handleCloseUpdateModal} />}
         </Modal.Body>
       </Modal>
+      {/* Add Employee Modal */}
       <Modal show={showAddModal} onHide={handleCloseAddModal}>
         <Modal.Header closeButton>
           <Modal.Title>Add Employee</Modal.Title>

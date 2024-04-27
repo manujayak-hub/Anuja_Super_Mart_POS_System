@@ -15,7 +15,7 @@ const AddEmployeeForm = ({ handleClose }) => {
     empContactNum: Yup.string()
       .required('Contact Number is required')
       .matches(/^\d{10}$/, 'Contact Number must be 10 digits'),
-    empJoinedDate: Yup.date().required('Joined Date is required'),
+    empJoinedDate: Yup.date().max(new Date(), 'Joined Date cannot be a future date').required('Joined Date is required'),
     empBasicSalary: Yup.number().required('Basic Salary is required'),
     empRemainingLeaves: Yup.number()
       .required('Monthly Leaves is required')
@@ -36,14 +36,20 @@ const AddEmployeeForm = ({ handleClose }) => {
   };
 
   // Submit handler
-  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+  const handleSubmit = async (values, { setSubmitting, resetForm, setErrors }) => {
     try {
       await axios.post('/emp', values);
       handleClose(); // Close the modal after successful submission
       resetForm();
     } catch (error) {
       console.error('Error adding employee:', error);
-      // Handle error
+      if (error.response && error.response.status === 409) {
+        // Employee ID already exists
+        setErrors({ empID: 'Employee ID already exists' });
+      } else {
+        // Other error
+        // Handle error
+      }
     } finally {
       setSubmitting(false);
     }
