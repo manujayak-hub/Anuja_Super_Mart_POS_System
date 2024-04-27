@@ -22,21 +22,25 @@ const PickupOrders = () => {
     fetchData();
   }, []);
 
+
   return (
     <div className="pickup-orders-container"> 
       <MenuNav />
       <div className='topic'><h1>Pickup Orders</h1></div>
       {/* Render your cart items here */}
-      <ul>
-        {cart.map(item => (
-          <li key={item.id}>
-           
-            {item.ItemName} - {item.Quantity}
-          </li>
-        ))}
-      </ul>
+      <table>
+        <tbody>
+          {cart.map(item => (
+            <tr key={item.id}>
+              <td>{item.ItemName}</td>
+              <td>{item.Quantity}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
+  
 };
 
 export default PickupOrders;

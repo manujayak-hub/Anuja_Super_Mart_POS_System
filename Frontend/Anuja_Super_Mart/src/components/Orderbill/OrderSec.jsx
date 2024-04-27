@@ -13,6 +13,7 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
     }); 
     const [customerId, setCustomerId] = useState(""); 
     const [paymentAmount, setPaymentAmount] = useState(0); 
+    const [refreshKey, setRefreshKey] = useState(0); // Key to force component refresh
 
     useEffect(() => {
         localStorage.setItem("orderIdCounter", orderIdCounter.toString());
@@ -66,6 +67,9 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
             // Generate and download PDF receipt
             generatePDFReceipt(orderId, currentDate);
 
+            // Increment refresh key to force component refresh
+            setRefreshKey(prevKey => prevKey + 1);
+
         } catch (error) {
             console.error("Error placing order:", error);
             setMessage("Failed to place order.");
@@ -74,6 +78,11 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
 
     const generatePDFReceipt = (orderId, currentDate) => {
         const doc = new jsPDF();
+        
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const pageHeight = doc.internal.pageSize.getHeight();
+        doc.rect(5, 5, pageWidth - 10, pageHeight - 10);
+
         doc.setFontSize(18);
         doc.text("Anuja Super Mart", doc.internal.pageSize.getWidth() / 2, 10, 'center');
 
@@ -81,7 +90,7 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
         doc.text("Order Receipt", doc.internal.pageSize.getWidth() / 2, 20, 'center');
 
         doc.setFontSize(12);
-        doc.text(`Order ID: ${orderId}`, 10, 30);
+        doc.text(`Order ID: ${orderId}`, 10, 30,);
         doc.text(`Date: ${currentDate}`, 10, 40);
 
         let y = 50;
@@ -98,7 +107,7 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
     };
 
     return (
-        <div className="OrderSec">
+        <div key={refreshKey} className="OrderSec">
             <div name="order_header">
                 <h1>Order</h1>
             </div>
@@ -128,8 +137,8 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
                 </tbody>
             </table>
             <div className="totalprice">
-                <h5>Total: Rs {totalPrice}</h5>
-                <h5>Balance: Rs {balance}</h5>
+                <h5 style={{marginRight:'10px'}}>Total: Rs {totalPrice}</h5>
+                <h5 style={{marginRight:'10px'}}>Balance: Rs {balance}</h5>
                 <input 
                  type="number" 
                  placeholder="Enter Payment Amount" 
