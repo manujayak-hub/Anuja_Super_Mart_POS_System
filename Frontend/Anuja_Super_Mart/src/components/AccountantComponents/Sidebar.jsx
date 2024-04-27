@@ -9,10 +9,12 @@ const Sidebar = ({ handleDownloadPDF }) => {
       <div className="text-center p-3">
         <img src="src/assets/Accountant/logo.png" alt="Logo" className="img-fluid mb-3" />
       </div>
+     
+     
       <Nav.Item className="sidebar-item text-center py-3">
-        <Nav.Link href="/TransactionReport">
-          <img src="src/assets/Accountant/User Male.png" alt="Icon 1" className="img-fluid d-inline-block icon" />
-          <span className="d-inline-block text">User Profile</span>
+        <Nav.Link href="/transactions">
+          <img src="src/assets/Accountant/Receipt Approved.png" alt="Icon 2" className="img-fluid d-inline-block icon" />
+          <span className="d-inline-block text"> Dashboard</span>
         </Nav.Link>
       </Nav.Item>
 
@@ -24,18 +26,20 @@ const Sidebar = ({ handleDownloadPDF }) => {
       </Nav.Item>
     
       <Nav.Item className="sidebar-item text-center py-3">
-        <Nav.Link href="/transactions">
-          <img src="src/assets/Accountant/Receipt Approved.png" alt="Icon 2" className="img-fluid d-inline-block icon" />
-          <span className="d-inline-block text">Transaction List</span>
+        <Nav.Link href="/AccountantDash">
+          <img src="src/assets/Accountant/Sales Performance.png" alt="Icon 3" className="img-fluid d-inline-block icon" />
+          <span className="d-inline-block text">Fetch Totals</span>
+        </Nav.Link>
+      </Nav.Item>  
+
+      <Nav.Item className="sidebar-item text-center py-3">
+        <Nav.Link href="/UserProfile">
+          <img src="src/assets/Accountant/User Male.png" alt="Icon 1" className="img-fluid d-inline-block icon" />
+          <span className="d-inline-block text">User Profile</span>
         </Nav.Link>
       </Nav.Item>
       
-      {/* <Nav.Item className="sidebar-item text-center py-3">
-        <Nav.Link href="/Revenue">
-          <img src="src/assets/Accountant/Sales Performance.png" alt="Icon 3" className="img-fluid d-inline-block icon" />
-          <span className="d-inline-block text">Revenue</span>
-        </Nav.Link>
-      </Nav.Item> */}
+       
 
       {/* <Nav.Item className="sidebar-item text-center py-3">  
         <Nav.Link onClick={handleDownloadPDF}>

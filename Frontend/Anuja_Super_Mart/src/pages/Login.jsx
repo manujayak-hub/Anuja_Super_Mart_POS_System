@@ -26,11 +26,21 @@ const Login = () => {
       setErrorMessage('');
       // Redirect based on user email
       if (email === 'manujayak8@gmail.com') {
-        navigate('/inventory');
-      } else if (email === 'n@gmail.com') {
-        navigate('/cashier');
+
+        navigate('/inventory'); // Navigate to /inventory for manujayak8@gmail.com
+
+      } else if (email === 'udari@gmail.com') {
+        navigate('/Transactions');  // Navigate to /cashier for n@gmail.com
+
+      } else if (email === 'rmsahanpramudithabandara22@gmail.com') {
+        navigate('/Menu'); // Navigate to /cashier for n@gmail.com
+
+        
+
       } else if (email === 'dulanimalka1@gmail.com') {
         navigate('/emp_list');
+ 
+
       } else {
         navigate('/');
       }

@@ -1,3 +1,14 @@
+
+import React, { useEffect, useState } from 'react';
+import axios from '../../api/axios';
+import EmployeeDetails from './EmployeeDetails';
+import EmployeeForm from './EmployeeForm';
+import AddEmployeeForm from './AddEmployeeForm';
+import SideBar from '../../components/EmployeeComponents/empSideBar';
+import Modal from 'react-bootstrap/Modal'; // Correct import for Modal
+import Button from 'react-bootstrap/Button'; // Correct import for Button
+
+
 const Emp_list = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -90,7 +101,7 @@ const Emp_list = () => {
   return (
     <>
       <style>
-  {`
+        {`
     body {
       background-color: #D8D1D1;
     }
@@ -132,9 +143,9 @@ const Emp_list = () => {
       color: #fff;
     }
   `}
-</style>
+      </style>
 
-      <SideBar/>
+      <SideBar />
       <div className="content" style={{ marginLeft: '250px', marginRight: '50px', padding: '20px' }}>
         <div className="emp_search-bar-container">
           <input

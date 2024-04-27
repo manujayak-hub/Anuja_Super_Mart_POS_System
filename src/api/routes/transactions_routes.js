@@ -28,11 +28,11 @@ transactionRouter.delete('/:id', deleteTransaction);
 // Update a transaction
 transactionRouter.patch('/:id', updateTransaction);
 
-// Save type and total - Define a unique endpoint, for example '/save-type-total'
+
 transactionRouter.post('/save-type-total', saveTypeTotal);
 
 transactionRouter.post('/reset-type-total', resetTypeTotal);
 
-transactionRouter.post('/get-type-total', getAllTypeTotals);
+transactionRouter.get('/get-type-total', getAllTypeTotals);
 
 module.exports = transactionRouter;

@@ -38,14 +38,14 @@ const TransactionForm = () => {
   });
 
   return (
-    <div style={{ display: 'flex', height: '100vh' }}>
+    <div style={{ display: 'flex', height: '100vh',backgroundColor: 'lightgray' }}>
       <Sidebar />
       <div style={{ flex: 1, padding: '20px', overflowY: 'auto' }}>
-      <h1 className="text-danger" style={{ textAlign: 'center',marginLeft: '300px'}}>Add Transaction</h1>
+        <h1 className="text-danger" style={{ textAlign: 'center',marginLeft: '300px'}}>Add Transaction</h1>
 
-      <div className="card" style={{ maxWidth: '1000px', margin: '0 auto', marginLeft: '300px', height: '80vh' }}>
-    <div className="card-body" style={{ maxWidth: '1000px', height: '80%' }}>
-    <form onSubmit={formik.handleSubmit} style={{ height: '900px' }}>
+        <div className="card" style={{ maxWidth: '1000px', margin: '0 auto', marginLeft: '300px', height: '80vh' }}>
+          <div className="card-body" style={{ maxWidth: '1000px', height: '80%' }}>
+            <form onSubmit={formik.handleSubmit} style={{ height: '900px' }}>
               <div className="mb-3">
                 <label htmlFor="transactionID" className="form-label">Transaction ID</label>
                 <input
@@ -54,6 +54,7 @@ const TransactionForm = () => {
                   id="transactionID"
                   {...formik.getFieldProps('transactionID')}
                   value={formik.values.transactionID}  
+                  autoComplete="off" 
                 />
                 {formik.touched.transactionID && formik.errors.transactionID ? (
                   <div className="text-danger">{formik.errors.transactionID}</div>
@@ -67,6 +68,7 @@ const TransactionForm = () => {
                   id="transactionDateTime"
                   {...formik.getFieldProps('transactionDateTime')}
                   value={formik.values.transactionDateTime}  
+                  autoComplete="off" 
                 />
                 {formik.touched.transactionDateTime && formik.errors.transactionDateTime ? (
                   <div className="text-danger">{formik.errors.transactionDateTime}</div>
@@ -79,6 +81,7 @@ const TransactionForm = () => {
                   id="transactionType"
                   {...formik.getFieldProps('transactionType')}
                   value={formik.values.transactionType}  
+                  autoComplete="off" 
                 >
                   <option value="">Select Transaction Type</option>
                   <option value="inventory">Inventory</option>
@@ -99,6 +102,7 @@ const TransactionForm = () => {
                   id="transactionAmount"
                   {...formik.getFieldProps('transactionAmount')}
                   value={formik.values.transactionAmount}  
+                  autoComplete="off" 
                 />
                 {formik.touched.transactionAmount && formik.errors.transactionAmount ? (
                   <div className="text-danger">{formik.errors.transactionAmount}</div>
@@ -111,6 +115,7 @@ const TransactionForm = () => {
                   id="transactionMethod"
                   {...formik.getFieldProps('transactionMethod')}
                   value={formik.values.transactionMethod}  
+                  autoComplete="off" 
                 >
                   <option value="">Select Transaction Method</option>
                   <option value="cash">Cash</option>
@@ -134,38 +139,37 @@ const TransactionForm = () => {
       </div>
      
       {showModal && (
-  <div
-    style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      backdropFilter: 'blur(0px)'
-    }}
-  >
-    <div
-      style={{
-        backgroundColor: '#fff',
-        padding: '20px',
-        borderRadius: '5px',
-        boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)',
-        width: '500px',
-        height: '150px'
-      }}
-    >
-      <h2 style={{ fontSize: '20px' }}>Transaction Added Successfully!</h2>
-      <div className="modal-buttons" style={{ marginTop: '10px' }}>
-        <button className="btn btn-danger" onClick={() => setShowModal(false)}>Close</button>
-      </div>
-    </div>
-  </div>
-)}
-
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backdropFilter: 'blur(0px)'
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: '#fff',
+              padding: '20px',
+              borderRadius: '5px',
+              boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)',
+              width: '500px',
+              height: '150px'
+            }}
+          >
+            <h2 style={{ fontSize: '20px' }}>Transaction Added Successfully!</h2>
+            <div className="modal-buttons" style={{ marginTop: '10px' }}>
+              <button className="btn btn-danger" onClick={() => setShowModal(false)}>Close</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
