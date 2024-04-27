@@ -17,12 +17,6 @@ const Sidebar = () => {
                     <img src={logo} alt="Logo" className="img-fluid mb-3" />
                 </div>
 
-                <Link to="/invprofile" className="text-decoration-none"> {/* Added text-decoration-none class here */}
-                    <div className="sidebar-item text-center py-1">
-                        <img src={user} alt="Icon 1" className="img-fluid d-inline-block invIcon" />
-                        <span className="d-inline-block invText">User Profile</span>
-                    </div>
-                </Link>
 
                 <Link to="/inventory" className="text-decoration-none"> {/* Added text-decoration-none class here */}
                     <div className="sidebar-item text-center py-1">

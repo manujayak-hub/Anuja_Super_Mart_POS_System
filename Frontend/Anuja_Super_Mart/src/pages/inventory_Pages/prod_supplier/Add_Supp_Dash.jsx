@@ -1,13 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import useProdSupStore from '../../../stores/prodsupplierStore';
 import InvSupSidebar from '../../../components/InventoryComponents/InvSideBarForSup';
 import InvSupNav from '../../../components/InventoryComponents/invSupNav';
+import DatePicker from 'react-datepicker'; // Import DatePicker
+import 'react-datepicker/dist/react-datepicker.css'; // Import DatePicker CSS
 import '../../../styles/additem.scss'; // Import the shared styles
 
 const AddSupplierForm = () => {
     const { createProdsup } = useProdSupStore();
+
+    const [showPopup, setShowPopup] = useState(false); // State for showing/hiding the popup
+    const [popupMessage, setPopupMessage] = useState(''); // State for the popup message
+
+    const handleClosePopup = () => {
+        setShowPopup(false);
+        setPopupMessage('');
+    };
 
     const formik = useFormik({
         initialValues: {
@@ -23,7 +33,9 @@ const AddSupplierForm = () => {
             SupId: Yup.string().required('Required'),
             supname: Yup.string().required('Required'),
             Contactno: Yup.string().required('Required'),
-            email: Yup.string().email('Invalid email').required('Required')
+            email: Yup.string().email('Invalid email').required('Required'),
+            supstatus: Yup.string().required('Required'),
+            note: Yup.string()
         }),
         onSubmit: async (values, { setSubmitting, resetForm }) => {
             try {
@@ -31,8 +43,12 @@ const AddSupplierForm = () => {
                 await createProdsup(values);
                 // Reset form after successful submission
                 resetForm();
+                setPopupMessage('Supplier added successfully.');
+                setShowPopup(true);
             } catch (error) {
                 console.error('Error adding supplier:', error);
+                setPopupMessage('Failed to add supplier.');
+                setShowPopup(true);
             } finally {
                 setSubmitting(false);
             }
@@ -48,6 +64,18 @@ const AddSupplierForm = () => {
                 <div className="col-sm-10">
                     <InvSupNav />
                     <h1 style={{ color: 'red', textAlign: 'center' }}>Add Supplier</h1>
+
+                    {showPopup && (
+                        <div className="popup" style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: '9999', borderRadius: '5px', padding: '20px' }}>
+                            <div className="popup-inner">
+                                <button className="close-btn" onClick={handleClosePopup} style={{ position: 'absolute', top: '5px', right: '10px', border: 'none', background: 'transparent', fontSize: '20px', color: '#fff', cursor: 'pointer' }}>
+                                    &times;
+                                </button>
+                                <p style={{ color: '#fff' }}>{popupMessage}</p>
+                            </div>
+                        </div>
+                    )}
+
                     {/* Formik form */}
                     <form onSubmit={formik.handleSubmit} className="add-item-form p-3"> {/* Apply shared form class */}
                         <div className="mb-3">
@@ -130,8 +158,6 @@ const AddSupplierForm = () => {
                             ) : null}
                         </div>
 
-                        
-
                         <div className="row">
                             <label htmlFor="supstatus" className="form-label">Supplier Status</label>
                             <div className="col-sm-6 mb-3">
@@ -162,7 +188,6 @@ const AddSupplierForm = () => {
                                 <div className="text-danger">{formik.errors.supstatus}</div>
                             ) : null}
                         </div>
-                        
 
                         <div className="mb-3">
                             <label htmlFor="note" className="form-label">Special Note</label>
