@@ -9,6 +9,7 @@ function NavBar() {
   const [cartItems, setCartItems] = useState([]);
   const [checkoutClicked, setCheckoutClicked] = useState(false); // State to track checkout click
   const [totalValue, setTotalValue] = useState(0);
+  const [removalMessage, setRemovalMessage] = useState(''); // State for removal message
 
   const toggleCart = () => {
     setCartOpen(!cartOpen);
@@ -21,6 +22,11 @@ function NavBar() {
         const newCartItems = [...cartItems];
         newCartItems.splice(index, 1);
         setCartItems(newCartItems);
+        setRemovalMessage('Item removed from cart'); // Set the removal message
+        // Clear the message after a certain time (e.g., 3 seconds)
+        setTimeout(() => {
+          setRemovalMessage('');
+        }, 3000);
       }
     } catch (error) {
       console.error('Error removing item from cart:', error);
@@ -37,8 +43,6 @@ function NavBar() {
     setCartItems(newCartItems);
   };
   
-
-
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
@@ -79,30 +83,31 @@ function NavBar() {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav me-auto">
               <li className="nav-item">
-                <Link className="nav-link" to="/">Home</Link>
+                <Link className="nav-link text-white" to="/">Home</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/about">About</Link>
+                <Link className="nav-link text-white" to="/about">About</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/contact">Contact</Link>
+                <Link className="nav-link text-white" to="/contact">Contact</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/categories">Categories</Link>
+                <Link className="nav-link text-white" to="/categories">Categories</Link>
               </li>
             </ul>
             <div className="navbar-right">
             <button
-              className="btn btn-white"
-              type="button"
-              onClick={toggleCart}
-              data-bs-toggle="offcanvas"
-              data-bs-target="#offcanvasCart"
-              aria-controls="offcanvasCart"
-            >
-              <i className="bi bi-cart"></i> {/* Updated Cart Icon */}
-              <span className="badge bg-danger">{cartItems.length}</span> {/* Cart Item Count */}
-            </button>
+  className="btn btn-white"
+  type="button"
+  onClick={toggleCart}
+  data-bs-toggle="offcanvas"
+  data-bs-target="#offcanvasCart"
+  aria-controls="offcanvasCart"
+>
+<img src="/src/assets/Customer/cart.png" alt="" style={{ width: '20px', height: '20px' }} />
+  <span className="badge bg-danger">{cartItems.length}</span>
+</button>
+
           </div>
             <div className="navbar-right dropdown">
               {/* Profile Dropdown */}
@@ -114,13 +119,6 @@ function NavBar() {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                <img
-                  src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (31).webp"
-                  className="rounded-circle"
-                  height="22"
-                  alt="Portrait of a Woman"
-                  loading="lazy"
-                />
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <li>
@@ -131,11 +129,10 @@ function NavBar() {
                 </li>
               </ul>
             </div>
-            
+
           </div>
         </div>
       </nav>
-
       <div
         className={`offcanvas offcanvas-end`}
         id="offcanvasCart"
@@ -150,7 +147,18 @@ function NavBar() {
             aria-label="Close"
           ></button>
         </div>
+        <style>
+  {`
+  .alert-warning {
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+    color: #8a6d3b;
+  }
+ `}
+</style>
+      
         <div className="offcanvas-body">
+        {removalMessage && <div className="alert alert-warning">{removalMessage}</div>}
           <ul className="list-group">
             {cartItems.map((item, index) => (
               <li className="list-group-item" key={index}>
@@ -175,7 +183,7 @@ function NavBar() {
                       -
                     </button>
                   </p>
-                  <p><strong>Price:</strong> ${item.ItemPrice || (item.ItemPrice * item.Quantity)}</p>
+                  <p><strong>Price:</strong> Rs.{item.ItemPrice || (item.ItemPrice * item.Quantity)}</p>
                 </div>
                 <button className="btn btn-danger btn-sm" onClick={() => removeFromCart(index, item._id)}>
                   Remove
@@ -186,7 +194,7 @@ function NavBar() {
         </div>
         {/* Display Total Amount */}
         <div className="offcanvas-footer">
-          <p><strong>Total:</strong> {typeof totalValue === 'number' ? `$${totalValue.toFixed(2)}` : '$0.00'}</p>
+          <p><strong>Total:</strong> {typeof totalValue === 'number' ? `Rs.${totalValue.toFixed(2)}` : 'Rs.0.00'}</p>
           <button
             className="btn btn-success"
             onClick={handleCheckout}

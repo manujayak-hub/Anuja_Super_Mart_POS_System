@@ -57,6 +57,17 @@ const Contact = () => {
                     </Form.Control.Feedback>
                   </Form.Group>
 
+                  <Form.Group controlId="formBasicReaction">
+                    <Form.Label>Reaction</Form.Label>
+                    <Form.Control as="select">
+                      <option>Choose...</option>
+                      <option>Bad</option>
+                      <option>Not bad</option>
+                      <option>Good</option>
+                      <option>Excellent</option>
+                    </Form.Control>
+                  </Form.Group>
+
                   <Button variant="primary" type="submit">
                     Submit
                   </Button>

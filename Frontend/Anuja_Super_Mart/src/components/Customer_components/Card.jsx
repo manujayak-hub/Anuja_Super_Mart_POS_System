@@ -32,7 +32,7 @@ const Card = ({ product, addToOrder }) => {
   };
 
   return (
-    <div className="card custom-card" style={{ width: '15rem' }}>
+    <div className={`card custom-card ${addedToCart ? 'pulse-animation' : ''}`} style={{ width: '15rem' }}>
       <img src={imageUrl} className="card-img-top" alt="Product" />
       <div className="card-body">
         <h5 className="card-title">{productName}</h5>
