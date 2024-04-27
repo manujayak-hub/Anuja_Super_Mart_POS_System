@@ -12,6 +12,8 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
         return storedOrderIdCounter ? parseInt(storedOrderIdCounter) : 1;
     }); 
     const [customerId, setCustomerId] = useState(""); 
+    const [paymentAmount, setPaymentAmount] = useState(0); 
+    const [refreshKey, setRefreshKey] = useState(0); // Key to force component refresh
 
     useEffect(() => {
         localStorage.setItem("orderIdCounter", orderIdCounter.toString());
@@ -29,6 +31,7 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
     };
 
     const totalPrice = orderItems.reduce((total, item) => total + item.wholesalePrice, 0);
+    const balance = paymentAmount - totalPrice;
 
     const handleRemoveFromOrder = (index) => {
         removeFromOrder(index);
@@ -40,6 +43,11 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
 
     const handleConfirmOrder = async () => {
         try {
+            if (orderItems.length === 0) {
+                setMessage("Please add items to the order before confirming.");
+                return;
+            }
+
             const orderId = generateOrderId(); 
             const currentDate = getCurrentDate(); 
 
@@ -59,6 +67,9 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
             // Generate and download PDF receipt
             generatePDFReceipt(orderId, currentDate);
 
+            // Increment refresh key to force component refresh
+            setRefreshKey(prevKey => prevKey + 1);
+
         } catch (error) {
             console.error("Error placing order:", error);
             setMessage("Failed to place order.");
@@ -67,6 +78,11 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
 
     const generatePDFReceipt = (orderId, currentDate) => {
         const doc = new jsPDF();
+        
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const pageHeight = doc.internal.pageSize.getHeight();
+        doc.rect(5, 5, pageWidth - 10, pageHeight - 10);
+
         doc.setFontSize(18);
         doc.text("Anuja Super Mart", doc.internal.pageSize.getWidth() / 2, 10, 'center');
 
@@ -74,7 +90,7 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
         doc.text("Order Receipt", doc.internal.pageSize.getWidth() / 2, 20, 'center');
 
         doc.setFontSize(12);
-        doc.text(`Order ID: ${orderId}`, 10, 30);
+        doc.text(`Order ID: ${orderId}`, 10, 30,);
         doc.text(`Date: ${currentDate}`, 10, 40);
 
         let y = 50;
@@ -84,42 +100,76 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
         });
 
         doc.text(`Total: Rs ${totalPrice}`, 10, y);
+        doc.text(`Payment: Rs ${paymentAmount}`, 10, y + 10);
+        doc.text(`Balance: Rs ${balance}`, 10, y + 20);
 
         doc.save(`receipt_${orderId}.pdf`);
     };
 
     return (
-        <div className="OrderSec">
+        <div key={refreshKey} className="OrderSec">
             <div name="order_header">
                 <h1>Order</h1>
             </div>
-            <div name="itemlist_order">
-                {orderItems.map((item, index) => (
-                    <div key={index}>
-                        <p>{item.productName}
-                        <button 
-                           name="remove" 
-                           onClick={() => handleRemoveFromOrder(index)} 
-                           style={{ 
-                           float: 'right', 
-                           fontSize: '12px', 
-                           padding: '5px' 
-                             }}
->
-                          Remove
-                        </button>
-
-                        </p>
-                        <p>Rs: {item.wholesalePrice}</p>
-                    </div>
-                ))}
-            </div>
+            <table className="itemlist_order">
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Price</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {orderItems.map((item, index) => (
+                        <tr key={index}>
+                            <td>{item.productName}</td>
+                            <td>Rs: {item.wholesalePrice}</td>
+                            <td>
+                                <button 
+                                    name="remove" 
+                                    onClick={() => handleRemoveFromOrder(index)}
+                                >
+                                    Remove
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
             <div className="totalprice">
-                <h5>Total: Rs {totalPrice}</h5>
+                <h5 style={{marginRight:'10px'}}>Total: Rs {totalPrice}</h5>
+                <h5 style={{marginRight:'10px'}}>Balance: Rs {balance}</h5>
+                <input 
+                 type="number" 
+                 placeholder="Enter Payment Amount" 
+                 value={paymentAmount} 
+                 onChange={(e) => {
+                 const inputValue = parseInt(e.target.value);
+                 if (!isNaN(inputValue) && inputValue >= 0) {
+                 setPaymentAmount(inputValue);
+                 }
+                 }} 
+                 style={{marginRight:'10px'}}
+                />
+
+                
             </div>
             <div className="customer_input">
-                <input type="text" placeholder="Enter Customer ID" value={customerId} onChange={(e) => setCustomerId(e.target.value)} />
-            </div>
+    <input 
+        type="text" 
+        placeholder="Enter Customer ID" 
+        value={customerId} 
+        onChange={(e) => {
+            const inputValue = e.target.value;
+            // Check if the input consists only of digits and has a length of 10
+            if (/^\d{0,10}$/.test(inputValue)) {
+                setCustomerId(inputValue);
+            }
+        }} 
+        style={{marginRight:'1px'}} 
+    />
+</div>
+
             <div className="addorder">
                 <button onClick={handleConfirmOrder}>Confirm Order</button>
             </div>

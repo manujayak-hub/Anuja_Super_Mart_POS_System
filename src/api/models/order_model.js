@@ -4,13 +4,13 @@ const Schema = mongoose.Schema
 const orderSchema = new Schema({
 
 
-    orderId: {type: String},
+    orderId: {type: String,required: true},
     customerId: {type:String},
     ItemID: {type: String},
-    ItemName: {type: String},
-    Quantity: {type: String},
-    TotalAmount: {type: String},
-    date:{type:String}
+    ItemName: {type: String,required: true},
+    Quantity: {type: String,required: true},
+    TotalAmount: {type: String,required: true},
+    date:{type:String,required: true}
     
 
 },{
