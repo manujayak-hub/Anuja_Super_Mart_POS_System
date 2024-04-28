@@ -1,0 +1,40 @@
+// OrderEditForm.scss
+
+.OrderEditForm {
+    display: flex;
+    flex-direction: column;
+    padding: 20px; // Add padding for spacing
+
+    label {
+        margin-bottom: 10px;
+
+        input {
+            width: 100%;
+            padding: 5px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    }
+
+    button {
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        background-color: #FD204F;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+
+        &:hover {
+            background-color:#FD204F;
+        }
+    }
+
+    // Adjust positioning for the right side of the page
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%; // Fill the height of the container
+}

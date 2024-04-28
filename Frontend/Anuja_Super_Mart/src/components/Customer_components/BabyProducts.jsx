@@ -1,17 +1,15 @@
-// BabyProducts.js
 import React, { useEffect, useState } from 'react';
 import axios from '../../api/axios';
 import Card from '../Customer_components/Card';
-import Cart from './Cart';
 
 const BabyProducts = () => {
   const [inventory, setInventory] = useState([]);
-  const [orderItems, setOrderItems] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const fetchInventoryByCategory = async () => {
       try {
-        const category = "baby_products";
+        const category = "Baby_products";
         const response = await axios.get(`/inventory/category/${category}`);
         const inventoryData = response.data;
         console.log("Inventory data from API:", inventoryData);
@@ -24,38 +22,62 @@ const BabyProducts = () => {
     fetchInventoryByCategory();
   }, []);
 
+  console.log("Current Inventory:", inventory); // Log the current inventory
+
   const addToOrder = (product) => {
-    const updatedOrderItems = [...orderItems, product];
-    setOrderItems(updatedOrderItems);
-    console.log("Updated Order Items:", updatedOrderItems);
-  };
-  
-
-  const removeFromOrder = (indexToRemove) => {
-    const updatedItems = orderItems.filter((product, index) => index !== indexToRemove);
-    setOrderItems(updatedItems);
+    // Define the logic to add the product to the order/cart
+    console.log('Adding product to order:', product);
+    // You can implement the functionality to add the product to the order/cart here
   };
 
-  console.log("Current Inventory:", inventory);
+  // Filter the inventory based on search query
+  const filteredInventory = inventory.filter(product =>
+    product.productName.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div>
       <center>
-        <h1>Baby Products</h1>
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search for products..."
+          style={{ marginBottom: '20px', padding: '5px' }}
+        />
       </center>
-      <div className="products">
-        {inventory.map((product) => (
+      <div className="products-container">
+        {filteredInventory.map((product) => (
           <div key={product.productId} className="product">
-            {/* Pass addToOrder function to Card component */}
-            <Card product={product} key={product._id} addToOrder={addToOrder} />
+            <Card product={product} addToOrder={addToOrder} />
           </div>
         ))}
       </div>
-      {/* Pass orderItems and removeFromOrder function to Cart component */}
-      <Cart orderItems={orderItems} 
-      removeFromOrder={removeFromOrder}
-      setOrderItems={setOrderItems} 
-      />
+      <style jsx>{`
+        .products-container {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between; // Adjust as needed
+        }
+        
+        .product {
+          width: 30%; // Adjust the width of each product card
+          margin-bottom: 20px; // Add margin between products
+        }
+
+        // Media query for responsiveness
+        @media (max-width: 768px) {
+          .product {
+            width: 45%; // Adjust width for smaller screens
+          }
+        }
+
+        @media (max-width: 576px) {
+          .product {
+            width: 100%; // Full width for extra small screens
+          }
+        }
+      `}</style>
     </div>
   );
 };

@@ -1,58 +1,66 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const EmployeeDetails = ({ employee, onUpdate }) => {
+const EmployeeDetails = ({ employee, handleRemove }) => {
   const [editedDetails, setEditedDetails] = useState({ ...employee });
+
+  useEffect(() => {
+    setEditedDetails({ ...employee });
+  }, [employee]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setEditedDetails({ ...editedDetails, [name]: value });
   };
 
-  const handleUpdate = () => {
-    onUpdate(editedDetails);
+  const handleRemoveEmployee = () => {
+    handleRemove(employee._id);
   };
 
-  return (
+  
+
+  return  (
     <div>
-      <h2>Employee Details</h2>
+     
       <form>
         <div className="mb-3">
           <label className="form-label">Employee ID</label>
-          <input type="text" className="form-control" value={employee.empID} readOnly />
+          <input type="text" className="form-control" value={editedDetails.empID} readOnly />
         </div>
         <div className="mb-3">
           <label className="form-label">Name</label>
-          <input type="text" className="form-control" name="empName" value={editedDetails.empName} onChange={handleInputChange} />
+          <input type="text" className="form-control" name="empName" value={editedDetails.empName} readOnly />
         </div>
         <div className="mb-3">
           <label className="form-label">Role</label>
-          <input type="text" className="form-control" name="empRole" value={editedDetails.empRole} onChange={handleInputChange} />
+          <input type="text" className="form-control" name="empRole" value={editedDetails.empRole} readOnly />
         </div>
         <div className="mb-3">
           <label className="form-label">Address</label>
-          <input type="text" className="form-control" name="empAddress" value={editedDetails.empAddress} onChange={handleInputChange} />
+          <input type="text" className="form-control" name="empAddress" value={editedDetails.empAddress} readOnly />
         </div>
         <div className="mb-3">
           <label className="form-label">Contact Number</label>
-          <input type="text" className="form-control" name="empContactNum" value={editedDetails.empContactNum} onChange={handleInputChange} />
+          <input type="text" className="form-control" name="empContactNum" value={editedDetails.empContactNum} readOnly />
         </div>
         <div className="mb-3">
           <label className="form-label">Joined Date</label>
-          <input type="text" className="form-control" name="empJoinedDate" value={editedDetails.empJoinedDate} onChange={handleInputChange} />
+          <input type="string" className="form-control" name="empJoinedDate" value={editedDetails.empJoinedDate} readOnly />
         </div>
         <div className="mb-3">
           <label className="form-label">Basic Salary</label>
-          <input type="text" className="form-control" name="empBasicSalary" value={editedDetails.empBasicSalary} onChange={handleInputChange} />
+          <input type="text" className="form-control" name="empBasicSalary" value={editedDetails.empBasicSalary} readOnly />
         </div>
         <div className="mb-3">
           <label className="form-label">Remaining Leaves</label>
-          <input type="text" className="form-control" name="empRemainingLeaves" value={editedDetails.empRemainingLeaves} onChange={handleInputChange} />
+          <input type="text" className="form-control" name="empRemainingLeaves" value={editedDetails.empRemainingLeaves} readOnly />
         </div>
         <div className="mb-3">
           <label className="form-label">Final Salary</label>
           <input type="text" className="form-control" name="empFinalSalary" value={editedDetails.empFinalSalary} onChange={handleInputChange} />
         </div>
-        <button type="button" className="btn btn-primary" onClick={handleUpdate}>Update</button>
+        <button type="button" className="btn btn-danger ms-2" style={{ backgroundColor: '#FD204F', borderColor: '#FD204F' }} onClick={handleRemoveEmployee}>Remove Employee</button>
+
+        
       </form>
     </div>
   );

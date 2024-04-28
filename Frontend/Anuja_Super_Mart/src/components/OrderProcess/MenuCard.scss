@@ -1,0 +1,46 @@
+// MenuCard.scss
+
+// Unique class for the inventory card container
+.inventory-card {
+    border: 1px solid #d77d7d; /* Add border */
+    border-radius: 5px; /* Add border radius */
+    padding: 10px; /* Add padding */
+    margin-bottom: 20px; /* Add margin between cards */
+    background-color: #ffffff; /* Add background color */
+    box-shadow: 0 0 5px rgba(204, 81, 81, 0.1); /* Add box shadow */
+    width: 200px; /* Add fixed width */
+    margin-right: 20px; /* Add margin between cards */
+    margin-bottom: 20px; /* Add margin between rows */
+}
+
+// Unique class for the product ID
+.product-id {
+    font-weight: bold; /* Add bold font weight */
+    color: #333; /* Add color */
+}
+
+// Unique class for the product name
+.product-name {
+    margin-top: 5px; /* Add margin */
+}
+
+// Unique class for the wholesale price
+.wholesale-price {
+    font-size: 16px; /* Add font size */
+    margin-top: 5px; /* Add margin */
+}
+
+// Unique class for the add button
+.add-button {
+    background-color: #FD204F; /* Add background color */
+    color: #fff; /* Add text color */
+    border: none; /* Remove border */
+    border-radius: 3px; /* Add border radius */
+    padding: 5px 10px; /* Add padding */
+    cursor: pointer; /* Add cursor pointer */
+    transition: background-color 0.3s; /* Add transition */
+}
+
+.add-button:hover {
+    background-color: #ff5e78; /* Change background color on hover */
+}

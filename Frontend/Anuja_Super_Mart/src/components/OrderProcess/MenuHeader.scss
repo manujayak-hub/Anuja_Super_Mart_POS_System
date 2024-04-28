@@ -1,0 +1,29 @@
+/* MenuHeader.scss */
+
+/* Unique class for the container */
+.menu-header-container {
+  /* Add styles for the container */
+  justify-content: center;
+  align-items: center;
+  margin-left: 47%;
+
+  position: relative; /* Add position relative */
+}
+
+/* Add a vertical line border in the right corner */
+.menu-header-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%; /* Height of the container */
+  border-right: 1px solid black; /* Adjust border properties as needed */
+}
+
+/* Unique class for the heading */
+.menu-header-heading {
+  align-items: center;
+  justify-content: center;
+  color: #FD204F; /* Setting color as per your example */
+  /* Add additional styles for the heading */
+}

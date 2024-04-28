@@ -1,0 +1,27 @@
+// InvSupNav.scss
+
+.inv-sup-nav-container {
+    background-color: #f8f9fa; // Set background color
+    padding: 10px; // Add padding for spacing
+}
+
+.inv-sup-nav-link-container {
+    display: flex;
+    justify-content: flex-start; // Align links to the left side
+}
+
+.inv-sup-nav-link {
+    color: #343a40; // Set default text color
+    font-weight: bold; // Make text bold
+    text-decoration: none; // Remove default underline
+    padding: 0 10px; // Add padding for spacing
+
+    &:hover {
+        color: red; // Change text color on hover
+        text-decoration: underline; // Add underline on hover
+    }
+}
+
+.inv-sup-logout-button {
+    margin-left: auto; // Align button to the right side
+}

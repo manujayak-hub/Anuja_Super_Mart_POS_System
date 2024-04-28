@@ -1,20 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../../api/axios';
-import './Transactions.css'; 
-import useTransactionStore from '../../stores/accountantStore'; 
+import './Transactions.css';
+import useTransactionStore from '../../stores/accountantStore';
+import Sidebar from '../../components/AccountantComponents/Sidebar';
+import UpdateTransaction from './UpdateTransaction';
+import TransactionReport from './TransactionReport';
+import * as XLSX from 'xlsx'; 
+import { Card } from 'react-bootstrap';
 
 const TransactionList = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [transactions, setTransactions] = useState([]);
-    const [selectedTransaction, setSelectedTransaction] = useState(null); 
-    const transactionStore = useTransactionStore(); 
+    const [selectedTransaction, setSelectedTransaction] = useState(null);
+    const [searchInput, setSearchInput] = useState('');
+    const [showModal, setShowModal] = useState(false);
+    const [deleteTransactionId, setDeleteTransactionId] = useState(null);
+    const [totalAmounts, setTotalAmounts] = useState({});
+    const [typeTotals, setTypeTotals] = useState([]); // Define typeTotals state
+    const transactionStore = useTransactionStore();
 
     useEffect(() => {
         const fetchTransactions = async () => {
             try {
                 const response = await axios.get('/transactions');
                 setTransactions(response.data);
+                calculateTotalAmounts(response.data);
+                fetchTypeTotals(); // Fetch type totals
             } catch (error) {
                 setError(error.message);
             } finally {
@@ -25,112 +37,193 @@ const TransactionList = () => {
         fetchTransactions();
     }, []);
 
+    const calculateTotalAmounts = (transactions) => {
+        const totalAmounts = { totalExpenses: 0, totalSales: 0 };
+        transactions.forEach(transaction => {
+            const type = transaction.transactionType;
+            const amount = parseFloat(transaction.transactionAmount);
+    
+            if (type === 'sales') {
+                totalAmounts.totalSales += amount;
+            } else {
+                totalAmounts.totalExpenses += amount;
+            }
+        });
+    
+        const income = totalAmounts.totalSales - totalAmounts.totalExpenses;
+        setTotalAmounts({ ...totalAmounts, income });
+    };
+
+    const fetchTypeTotals = async () => {
+        try {
+            const response = await axios.get('/transactions/type-totals');
+            setTypeTotals(response.data);
+        } catch (error) {
+            console.error('Error fetching type totals:', error);
+        }
+    };
+
     const handleUpdate = (transactionId) => {
         const selected = transactions.find(transaction => transaction._id === transactionId);
         setSelectedTransaction(selected);
     };
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setSelectedTransaction({
-            ...selectedTransaction,
-            [name]: value
-        });
+    const handleDelete = (transactionId) => {
+        setDeleteTransactionId(transactionId);
+        setShowModal(true);
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const confirmDelete = async () => {
         try {
-            
-            await axios.patch(`/transactions/${selectedTransaction._id}`, selectedTransaction);
-            transactionStore.updateTransaction(selectedTransaction);
-            setSelectedTransaction(null);
-        } catch (error) {
-            console.error('Error updating transaction:', error);
-        }
-    };
-
-    const handleDelete = async (transactionId) => {
-        try {
-            
-            await axios.delete(`/transactions/${transactionId}`);
-            setTransactions(transactions.filter(transaction => transaction._id !== transactionId));
-            transactionStore.removeTransaction(transactionId);
+            await axios.delete(`/transactions/${deleteTransactionId}`);
+            setTransactions(transactions.filter(transaction => transaction._id !== deleteTransactionId));
+            transactionStore.removeTransaction(deleteTransactionId);
+            calculateTotalAmounts(transactions.filter(transaction => transaction._id !== deleteTransactionId));
+            saveTypeTotal('yourType');
         } catch (error) {
             console.error('Error deleting transaction:', error);
         }
+        setShowModal(false);
     };
+
+    const handleUpdateSuccess = (updatedTransaction) => {
+        setTransactions(transactions.map(transaction =>
+            transaction._id === updatedTransaction._id ? updatedTransaction : transaction
+        ));
+        setSelectedTransaction(null);
+        calculateTotalAmounts(transactions);
+        saveTypeTotal('yourType');
+    };
+
+    const handleSearch = (e) => {
+        setSearchInput(e.target.value);
+    };
+
+    const filteredTransactions = transactions.filter(transaction =>
+        transaction.transactionID.toLowerCase().includes(searchInput.toLowerCase())
+    );
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
 
-    return (
-        <div className="transaction-list-container">
-            <h1>Transactions</h1>
-            {transactions.length > 0 ? (
-                <table className="table table-dark table-striped">
-                    <thead>
-                        <tr>
-                            <th>Transaction ID</th>
-                            <th>Date/Time</th>
-                            <th>Type</th>
-                            <th>Amount</th>
-                            <th>Method</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {transactions.map((transaction) => (
-                            <tr key={transaction._id}>
-                                <td>{transaction.transactionID}</td>
-                                <td>{transaction.transactionDateTime}</td>
-                                <td>{transaction.transactionType}</td>
-                                <td>{transaction.amount}</td>
-                                <td>{transaction.transactionMethod}</td>
-                                <td>
-                                    <div className="actions-container">
-                                        <button onClick={() => handleUpdate(transaction._id)}>Update</button>
-                                        <button onClick={() => handleDelete(transaction._id)}>Delete</button>
-                                    </div>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            ) : (
-                <p>No transactions found.</p>
-            )}
+    const saveTypeTotal = async (type) => {
+        try {
+            await axios.post('/transactions/reset-type-total');
 
-            
-            {selectedTransaction && (
-                <div className="update-form">
-                    <h2>Update Transaction</h2>
-                    <form onSubmit={handleSubmit}>
-                        <div>
-                            <label>Transaction ID:</label>
-                            <input type="text" value={selectedTransaction.transactionID} readOnly />
-                        </div>
-                        <div>
-                            <label>Date/Time:</label>
-                            <input type="text" value={selectedTransaction.transactionDateTime} readOnly />
-                        </div>
-                        <div>
-                            <label>Type:</label>
-                            <input type="text" name="transactionType" value={selectedTransaction.transactionType} onChange={handleInputChange} />
-                        </div>
-                        <div>
-                            <label>Amount:</label>
-                            <input type="text" name="amount" value={selectedTransaction.amount} onChange={handleInputChange} />
-                        </div>
-                        <div>
-                            <label>Method:</label>
-                            <input type="text" name="transactionMethod" value={selectedTransaction.transactionMethod} onChange={handleInputChange} />
-                        </div>
-                       
-                        <button type="submit">Update</button>
-                    </form>
+            const filteredTotalAmounts = Object.fromEntries(
+                Object.entries(totalAmounts).filter(([key, value]) => !isNaN(value))
+            );
+
+            if (Object.keys(filteredTotalAmounts).length === 0) {
+                console.log('No valid total amounts to save.');
+                return;
+            }
+
+            await axios.post('/transactions/save-type-total', { type, totalAmounts: filteredTotalAmounts });
+            console.log('Type total saved successfully');
+        } catch (error) {
+            console.error('Error saving type total:', error);
+        }
+    };
+
+    const exportToExcel = () => {
+        const workbook = XLSX.utils.book_new();
+    
+        const filteredTransactionsWithoutColumns = filteredTransactions.map(transaction => {
+            const { totalSales, totalPayments, totalUtilityBills, totalRevenue, __v, ...filteredTransaction } = transaction;
+            return filteredTransaction;
+        });
+    
+        const worksheet = XLSX.utils.json_to_sheet(filteredTransactionsWithoutColumns);
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Transactions");
+    
+        // Add type totals to the Excel sheet
+        const typeTotalsSheet = XLSX.utils.json_to_sheet(typeTotals);
+        XLSX.utils.book_append_sheet(workbook, typeTotalsSheet, "TypeTotals");
+    
+        XLSX.writeFile(workbook, "transactions.xlsx");
+    };
+    
+    
+    
+    
+
+    return (
+        <div>
+            <Sidebar />
+            <div className="transaction-list-container" style={{ backgroundColor: 'lightgray', minHeight: '100vh' }}>
+                <h1 className="text-danger">Accountant Dashboard</h1>
+                <div className="search-bar-container " >
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Search by transaction ID"
+                        value={searchInput}
+                        onChange={handleSearch}
+                    />
                 </div>
-            )}
+                <div className="transaction-table-wrapper" style={{ padding: '10px 20px' }}>
+    <div style={{ maxHeight: "360px", overflowY: "auto", borderRadius: '10px' }}>
+        <table className="table table-striped" style={{ borderRadius: '10px' }}>
+                            <thead style={{ position: "sticky", top: "0", zIndex: "1", background: "#fff" }}>
+                                <tr className="bg-danger text-white">
+                                    <th>Transaction ID</th>
+                                    <th>Date/Time</th>
+                                    <th>Type</th>
+                                    <th>Amount</th>
+                                    <th>Method</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {filteredTransactions.map((transaction) => (
+                                    <tr key={transaction._id}>
+                                        <td>{transaction.transactionID}</td>
+                                        <td>{transaction.transactionDateTime}</td>
+                                        <td>{transaction.transactionType}</td>
+                                        <td>{transaction.transactionAmount}</td>
+                                        <td>{transaction.transactionMethod}</td>
+                                        <td>
+                                            <div className="actions-container">
+                                                <button className="btn btn-info" onClick={() => handleUpdate(transaction._id)}>Update</button>
+                                                <button className="btn btn-danger" onClick={() => handleDelete(transaction._id)}>Delete</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                
+
+                {selectedTransaction && (
+                    <UpdateTransaction 
+                        transaction={selectedTransaction} 
+                        onUpdate={handleUpdateSuccess} 
+                    />
+                )}
+                {showModal && (
+                    <div className="modal-overlay">
+                        <div className="confirmation-modal">
+                            <p>Are you sure you want to delete this transaction?</p>
+                            <div className="modal-buttons">
+                                <button className="btn btn-danger" onClick={confirmDelete}>Confirm</button>
+                                <button className="btn btn-secondary" onClick={() => setShowModal(false)}>Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                )}
+                <TransactionReport totalAmounts={totalAmounts} />
+                <div style={{ display: 'inline-block' }}>
+                    <button className="btn btn-danger" style={{ marginRight: '10px' }} onClick={() => {
+                        saveTypeTotal('yourType');
+                        alert('Transaction Summary Added Successfully');
+                    }}>Save Summary</button>
+                    <button className="btn btn-primary" onClick={exportToExcel}>Export to Excel</button>
+                </div>
+            </div>
         </div>
     );
 };

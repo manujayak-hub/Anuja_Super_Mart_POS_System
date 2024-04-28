@@ -5,7 +5,9 @@ Welcome to our MERN (MongoDB, Express.js, React.js, Node.js) based POS (Point of
 
 ## Team Members
 - [Kamburugammuwa K.V.M.S](https://github.com/manujayak-hub)
+
 - [Yasodara S.A.D.S](https://github.com/Shehanii)
+
 - [Bandara R.M.S.P](https://github.com/sahanpramuditha22)
 - [Jayawardana N.G.U.D](https://github.com/UdariDevindi)
 - [Imalka T.A.D.D](https://github.com/XdulanX)

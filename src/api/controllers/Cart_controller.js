@@ -2,21 +2,22 @@ import Cart from '../models/Cart_model'
 import mongoose from 'mongoose'
 
 
+const createCart = async (req, res) => {
+  const { OrderID, ItemID, ItemName, Quantity, ItemPrice, PickupTime, imageUrl } = req.body;
 
+  if (isNaN(ItemPrice)) {
+      return res.status(400).json({ error: 'Invalid Item Price' });
+  }
 
-const createCart = async (req ,res) =>{
+  try {
+      const OD = await Cart.create({ OrderID, ItemID, ItemName, Quantity, ItemPrice, PickupTime,imageUrl});
+      res.status(200).json(OD);
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Server Error' });
+  }
+};
 
-    const {OrderID,ItemID,ItemName,Quantity,TotalAmount,PickupTime} = req.body
-
-    try {
-        const OD = await Cart.create({OrderID,ItemID,ItemName,Quantity,TotalAmount,PickupTime})
-        res.status(200).json(OD)
-
-    } catch (error) {
-        res.status(400).json({error:'Server Error'})
-    }
-
-}
 
 const getallCart = async (req, res) => {
    
@@ -52,14 +53,14 @@ const getbyIdCart = async (req,res) => {
 const updateCart  =async (req,res) => {
     var {id} = req.params
 
-    const {OrderID,ItemID,ItemName,Quantity,TotalAmount,PickupTime} = req.body
+    const {OrderID,ItemID,ItemName,Quantity,ItemPrice,PickupTime,imageUrl} = req.body
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(400).json({error:'Invalid ID Format'})
       }
 
     const OD = await Cart.findOneAndUpdate({_id:id},
-        {OrderID,ItemID,ItemName,Quantity,TotalAmount,PickupTime}, 
+        {OrderID,ItemID,ItemName,Quantity,ItemPrice,PickupTime,imageUrl}, 
         { new: true } 
     )
 
@@ -68,7 +69,6 @@ const updateCart  =async (req,res) => {
       }
 
     res.status(200).json(OD)
-
 }
 
 const deleteCart = async (req, res) => {
@@ -93,4 +93,15 @@ const deleteCart = async (req, res) => {
     res.status(200).json(Cart)
   }
 
-module.exports={createCart,deleteCart,updateCart,getallCart,getbyIdCart};
+  const deleteAllCart = async (req, res) => {
+    try {
+      const deletedODs = await Cart.deleteMany({}); // Delete all cart items
+      res.status(200).json(deletedODs);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
+  
+
+module.exports={createCart,deleteCart,updateCart,getallCart,getbyIdCart,deleteAllCart};
