@@ -39,7 +39,7 @@ const OrderEditForm = ({ order }) => {
             </label>
             <label>
                 Total Amount:
-                <input type="text" name="totalAmount" value={updatedOrder.totalAmount} onChange={handleChange} required />
+                <input type="text" name="totalAmount" value={updatedOrder.TotalAmount|| ''} onChange={handleChange} required />
             </label>
             <button type="submit">Update</button>
             {/* Display update status message */}
