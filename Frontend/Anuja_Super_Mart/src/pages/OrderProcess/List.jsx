@@ -9,7 +9,7 @@ function List() {
     const fetchInventory = async () => {
         setIsLoading(true);
         try {
-            const response = await fetch('http://localhost:8000/inventory'); // Corrected URL
+            const response = await fetch('http://localhost:8000/inventory'); 
             if (!response.ok) {
                 throw new Error('Failed to fetch data');
             }
@@ -30,7 +30,7 @@ function List() {
         <>
             <MenuNav />
             <div className="list-container-custom">
-                <div className="list-heading-custom"><h1>LIST</h1></div>
+                <div className="list-heading-custom" style={{textAlign:'center'}}><h1>LIST</h1></div>
                 {isLoading ? (
                     <p className="loading-message-custom">Loading...</p>
                 ) : (

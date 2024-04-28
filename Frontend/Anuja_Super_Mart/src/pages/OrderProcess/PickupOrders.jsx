@@ -1,46 +1,59 @@
 import React, { useState, useEffect } from 'react';
-import './PickupOrders.scss'; // Import SCSS file
+import './PickupOrders.scss';
 import MenuNav from '../../components/OrderProcess/MenuNavbar';
+import axios from 'axios';
 
 const PickupOrders = () => {
-  const [cart, setCart] = useState([]);
+  const [pickup, setPickups] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:8000/Cart'); // Assuming your API endpoint is '/cart'
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
-        }
-        const data = await response.json();
-        setCart(data);
+        const response = await axios.get('http://localhost:8000/pickup'); 
+        setPickups(response.data);
+        setLoading(false);
       } catch (error) {
-        console.error('Error fetching cart:', error);
+        console.error('Error fetching pickups:', error);
       }
     };
 
     fetchData();
   }, []);
 
-
   return (
     <div className="pickup-orders-container"> 
       <MenuNav />
-      <div className='topic'><h1>Pickup Orders</h1></div>
-      {/* Render your cart items here */}
-      <table>
-        <tbody>
-          {cart.map(item => (
-            <tr key={item.id}>
-              <td>{item.ItemName}</td>
-              <td>{item.Quantity}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className='topic'style={{color:'red'}}><h1>Pickup Orders</h1></div>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        pickup.map((pickupItem, index) => (
+          <div key={index} style={{ width: '400px' }}> {/* Set the width for each table */}
+            <table key={index} className="pickup-table" style={{ borderCollapse: 'collapse', border: '1px solid black', width: '100%', tableLayout: 'fixed' }}>
+              <thead>
+                <tr>
+                  <th style={{ border: '1px solid black', width: '33%' }}>Item Name</th>
+                  <th style={{ border: '1px solid black', width: '33%' }}>Quantity</th>
+                  <th style={{ border: '1px solid black', width: '33%' }}>Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                {pickupItem.items.map((item, itemIndex) => (
+                  <tr key={itemIndex}>
+                    <td style={{ border: '1px solid black' }}>{item.itemName}</td>
+                    <td style={{ border: '1px solid black' }}>{item.quantity}</td>
+                    <td style={{ border: '1px solid black' }}>{item.itemPrice}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <p>Total Price: {pickupItem.TotalPrice}</p>
+          </div>
+        ))
+      )}
     </div>
   );
-  
 };
 
 export default PickupOrders;

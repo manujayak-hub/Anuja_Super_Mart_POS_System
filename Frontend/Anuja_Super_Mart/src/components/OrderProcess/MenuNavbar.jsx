@@ -6,7 +6,7 @@ import logo from '../../assets/Order/logo.png'
 const MenuNav = () => {
     return ( <>
     
-    <div class="sidebar">
+    <div class="sidebarorder">
       <div className="logoicaon">
       <img src={logo} alt="logo" style={{ width: "100px", height: "100px", marginLeft:"40px"}} />
 
