@@ -3,26 +3,26 @@ import mongoose from 'mongoose';
 
 const createproduct = async (req, res) => {
     const {
-    productId ,
-    productName ,
-    productPrice ,
-    productDiscription ,
-    quantityInStock ,
-    discount,
-    expireDate,
-    imageUrl
+        productId,
+        productName,
+        productPrice,
+        productDiscription,
+        quantityInStock,
+        discount,
+        expireDate,
+        imageUrl
     } = req.body;
 
     try {
         const prod = await product.create({
-            productId ,
-    productName ,
-    productPrice ,
-    productDiscription ,
-    quantityInStock ,
-    discount,
-    expireDate,
-    imageUrl
+            productId,
+            productName,
+            productPrice,
+            productDiscription,
+            quantityInStock,
+            discount,
+            expireDate,
+            imageUrl
         });
         res.status(201).json(prod); // 201 for resource created successfully
     } catch (error) {
@@ -65,14 +65,14 @@ const getbyIdproduct = async (req, res) => {
 const updateproduct = async (req, res) => {
     const { id } = req.params;
     const {
-        productId ,
-    productName ,
-    productPrice ,
-    productDiscription ,
-    quantityInStock ,
-    discount,
-    expireDate,
-    imageUrl
+        productId,
+        productName,
+        productPrice,
+        productDiscription,
+        quantityInStock,
+        discount,
+        expireDate,
+        imageUrl
     } = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -81,11 +81,11 @@ const updateproduct = async (req, res) => {
 
     try {
         const prod = await product.findOneAndUpdate({ _id: id }, {
-            productId ,
-            productName ,
-            productPrice ,
-            productDiscription ,
-            quantityInStock ,
+            productId,
+            productName,
+            productPrice,
+            productDiscription,
+            quantityInStock,
             discount,
             expireDate,
             imageUrl
@@ -123,4 +123,4 @@ const deleteproduct = async (req, res) => {
     }
 };
 
-module.exports = { createproduct, getallproduct, getbyIdproduct, updateproduct,deleteproduct };
+module.exports = { createproduct, getallproduct, getbyIdproduct, updateproduct, deleteproduct };
