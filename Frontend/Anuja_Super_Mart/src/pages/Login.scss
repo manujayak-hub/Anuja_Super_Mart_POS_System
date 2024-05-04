@@ -1,0 +1,93 @@
+// Define your custom colors
+$primary-color: #198754;
+$light-red-color: #dc3545;
+
+// Base styles
+.card {
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+
+  &-body {
+    padding: 40px;
+  }
+
+  &-title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+}
+
+// Form styles
+form {
+  input[type='email'],
+  input[type='password'] {
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding: 12px;
+    border: 1px solid #ced4da;
+    width: 100%;
+
+    &:focus {
+      outline: none;
+      border-color: $primary-color; // Use primary color variable
+    }
+  }
+
+  .btn-primary {
+    background-color: $primary-color; // Use primary color variable
+    border-color: $primary-color; // Use primary color variable
+    width: 100%;
+    padding: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    outline: none;
+
+    &:hover {
+      background-color: darken($primary-color, 10%); // Darken primary color on hover
+      border-color: darken($primary-color, 10%); // Darken primary color on hover
+    }
+  }
+}
+
+// Error message styles
+.text-danger {
+  color: $light-red-color; // Use light red color variable
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 0.875rem; // Adjust font size as needed
+}
+
+.mt-3 {
+  text-align: center;
+
+  a {
+    color: $light-red-color; // Use light red color variable
+    text-decoration: none;
+    font-weight: bold;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// Error modal button styles
+.error-modal-button {
+  background-color: $light-red-color; // Use light red color variable
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: darken($light-red-color, 10%); // Darken light red color on hover
+  }
+
+  &:focus {
+    outline: none;
+  }
+}

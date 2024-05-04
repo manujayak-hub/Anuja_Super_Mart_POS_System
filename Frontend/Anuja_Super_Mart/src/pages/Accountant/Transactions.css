@@ -1,32 +1,33 @@
 body {
-    margin: 0; /* Remove default body margin */
-    padding: 0; /* Remove default body padding */
-    overflow-x: hidden; /* Hide horizontal overflow */
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    
 }
 
 .transaction-list-container {
     display: flex;
-    flex-direction: column; /* Stack children vertically */
-    align-items: center; /* Center horizontally */
-    max-width: 1200px; /* Set maximum width for the table container */
-    margin: 0 auto; /* Center the table container horizontally */
+    flex-direction: column;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
 }
+
 .table {
     width: 100%;
     max-width: 100%;
-    font-size: 14px; /* Adjust font size */
-    table-layout: fixed; /* Ensure table cells have equal width */
+    font-size: 14px;
+    table-layout: fixed;
 }
 
 .table th,
 .table td {
-    padding: 6px; /* Adjust padding */
+    padding: 6px;
     text-align: left;
-    overflow: hidden; /* Hide overflowing content */
-    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden;
+    white-space: nowrap;
 }
 
-/* Ensure buttons are displayed side by side */
 .actions-container {
     display: flex;
 }
@@ -34,3 +35,57 @@ body {
 .actions-container button {
     margin-right: 5px;
 }
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 200px;
+    background-color: #f8f9fa;
+    padding: 20px;
+}
+
+.transaction-list-container {
+    margin-left: 220px;
+}
+
+.search-bar-container {
+    margin-left: 0px; 
+    margin-top: 20px; 
+    padding: 0px;
+    
+    width: 1100px; 
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(0px); 
+  }
+  
+  .confirmation-modal {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    width: 500px;
+    height: 150px;
+  }
+  
+  .modal-buttons {
+    margin-top: 10px;
+  }
+  
+  .modal-buttons button {
+    margin-right: 10px; 
+  }
+  
+  

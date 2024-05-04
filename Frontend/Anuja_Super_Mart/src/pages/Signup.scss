@@ -1,0 +1,75 @@
+.signup-container {
+  margin-top: 50px;
+
+  .card {
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+
+    .card-body {
+      padding: 40px;
+
+      .card-title {
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      form {
+        input[type='text'],
+        input[type='tel'],
+        input[type='email'],
+        input[type='password'] {
+          border-radius: 5px;
+          margin-bottom: 20px;
+          padding: 12px;
+          border: 1px solid #ced4da;
+          width: 100%;
+
+          &:focus {
+            outline: none;
+            border-color: #198754;
+          }
+        }
+
+        .btn-primary {
+          background-color: #198754;
+          border-color: #198754;
+          width: 100%;
+          padding: 12px;
+          font-size: 18px;
+          font-weight: bold;
+
+          &:hover {
+            background-color: #157347;
+            border-color: #157347;
+          }
+        }
+      }
+
+      .mt-3 {
+        text-align: center;
+        a {
+          color: #dc3545;
+          text-decoration: none;
+          font-weight: bold;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+
+      .text-danger {
+        color: #dc3545;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .alert {
+        text-align: center;
+      }
+      
+    }
+  }
+}

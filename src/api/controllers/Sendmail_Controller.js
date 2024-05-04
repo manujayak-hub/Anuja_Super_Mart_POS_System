@@ -1,0 +1,64 @@
+import { createTransport } from 'nodemailer';
+import Inventory from '../models/inventory_model';
+
+const sendLowInventoryEmail = async () => {
+    try {
+        // Find all products with quantity less than 10
+        const lowInventoryProducts = await Inventory.find({ quantityInStock: { $lt: 10 } });
+
+        // If there are no low inventory products, return a specific value to indicate this
+        if (lowInventoryProducts.length === 0) {
+            console.log('No low inventory products found.');
+            return { success: false, message: 'No low inventory products found.' };
+        }
+
+        // Create transporter object using SMTP transport
+        let transporter = createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'webloftmas@gmail.com',
+                pass: 'elgv aobm kvsg tkbj'
+            }
+        });
+
+        // Compose email
+        let mailOptions = {
+            from: 'inventoryManager@anuja.com',
+            to: 'manujayak8@gmail.com',
+            subject: 'Low Inventory Alert',
+            text: 'The following products are running low on inventory:',
+            html: `<p>Dear Inventory Manager,</p>
+                    <p>This is to inform you that the following products are running low on inventory:</p>
+                    <table style="border-collapse: collapse;">
+                        <thead>
+                            <tr>
+                                <th style="border: 1px solid #ddd; padding: 8px;">Product Name</th>
+                                <th style="border: 1px solid #ddd; padding: 8px;">Quantity Left</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${lowInventoryProducts.map(product => `
+                                <tr>
+                                    <td style="border: 1px solid #ddd; padding: 8px;">${product.productName}</td>
+                                    <td style="border: 1px solid #ddd; padding: 8px;">${product.quantityInStock}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                    <p>Please take necessary actions to restock the inventory.</p>
+                    <p>Thank you.</p>`
+
+        };
+
+        // Send email
+        await transporter.sendMail(mailOptions);
+        console.log('Low inventory alert email sent successfully.');
+        return { success: true, message: 'Low inventory alert email sent successfully.' };
+    } catch (error) {
+        console.error('Error sending low inventory alert email:', error);
+        // Return an object with the error message
+        return { success: false, message: 'Failed to send low inventory alert email.' };
+    }
+};
+
+export default { sendLowInventoryEmail };

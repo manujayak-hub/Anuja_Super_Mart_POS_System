@@ -1,0 +1,74 @@
+.OrderSec {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 300px; /* Adjust the width of the order section as needed */
+    height: auto; /* Remove fixed height to allow content to expand */
+    background-color: #ffffff; /* Background color for the section */
+    border-left: 1px solid #ccc; /* Border separating the order section from the rest of the page */
+    padding: 20px; /* Add padding to the section */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    height: 100%;
+    z-index: 1; /* Ensure the order section is above other elements */
+
+    /* CSS for the order header */
+    div[name="order_header"] {
+        margin-bottom: 20px; /* Adjust spacing between order header and item list */
+    }
+
+    /* CSS for the item list */
+    div[name="itemlist_order"] {
+        margin-bottom: 20px; /* Adjust spacing between item list and total, balance, and button */
+    }
+
+    /* CSS for the totalprice */
+    .totalprice {
+        text-align: right;
+        margin-top: auto; /* Push the totalprice to the bottom */
+        padding: 2px; /* Add padding to the totalprice */
+        position: absolute; /* Position the totalprice absolutely */
+        bottom: 100px; /* Adjust the distance from the bottom */
+        left: 50%; /* Center the totalprice horizontally */
+        transform: translateX(-50%);
+        width: 100%; /* Ensure the totalprice takes full width */
+    }
+
+    /* CSS for the button */
+    button {
+        background-color: #FD204F; /* Button background color */
+        color: white; /* Button text color */
+        border: none; /* Remove button border */
+        padding: 5px 10px; /* Add padding to the button */
+        cursor: pointer; /* Change cursor to pointer on hover */
+        margin-right: 5%;
+        margin-left: 10%;
+
+        &:hover {
+            background-color: #605a5b; /* Change button background color on hover */
+        }
+    }
+
+    .addorder {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%; /* Ensure the button takes full width */
+        text-align: center; /* Center align the button */
+    }
+
+    .customer_input {
+        position: absolute;
+        bottom: 60px; /* Adjust the distance from the bottom */
+        left: 56%;
+        transform: translateX(-50%);
+        width: 100%; /* Set input width to 100% */
+        text-align: center; /* Center align the input field */
+    }
+
+    .customer_input input {
+        width: 80%; /* Set input width to 80% */
+        padding: 5px; /* Add padding to the input */
+        box-sizing: border-box; /* Include padding and border in the input's total width */
+    }
+}

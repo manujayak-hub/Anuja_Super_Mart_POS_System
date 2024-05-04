@@ -1,27 +1,38 @@
-import  express  from "express"
+import express from "express";
 
-const transactionrouter =  express.Router()
+const transactionRouter = express.Router();
+
 const {
-    createTransaction,getallTransactions,getbyIdTransaction,deleteTransaction,updateTransaction
-} = require('../controllers/transactionController')
+    createTransaction,
+    getallTransactions,
+    getbyIdTransaction,
+    deleteTransaction,
+    updateTransaction,
+    saveTypeTotal,
+    resetTypeTotal,
+    getAllTypeTotals
+} = require('../controllers/transactionController');
 
-//Get all transactions  
-transactionrouter.get('/', getallTransactions)
+// Get all transactions  
+transactionRouter.get('/', getallTransactions);
+
+// Get a single transaction
+transactionRouter.get('/:id', getbyIdTransaction);
+
+// Post a new transaction
+transactionRouter.post('/', createTransaction);
+
+// Delete a transaction
+transactionRouter.delete('/:id', deleteTransaction);
+
+// Update a transaction
+transactionRouter.patch('/:id', updateTransaction);
 
 
-//Get a single transaction
-transactionrouter.get('/:id',getbyIdTransaction)
+transactionRouter.post('/save-type-total', saveTypeTotal);
 
+transactionRouter.post('/reset-type-total', resetTypeTotal);
 
-//Post a new transaction
-transactionrouter.post('/',createTransaction )
+transactionRouter.get('/get-type-total', getAllTypeTotals);
 
-
-//Delete a transaction
-transactionrouter.delete('/:id',deleteTransaction)
-
-
-//Update a transaction
-transactionrouter.patch('/:id',updateTransaction)
-
-module.exports = transactionrouter
+module.exports = transactionRouter;

@@ -1,114 +1,85 @@
-import React from 'react';
-import './all.css';
-
-const Card = ({ item }) => {
-    const addToCart = () => {
-        // Add your logic here for adding to cart
-        console.log(`Added ${item.name} to cart`);
-    };
-
-    return (
-        <div className="card">
-            <img className="card-image" src={item.image} alt={item.name} />
-            <div className="card-details">
-                <h2>{item.name}</h2>
-                <p><strong>Price:</strong> {item.price}</p>
-                <p>{item.description}</p>
-                <button className="add-to-cart-btn" onClick={addToCart}>
-                    <i className="fas fa-cart-plus"></i> Add to Cart
-                </button>
-            </div>
-        </div>
-    );
-};
+import React, { useEffect, useState } from 'react';
+import axios from '../../api/axios';
+import Card from '../Customer_components/Card';
 
 const PersonalCare = () => {
-    // Sample list of personal care products
-    const personalCareProducts = [
-        {
-            id: 1,
-            name: "Shampoo",
-            image: "https://example.com/shampoo.jpg",
-            price: "$5.99",
-            description: "Moisturizing shampoo for clean and healthy hair."
-        },
-        {
-            id: 2,
-            name: "Conditioner",
-            image: "https://example.com/conditioner.jpg",
-            price: "$5.99",
-            description: "Nourishing conditioner for smooth and silky hair."
-        },
-        {
-            id: 3,
-            name: "Body Wash",
-            image: "https://example.com/body-wash.jpg",
-            price: "$3.99",
-            description: "Refreshing body wash for a clean and invigorating shower."
-        },
-        {
-            id: 4,
-            name: "Hand Soap (Pack of 2)",
-            image: "https://example.com/hand-soap.jpg",
-            price: "$4.99",
-            description: "Gentle hand soap to keep hands clean and moisturized."
-        },
-        {
-            id: 5,
-            name: "Deodorant",
-            image: "https://example.com/deodorant.jpg",
-            price: "$2.99",
-            description: "Long-lasting deodorant for all-day freshness."
-        },
-        {
-            id: 6,
-            name: "Toothpaste",
-            image: "https://example.com/toothpaste.jpg",
-            price: "$3.49",
-            description: "Cavity-fighting toothpaste for strong and healthy teeth."
-        },
-        {
-            id: 7,
-            name: "Body Lotion",
-            image: "https://example.com/body-lotion.jpg",
-            price: "$6.99",
-            description: "Hydrating body lotion for soft and smooth skin."
-        },
-        {
-            id: 8,
-            name: "Facial Cleanser",
-            image: "https://example.com/facial-cleanser.jpg",
-            price: "$8.99",
-            description: "Gentle facial cleanser to remove dirt and impurities."
-        },
-        {
-            id: 9,
-            name: "Sunscreen",
-            image: "https://example.com/sunscreen.jpg",
-            price: "$9.99",
-            description: "Broad-spectrum sunscreen for protection against harmful UV rays."
-        },
-        {
-            id: 10,
-            name: "Shaving Cream",
-            image: "https://example.com/shaving-cream.jpg",
-            price: "$4.49",
-            description: "Smooth and creamy shaving cream for a comfortable shave."
-        }
-    ];
+  const [inventory, setInventory] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
-    return (
-        <div>
-            <center>
-            <h1>Personal Care Products</h1>
-            </center>
-            <div className="products">
-                {personalCareProducts.map(item => (
-                    <Card key={item.id} item={item} />
-                ))}
-            </div>
-        </div>
-    );
+  useEffect(() => {
+    const fetchInventoryByCategory = async () => {
+      try {
+        const category = "PersonalCare";
+        const response = await axios.get(`/inventory/category/${category}`);
+        const inventoryData = response.data;
+        console.log("Inventory data from API:", inventoryData);
+        setInventory(inventoryData);
+      } catch (error) {
+        console.error('Error fetching personal care products:', error);
+      }
+    };
+
+    fetchInventoryByCategory();
+  }, []);
+
+  console.log("Current Inventory:", inventory); // Log the current inventory
+
+  const addToOrder = (product) => {
+    // Define the logic to add the product to the order/cart
+    console.log('Adding product to order:', product);
+    // You can implement the functionality to add the product to the order/cart here
+  };
+
+  // Filter the inventory based on search query
+  const filteredInventory = inventory.filter(product =>
+    product.productName.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  return (
+    <div>
+      <center>
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search for products..."
+          style={{ marginBottom: '20px', padding: '5px' }}
+        />
+      </center>
+      <div className="products-container">
+        {filteredInventory.map((product) => (
+          <div key={product.productId} className="product">
+            <Card product={product} addToOrder={addToOrder} />
+          </div>
+        ))}
+      </div>
+      <style jsx>{`
+        .products-container {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between; // Adjust as needed
+        }
+        
+        .product {
+          width: 30%; // Adjust the width of each product card
+          margin-bottom: 20px; // Add margin between products
+        }
+
+        // Media query for responsiveness
+        @media (max-width: 768px) {
+          .product {
+            width: 45%; // Adjust width for smaller screens
+          }
+        }
+
+        @media (max-width: 576px) {
+          .product {
+            width: 100%; // Full width for extra small screens
+          }
+        }
+      `}</style>
+    </div>
+  );
 };
 
 export default PersonalCare;

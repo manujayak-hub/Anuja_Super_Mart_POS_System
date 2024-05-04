@@ -1,0 +1,38 @@
+// Unique class for the sidebar
+.sidebarorder {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh; /* Full height of the viewport */
+  width: 15%; /* Adjust the width as needed */
+  background-color:rgb(194, 186, 184);
+         /* Sidebar background color */
+  padding-top: 20px; /* Add some top padding */
+
+  z-index: 1; /* Ensure the sidebar is above other elements */
+}
+
+// Unique class for the navigation list
+.sidebarorder nav ul {
+  list-style-type: none; /* Remove default list style */
+  padding: 0; /* Remove default padding */
+}
+
+// Unique class for the navigation items
+.sidebarorder nav ul li {
+  padding: 20px; /* Add padding to each item */
+}
+
+// Unique class for the navigation links
+.sidebarorder nav ul li a {
+  color: #494949; /* Text color */
+  text-decoration: none; /* Remove default underline */
+  font-weight: bold; /* Bold font */
+  font-size: larger;
+}
+
+
+// Style the navigation links on hover
+.sidebarorder nav ul li a:hover {
+  color: #fd204f; /* Change text color on hover */
+}

@@ -1,114 +1,85 @@
-import React from 'react';
-import './all.css';
-
-const Card = ({ item }) => {
-    const addToCart = () => {
-        // Add your logic here for adding to cart
-        console.log(`Added ${item.name} to cart`);
-    };
-
-    return (
-        <div className="card">
-            <img className="card-image" src={item.image} alt={item.name} />
-            <div className="card-details">
-                <h2>{item.name}</h2>
-                <p><strong>Price:</strong> {item.price}</p>
-                <p>{item.description}</p>
-                <button className="add-to-cart-btn" onClick={addToCart}>
-                    <i className="fas fa-cart-plus"></i> Add to Cart
-                </button>
-            </div>
-        </div>
-    );
-};
+import React, { useEffect, useState } from 'react';
+import axios from '../../api/axios';
+import Card from '../Customer_components/Card';
 
 const Snacks = () => {
-    // Sample list of snacks
-    const snacks = [
-        {
-            id: 1,
-            name: "Potato Chips",
-            image: "https://example.com/potato-chips.jpg",
-            price: "$2.49",
-            description: "Classic potato chips for a crunchy snack."
-        },
-        {
-            id: 2,
-            name: "Popcorn",
-            image: "https://example.com/popcorn.jpg",
-            price: "$1.99",
-            description: "Buttery and salty popcorn for movie nights."
-        },
-        {
-            id: 3,
-            name: "Trail Mix",
-            image: "https://example.com/trail-mix.jpg",
-            price: "$3.99",
-            description: "Healthy trail mix with nuts, dried fruits, and seeds."
-        },
-        {
-            id: 4,
-            name: "Granola Bars (Pack of 6)",
-            image: "https://example.com/granola-bars.jpg",
-            price: "$5.99",
-            description: "Variety pack of granola bars for a quick energy boost."
-        },
-        {
-            id: 5,
-            name: "Chocolate Cookies",
-            image: "https://example.com/chocolate-cookies.jpg",
-            price: "$3.49",
-            description: "Rich and indulgent chocolate cookies."
-        },
-        {
-            id: 6,
-            name: "Mixed Nuts",
-            image: "https://example.com/mixed-nuts.jpg",
-            price: "$4.99",
-            description: "Assorted nuts for a protein-packed snack."
-        },
-        {
-            id: 7,
-            name: "Pretzels",
-            image: "https://example.com/pretzels.jpg",
-            price: "$2.99",
-            description: "Crunchy and salty pretzels for snacking."
-        },
-        {
-            id: 8,
-            name: "Dried Fruit Mix",
-            image: "https://example.com/dried-fruit.jpg",
-            price: "$3.79",
-            description: "Variety pack of dried fruits for a sweet and tangy snack."
-        },
-        {
-            id: 9,
-            name: "Cheese Crackers",
-            image: "https://example.com/cheese-crackers.jpg",
-            price: "$2.49",
-            description: "Cheesy and crispy crackers for snacking or pairing with dips."
-        },
-        {
-            id: 10,
-            name: "Gummy Bears",
-            image: "https://example.com/gummy-bears.jpg",
-            price: "$1.99",
-            description: "Chewy and fruity gummy bears for a fun treat."
-        }
-    ];
+  const [inventory, setInventory] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
-    return (
-        <div>
-            <center>
-            <h1>Snacks</h1>
-            </center>
-            <div className="products">
-                {snacks.map(item => (
-                    <Card key={item.id} item={item} />
-                ))}
-            </div>
-        </div>
-    );
+  useEffect(() => {
+    const fetchInventoryByCategory = async () => {
+      try {
+        const category = "Snacks";
+        const response = await axios.get(`/inventory/category/${category}`);
+        const inventoryData = response.data;
+        console.log("Inventory data from API:", inventoryData);
+        setInventory(inventoryData);
+      } catch (error) {
+        console.error('Error fetching snacks:', error);
+      }
+    };
+
+    fetchInventoryByCategory();
+  }, []);
+
+  console.log("Current Inventory:", inventory); // Log the current inventory
+
+  const addToOrder = (product) => {
+    // Define the logic to add the product to the order/cart
+    console.log('Adding product to order:', product);
+    // You can implement the functionality to add the product to the order/cart here
+  };
+
+  // Filter the inventory based on search query
+  const filteredInventory = inventory.filter(product =>
+    product.productName.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  return (
+    <div>
+      <center>
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search for products..."
+          style={{ marginBottom: '20px', padding: '5px' }}
+        />
+      </center>
+      <div className="products-container">
+        {filteredInventory.map((product) => (
+          <div key={product.productId} className="product">
+            <Card product={product} addToOrder={addToOrder} />
+          </div>
+        ))}
+      </div>
+      <style jsx>{`
+        .products-container {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between; // Adjust as needed
+        }
+        
+        .product {
+          width: 30%; // Adjust the width of each product card
+          margin-bottom: 20px; // Add margin between products
+        }
+
+        // Media query for responsiveness
+        @media (max-width: 768px) {
+          .product {
+            width: 45%; // Adjust width for smaller screens
+          }
+        }
+
+        @media (max-width: 576px) {
+          .product {
+            width: 100%; // Full width for extra small screens
+          }
+        }
+      `}</style>
+    </div>
+  );
 };
 
 export default Snacks;
