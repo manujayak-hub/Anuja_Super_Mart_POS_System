@@ -13,11 +13,11 @@ import analyticRoute from "./api/routes/analytic_route"
 import order_route from "./api/routes/order_route"
 import User_route from "./api/routes/user_routes"
 import pickup_rouete from './api/routes/pickup_route'
+import prodRoute from './api/routes/product_route'
 
 import ProdsupRoute from './api/routes/Prod_Supplier_route'
 
 
-import productRoute from "./api/routes/product.route"
 
 
 
@@ -69,10 +69,10 @@ app.use('/inventory', invRoute )
 //Authentication
 app.use('/auth',User_route)
 
-//products
-app.use("/products", productRoute)
 
-
+//product
+app.use('/product',prodRoute)
+//pick up
 app.use('/pickup',pickup_rouete)
 
 //prod_supplier
