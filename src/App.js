@@ -14,6 +14,7 @@ import analyticRoute from "./api/routes/analytic_route"
 import order_route from "./api/routes/order_route"
 import User_route from "./api/routes/user_routes"
 import pickup_rouete from './api/routes/pickup_route'
+import FeedbackRoute from './api/routes/feedback_route'
 
 import ProdsupRoute from './api/routes/Prod_Supplier_route'
 
@@ -70,6 +71,9 @@ app.use('/pickup',pickup_rouete)
 
 //prod_supplier
 app.use('/supplier',ProdsupRoute)
+
+//feedback
+app.use('/feedback',FeedbackRoute)
 
 
 
