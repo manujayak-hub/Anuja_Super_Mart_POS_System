@@ -95,20 +95,20 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
 
         // Order ID and Date
         doc.setFontSize(12);
-        doc.text(`Order ID: ${orderId}`, 10, 35);
-        doc.text(`Date: ${currentDate}`, 10, 45);
+        doc.text(`Order ID: ${orderId}`, doc.internal.pageSize.getWidth() / 2, 35, 'center');
+        doc.text(`Date: ${currentDate}`,  doc.internal.pageSize.getWidth() / 2, 45, 'center');
 
         // Items
         let y = 55;
         orderItems.forEach((item, index) => {
-            doc.text(`${index + 1}. ${item.productName} - Rs ${item.wholesalePrice}`, 10, y);
+            doc.text(`${index + 1}. ${item.productName} - Rs ${item.wholesalePrice}`,  doc.internal.pageSize.getWidth() / 2, y, 'center');
             y += 10;
         });
 
         // Total, Payment, Balance
-        doc.text(`Total: Rs ${totalPrice}`, 10, y);
-        doc.text(`Payment: Rs ${paymentAmount}`, 10, y + 10);
-        doc.text(`Balance: Rs ${balance}`, 10, y + 20);
+        doc.text(`Total: Rs ${totalPrice}`, doc.internal.pageSize.getWidth() / 2, y, 'center');
+        doc.text(`Payment: Rs ${paymentAmount}`, doc.internal.pageSize.getWidth() / 2, y+10, 'center');
+        doc.text(`Balance: Rs ${balance}`, doc.internal.pageSize.getWidth() / 2, y+20, 'center');
 
         // Save PDF
         doc.save(`receipt_${orderId}.pdf`);
