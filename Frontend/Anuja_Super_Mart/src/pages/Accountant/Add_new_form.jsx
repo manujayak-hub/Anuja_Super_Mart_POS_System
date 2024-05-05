@@ -41,7 +41,9 @@ const TransactionForm = () => {
     <div style={{ display: 'flex', height: '100vh',backgroundColor: 'lightgray' }}>
       <Sidebar />
       <div style={{ flex: 1, padding: '20px', overflowY: 'auto' }}>
-        <h1 className="text-danger" style={{ textAlign: 'center',marginLeft: '300px'}}>Add Transaction</h1>
+      <div className="text-danger" style={{  paddingLeft: '100px', fontSize: '2rem', fontWeight: 'bold' }}>Add New Transactions</div>
+
+
 
         <div className="card" style={{ maxWidth: '1000px', margin: '0 auto', marginLeft: '300px', height: '80vh' }}>
           <div className="card-body" style={{ maxWidth: '1000px', height: '80%' }}>
