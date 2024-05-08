@@ -5,7 +5,6 @@ import MongoConnect from "./configs/DB_Connection"
 import session from 'express-session';
 import transaction_routes from "./api/routes/transactions_routes"
 import ctask_route from "./api/routes/ctask_route"
-import Discount_route from "./api/routes/Discount_route"
 import employee_route from "./api/routes/employee_route"
 import cusRoute from "./api/routes/customer_routes"
 import CartRoute from "./api/routes/Cart_route"
@@ -14,8 +13,12 @@ import analyticRoute from "./api/routes/analytic_route"
 import order_route from "./api/routes/order_route"
 import User_route from "./api/routes/user_routes"
 import pickup_rouete from './api/routes/pickup_route'
+import prodRoute from './api/routes/product_route'
 
 import ProdsupRoute from './api/routes/Prod_Supplier_route'
+
+
+
 
 
 import "dotenv/config"
@@ -49,8 +52,8 @@ next()
 app.use('/transactions', transaction_routes)
 //Supplier_Task
 app.use('/ctask', ctask_route)
-//discount
-app.use('/Discount',Discount_route)
+
+
 //employee
 app.use('/emp', employee_route)
 //cashier
@@ -66,10 +69,15 @@ app.use('/inventory', invRoute )
 //Authentication
 app.use('/auth',User_route)
 
+
+//product
+app.use('/product',prodRoute)
+//pick up
 app.use('/pickup',pickup_rouete)
 
 //prod_supplier
 app.use('/supplier',ProdsupRoute)
+
 
 
 

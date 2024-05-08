@@ -41,6 +41,11 @@ const Login = () => {
         navigate('/emp_list');
  
 
+      }
+      else if (email === 'nethranjalee2art@gmail.com') {
+        navigate('/discountmanagerhome');
+ 
+
       } else {
         navigate('/');
       }
