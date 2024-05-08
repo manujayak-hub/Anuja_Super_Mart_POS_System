@@ -1,10 +1,30 @@
 import React, { useState, useEffect } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Button, Modal, Row, Table, Popover, Form } from "react-bootstrap";
-import { getTasks, createTask, updateTask, deleteTask } from '../../stores/task/taskStore'; 
-import { getproducts } from '../../stores/task/productStore';
-import { getsupplier } from '../../stores/task/supplierStore';
+import {
+  Button,
+  Modal,
+  Form,
+  Input,
+  Select,
+  Row,
+  Table,
+  Popconfirm,
+  notification,
+} from "antd";
+import "antd/dist/reset.css";
+import {
+  getTasks,
+  createTask,
+  updateTask,
+  deleteTask,
+} from "../../stores/task/taskStore"; // Ensure these are implemented
+import { getproducts } from "../../stores/task/productStore";
+import { getsupplier } from "../../stores/task/supplierStore";
+import Title from "antd/es/typography/Title";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import * as yup from "yup";
+
+
+const { Option } = Select;
 
 // Validation schema
 const taskSchema = yup.object().shape({
@@ -28,13 +48,7 @@ function TaskManage() {
   const [products, setProducts] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [currentTask, setCurrentTask] = useState(null); // Used for edit
-  const [formData, setFormData] = useState({
-    supplierId: "",
-    productId: "",
-    productQuantity: "",
-    startingDate: "",
-    expireDate: ""
-  });
+  const [form] = Form.useForm();
 
   useEffect(() => {
     fetchData();
@@ -46,69 +60,60 @@ function TaskManage() {
       setTasks(fetchedTasks);
       const fetchedSuppliers = await getsupplier();
       setSuppliers(fetchedSuppliers);
-      const fetchedProducts = await getproducts();
-      setProducts(fetchedProducts);
+      const products = await getproducts();
+      setProducts(products);
     } catch (error) {
-      console.error("Failed to fetch data:", error);
+      console.error("Failed to fetch tasks:", error);
     }
   };
 
   // Add or edit task based on currentTask state
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async (values) => {
     try {
-      const isValid = await taskSchema.validate(formData);
+      const isValid = await taskSchema.validate(values);
       if (currentTask) {
-        await updateTask(currentTask._id, formData);
+        await updateTask(currentTask._id, values);
       } else {
-        await createTask(formData);
+        await createTask(values);
       }
       fetchData(); // Refresh the data
       setIsModalVisible(false);
-      alert(`Task ${currentTask ? "updated" : "added"} successfully`);
+      notification.success({
+        message: `Task ${currentTask ? "updated" : "added"} successfully`,
+      });
     } catch (error) {
-      alert(error.message);
+      notification.error({ message: error.message });
     }
   };
 
   const handleDelete = async (id) => {
     await deleteTask(id);
     fetchData(); // Refresh the data
-    alert("Task deleted successfully");
+    notification.success({ message: "Task deleted successfully" });
   };
 
   const handleEdit = (task) => {
     setCurrentTask(task);
-    setFormData({
-      supplierId: task.supplierId,
-      productId: task.productId,
-      productQuantity: task.productQuantity,
+    form.setFieldsValue({
+      ...task,
       startingDate: task.startingDate.split("T")[0],
-      expireDate: task.expireDate.split("T")[0]
+      expireDate: task.expireDate.split("T")[0],
     });
     setIsModalVisible(true);
   };
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-  };
-
   const columns = [
     {
-      title: "Supplier ID",
+      title: "Supplier Name",
       dataIndex: "supplierId",
       key: "supplierId",
-      render: (supplier) => supplier.name,
+      render: (supplier) => supplier?.name,
     },
     {
       title: "Product ID",
       dataIndex: "productId",
       key: "productId",
-      render: (product) => product.productName,
+      render: (product) => product?.productName,
     },
     {
       title: "Product Quantity",
@@ -132,83 +137,109 @@ function TaskManage() {
       key: "action",
       render: (_, record) => (
         <>
-          <Button variant="primary" onClick={() => handleEdit(record)}>
-            Edit
-          </Button>
-          <Popover
-            id="popover-basic"
+          <Button icon={<EditOutlined />} onClick={() => handleEdit(record)} />
+          <Popconfirm
             title="Are you sure to delete this task?"
-            trigger="click"
+            onConfirm={() => handleDelete(record._id)}
+            okText="Yes"
+            cancelText="No"
           >
-            <Button variant="danger" onClick={() => handleDelete(record._id)}>
-              Delete
-            </Button>
-          </Popover>
+            <Button icon={<DeleteOutlined />} />
+          </Popconfirm>
         </>
       ),
     },
   ];
 
   return (
-    <div className="container mt-4">
-      <Row className="mb-3">
-        <h2>Tasks</h2>
-        <Button onClick={() => {
+    <div style={{ margin: "20px" }}>
+      <Row justify={"space-between"}>
+        <img src="logo.png" alt="Logo" style={{ margin: '10px', padding: '5px' }} />
+        <Title style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto' }}>Tasks</Title>
+
+
+
+
+        <Button
+          onClick={() => {
             setCurrentTask(null);
+            form.resetFields();
             setIsModalVisible(true);
-          }}>
+          }}
+          style={{ backgroundColor: 'red', color: 'white', border: 'none', borderRadius: '4px', padding: '8px 16px' }}
+        >
           Create Task
         </Button>
+
       </Row>
       <Table
         columns={columns}
-        dataSource={tasks.map((task) => ({ ...task, key: task._id }))}
+        dataSource={Array.isArray(tasks) ? tasks.map((task) => ({ ...task, key: task._id })) : []}
         rowKey="key"
       />
+
       <Modal
         title={`${currentTask ? "Edit" : "Add"} Task`}
-        show={isModalVisible}
-        onHide={() => setIsModalVisible(false)}
-        animation={false}
+        open={isModalVisible}
+        onCancel={() => setIsModalVisible(false)}
+        onOk={() => form.submit()}
       >
-        <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="supplierId">
-            <Form.Label>Supplier</Form.Label>
-            <Form.Control as="select" name="supplierId" value={formData.supplierId} onChange={handleInputChange}>
-              <option value="">Select Supplier</option>
-              {suppliers.map((supplier) => (
-                <option key={supplier._id} value={supplier._id}>
-                  {supplier.name}
-                </option>
+        <Form form={form} onFinish={handleSubmit} layout="vertical">
+          <Form.Item
+            name="supplierId"
+            label="Supplier"
+            rules={[{ required: true, message: "Please select a supplier!" }]}
+          >
+            <Select>
+              {Array.isArray(suppliers) && suppliers.map((supplier) => (
+                <Select.Option key={supplier._id} value={supplier._id}>
+                  {supplier.supname}
+                </Select.Option>
               ))}
-            </Form.Control>
-          </Form.Group>
-          <Form.Group controlId="productId">
-            <Form.Label>Product</Form.Label>
-            <Form.Control as="select" name="productId" value={formData.productId} onChange={handleInputChange}>
-              <option value="">Select Product</option>
-              {products.map((product) => (
-                <option key={product._id} value={product._id}>
+            </Select>
+          </Form.Item>
+
+          <Form.Item
+            name="productId"
+            label="Product"
+            rules={[{ required: true, message: "Please select a product!" }]}
+          >
+            <Select>
+              {Array.isArray(products) && products.map((product) => (
+                <Select.Option key={product._id} value={product._id}>
                   {product.productName}
-                </option>
+                </Select.Option>
               ))}
-            </Form.Control>
-          </Form.Group>
-          <Form.Group controlId="productQuantity">
-            <Form.Label>Product Quantity</Form.Label>
-            <Form.Control type="number" name="productQuantity" value={formData.productQuantity} onChange={handleInputChange} />
-          </Form.Group>
-          <Form.Group controlId="startingDate">
-            <Form.Label>Starting Date</Form.Label>
-            <Form.Control type="date" name="startingDate" value={formData.startingDate} onChange={handleInputChange} />
-          </Form.Group>
-          <Form.Group controlId="expireDate">
-            <Form.Label>Expire Date</Form.Label>
-            <Form.Control type="date" name="expireDate" value={formData.expireDate} onChange={handleInputChange} />
-          </Form.Group>
-          <Button variant="primary" type="submit">
-            Submit
-          </Button>
+            </Select>
+          </Form.Item>
+
+          <Form.Item
+            name="productQuantity"
+            label="Product Quantity"
+            rules={[
+              { required: true, message: "Please input the product quantity!" },
+            ]}
+          >
+            <Input type="number" />
+          </Form.Item>
+          <Form.Item
+            name="startingDate"
+            label="Starting Date"
+            rules={[
+              { required: true, message: "Please input the starting date!" },
+            ]}
+          >
+            <Input type="date" />
+          </Form.Item>
+          <Form.Item
+            name="expireDate"
+            label="Expire Date"
+            rules={[
+              { required: true, message: "Please input the expire date!" },
+            ]}
+          >
+            <Input type="date" />
+          </Form.Item>
         </Form>
       </Modal>
     </div>
