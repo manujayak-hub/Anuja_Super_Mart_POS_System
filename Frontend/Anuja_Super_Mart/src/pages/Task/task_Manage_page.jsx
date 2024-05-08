@@ -107,11 +107,13 @@ const columns = [
     title: "Supplier Name",
     dataIndex: "suppliername",
     key: "suppliername",
+    render: (supplierName) => supplierName, // Render supplier name directly
   },
   {
     title: "Product Name",
     dataIndex: "productname",
     key: "productname",
+    render: (productName) => productName, // Render product name directly
   },
   {
     title: "Product Quantity",
@@ -190,7 +192,7 @@ const columns = [
           >
             <Select>
               {Array.isArray(suppliers) && suppliers.map((supplier) => (
-                <Select.Option key={supplier._id} value={supplier._id}>
+                <Select.Option key={supplier._id} value={supplier.supname}>
                   {supplier.supname}
                 </Select.Option>
               ))}
@@ -204,7 +206,7 @@ const columns = [
           >
             <Select>
               {Array.isArray(products) && products.map((product) => (
-                <Select.Option key={product._id} value={product._id}>
+                <Select.Option key={product._id} value={product.productName}>
                   {product.productName}
                 </Select.Option>
               ))}

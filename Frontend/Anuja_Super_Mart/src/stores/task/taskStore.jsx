@@ -22,7 +22,7 @@ export const getTasks = async () => {
 
 export const updateTask = async (id, updatedTaskData) => {
   try {
-    const response = await axios.put(`/intask/${id}`, updatedTaskData);
+    const response = await axios.patch(`/intask/${id}`, updatedTaskData);
     return response.data;
   } catch (error) {
     console.error("Error updating task:", error.response.data);
