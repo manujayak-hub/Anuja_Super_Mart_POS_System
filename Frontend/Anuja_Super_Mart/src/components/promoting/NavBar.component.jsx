@@ -71,7 +71,7 @@ export default function NavBar(){
     return(
         <>
         <div className="header bs1" style={{ boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
-        //backgroundColor:"#80787b"
+        backgroundColor:"#198754"
         }}>
         <Row  justify="center">
           <Col lg={20} sm={24} xs={24}>
@@ -81,7 +81,7 @@ export default function NavBar(){
                   <Link
                     to="/"
                     style={{
-                      color: "darkslategray",
+                      color: "white",
                       letterSpacing: "1.5px",
                       fontSize: "30px",
                       fontFamily: "serif",
@@ -132,7 +132,7 @@ export default function NavBar(){
                       marginRight: "10px",
                     }}
                   />
-                  <p>Sales Manager</p>
+                  <p style={{color:'white'}}>Sales Manager</p>
                 </div>
               </Dropdown>
             </div>

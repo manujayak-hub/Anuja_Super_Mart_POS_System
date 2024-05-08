@@ -30,7 +30,7 @@ export default function DiscountHome() {
                             selection of products and enjoy great deals. <br />
                             Shop now and save big!<br />
                         </p>
-                        <Button type="primary" style={{ backgroundColor: "#FD204F",boxShadow: "0 2px 4px rgba(0,0,0,0.5)" }}><a href="/viewdiscount" style={{ textDecoration: "none" }}>Go to Discount</a></Button>
+                        <Button type="primary" style={{ backgroundColor: "#198754",boxShadow: "0 2px 4px rgba(0,0,0,0.5)" }}><a href="/viewdiscount" style={{ textDecoration: "none" }}>Go to Discount</a></Button>
 
 
 
@@ -78,7 +78,7 @@ export default function DiscountHome() {
                         <p style={{ textAlign: "center", color: "#FD204F", fontWeight: "bold", margin: "40px", fontSize: "16px" }}>
                             Check out our exclusive discounts made <br/>just for you!...<br />
                         </p>
-                        <Button type="primary" style={{ backgroundColor: "#FD204F",boxShadow: "0 2px 4px rgba(0,0,0,0.5)" }}><a href="/viewdiscount" style={{ textDecoration: "none" }}>Go to Discount</a></Button>
+                        <Button type="primary" style={{ backgroundColor: "#198754",boxShadow: "0 2px 4px rgba(0,0,0,0.5)" }}><a href="/viewdiscount" style={{ textDecoration: "none" }}>Go to Discount</a></Button>
 
                     </Col>
 
@@ -97,7 +97,7 @@ export default function DiscountHome() {
 
                             <br />
                         </p>
-                        <Button type="primary" style={{ backgroundColor: "#FD204F",boxShadow: "0 2px 4px rgba(0,0,0,0.5)" }}><a href="/viewdiscount" style={{ textDecoration: "none" }}>Go to Discount</a></Button>
+                        <Button type="primary" style={{ backgroundColor: "#198754",boxShadow: "0 2px 4px rgba(0,0,0,0.5)" }}><a href="/viewdiscount" style={{ textDecoration: "none" }}>Go to Discount</a></Button>
 
 
 

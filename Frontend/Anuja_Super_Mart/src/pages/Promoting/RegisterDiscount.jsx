@@ -79,7 +79,7 @@ export default function RegisterDiscount(){
                                 <br />
                                 <div className="form-group">
                                     <label>Product Price: </label>
-                                    <input type="text"
+                                    <input type="number"
                                         className="form-control"
                                         id="productPrice" required onChange={(e)=>{setProductPrice(e.target.value);}}
                                         
@@ -98,7 +98,7 @@ export default function RegisterDiscount(){
                                 <div className="form-group">
                                     <label>Quantity InStock : </label>
                                     <input
-                                        type="text"
+                                        type="number"
                                         className="form-control"
                                         id="quantityInStock" required onChange={(e)=>{setQuantityInStock(e.target.value);}}/>
                                 </div>
@@ -106,7 +106,7 @@ export default function RegisterDiscount(){
                                 <div className="form-group">
                                     <label>Discount : </label>
                                     <input
-                                        type="text"
+                                        type="number"
                                         className="form-control"
                                         id="discount" required onChange={(e)=>{setDiscount(e.target.value);}}/>
                                 </div>
