@@ -1,5 +1,6 @@
+// stask_controller.js
 import stask from "../models/stask_model";
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
 const createTask = async (req, res) => {
     const {
@@ -20,7 +21,8 @@ const createTask = async (req, res) => {
         })
         res.status(200).json(atc)
     } catch (error) {
-        res.status(400).json({ error: 'Server Error' })
+        console.error(error);
+        res.status(500).json({ error: 'Server Error' })
     }
 }
 
@@ -101,4 +103,4 @@ const updateStask = async (req, res) => {
     res.status(200).json(atc)
 }
 
-module.exports = { createTask, getallstask, getbyIdstask, deletestask, updateStask }
+export { createTask, getallstask, getbyIdstask, deletestask, updateStask };

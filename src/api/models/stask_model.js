@@ -3,14 +3,14 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const orderSchema = new Schema({
-    suppliername: { type: String },
-    productname: { type: String },
-    productQuantity: { type: Number },
-    startingDate: { type: Date }, // Change data type to Date if these fields represent dates
-    expireDate: { type: Date }, // Change data type to Date if these fields represent dates
+    suppliername: { type: String, required: true },
+    productname: { type: String, required: true },
+    productQuantity: { type: Number, required: true, min: 1 },
+    startingDate: { type: Date, required: true },
+    expireDate: { type: Date, required: true, min: 1 },
 }, {
-    timestamps: true,
-    // You can omit the collection option if you want Mongoose to pluralize the model name
+    timestamps: true, // Automatically add createdAt and updatedAt fields
+    collection: 'Itask' // Specify the collection name explicitly
 });
 
-export default mongoose.model('stask', orderSchema);
+export default mongoose.model('Itask', orderSchema);

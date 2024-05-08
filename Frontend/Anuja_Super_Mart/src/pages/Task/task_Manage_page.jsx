@@ -28,8 +28,8 @@ const { Option } = Select;
 
 // Validation schema
 const taskSchema = yup.object().shape({
-  supplierId: yup.string().required("Supplier is required"),
-  productId: yup.string().required("Product is required"),
+  suppliername: yup.string().required("Supplier is required"),
+  productname: yup.string().required("Product is required"),
   productQuantity: yup
     .number()
     .typeError("Must be a number")
@@ -107,13 +107,13 @@ function TaskManage() {
       title: "Supplier Name",
       dataIndex: "supplierId",
       key: "supplierId",
-      render: (supplier) => supplier?.name,
+      render: (supplier) => supplier?.suppliername,
     },
     {
       title: "Product ID",
       dataIndex: "productId",
       key: "productId",
-      render: (product) => product?.productName,
+      render: (product) => product?.productname,
     },
     {
       title: "Product Quantity",
@@ -186,7 +186,7 @@ function TaskManage() {
       >
         <Form form={form} onFinish={handleSubmit} layout="vertical">
           <Form.Item
-            name="supplierId"
+            name="suppliername"
             label="Supplier"
             rules={[{ required: true, message: "Please select a supplier!" }]}
           >
@@ -200,7 +200,7 @@ function TaskManage() {
           </Form.Item>
 
           <Form.Item
-            name="productId"
+            name="productname"
             label="Product"
             rules={[{ required: true, message: "Please select a product!" }]}
           >

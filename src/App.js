@@ -82,7 +82,7 @@ app.use('/sproduct', sopRoute)
 
 
 
-app.use('/stask',stask_route)
+app.use('/intask',stask_route)
 
 
 app.use('/Suplier',ssuplier_route)

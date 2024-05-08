@@ -1,7 +1,7 @@
 import express from 'express';
 const stask_route = express.Router();
 
-import { createTask, getallstask, getbyIdstask, deletestask, updateStask } from '../controllers/stask_controller';
+import {createTask, getallstask, getbyIdstask, deletestask, updateStask } from '../controllers/stask_controller';
 
 stask_route.get('/', getallstask); // Use getallstask for retrieving all tasks
 stask_route.get('/:id', getbyIdstask); // Use getbyIdstask for retrieving a task by ID
