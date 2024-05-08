@@ -14,6 +14,13 @@ import TransactionsList from './pages/Accountant/Transactions'
 import UserProfile from './pages/Accountant/UserProfile'
 import Dash from './pages/Accountant/Accountantdash'
 
+import RegisterDiscount from './pages/Promoting/RegisterDiscount';
+import UpdateDiscount from './pages/Promoting/UpdateDiscount';
+import DiscountList from './pages/Promoting/DiscountList';
+import DiscountManagerHome from './pages/Promoting/DiscountManagerHome';
+import DiscountHome from './pages/Promoting/DiscountHome';
+import Sendmail from './pages/Promoting/Sendmail';
+
 
 import Hamper from './pages/Discount/Hamper'
 import TotalSaving from './pages/Discount/TotalSaving'
@@ -67,6 +74,7 @@ function App() {
 
 
 
+
             
             <Route path="Promoting" element={<ItemList />} />
             <Route path="Hamper" element={<Hamper />} />
@@ -94,6 +102,37 @@ function App() {
 
 
 
+            <Route path="Customer" element={<Customer />} />
+            <Route path="Report" element={<Report />} />
+            <Route path="Promoting" element={<ItemList />} />
+            <Route path="Hamper" element={<Hamper />} />
+            <Route path="ItemList" element={<ItemList />} />
+            <Route path="TotalSaving" element={<TotalSaving />} />
+            <Route path="ButtonComponent" element={<ButtonComponent />} />
+
+
+
+
+
+
+            <Route path="OrderRetrieve" element={<OrderRetrieve />} />
+            <Route path="PickupOrders" element={<PickupOrders />} />
+
+
+
+            <Route path="/discount" element={<DiscountHome />} />
+            <Route path="/discountmanagerhome" element={<DiscountManagerHome />} />
+            <Route path="/edit/:id" element={<UpdateDiscount />} />
+            <Route path="/registerdiscount" element={<RegisterDiscount />} />
+            <Route path="/editdiscount" element={<UpdateDiscount />} />
+            <Route path="/viewdiscount" element={<DiscountList />} />
+            <Route path="/sendmail" element={<Sendmail />} />
+
+
+
+
+
+
             {user && <Route exact path="/About" render={() => <About />} />}
 
 
@@ -101,6 +140,10 @@ function App() {
         </Routes>
       </BrowserRouter>
       <InventoryRoute />
+
+
+      <discountRoute />
+
 
       <OrderRoute />
 

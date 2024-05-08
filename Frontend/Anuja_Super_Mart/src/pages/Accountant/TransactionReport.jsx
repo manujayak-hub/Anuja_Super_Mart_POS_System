@@ -44,8 +44,8 @@ const TransactionReport = ({ totalAmounts }) => {
             const imgHeight = (canvas.height * imgWidth) / canvas.width;
             const pdfWidth = pdf.internal.pageSize.getWidth();
             const pdfHeight = pdf.internal.pageSize.getHeight();
-            const marginLeft = 60; // Adjust margin as needed
-            const marginRight = 60; // Adjust margin as needed
+            const marginLeft = 60; 
+            const marginRight = 60; 
             const contentWidth = pdfWidth - marginLeft - marginRight;
             const xPos = (contentWidth - imgWidth) / 2 + marginLeft;
             const yPos = (pdfHeight - imgHeight) / 2;
