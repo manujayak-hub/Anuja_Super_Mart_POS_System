@@ -38,28 +38,30 @@ export default function EditFeedback() {
     },[]);
 
 
-  const updateFeedbackDetails = (e) => {
-    e.preventDefault();
-
-    let updatedData = {
-      username:username,
-      email:email,
-      view: view,
-      comment:comment,
-      reaction:reaction,
-      category: category,
-      priority: priority,
+    const updateFeedbackDetails = (e) => {
+      e.preventDefault();
+    
+      let updatedData = {
+        username: username,
+        email: email,
+        view: view,
+        comment: comment,
+        reaction: reaction,
+        category: category,
+        priority: priority,
+      };
+    
+      axios
+        .patch(`http://localhost:8000/feedback/${params.id}`, updatedData)
+        .then(() => {
+          alert("Feedback details updated");
+          window.location.href = "/adminfeedbacklist";
+        })
+        .catch((error) => {
+          setError(error.message || "An error occurred while updating feedback details.");
+        });
     };
-
-    axios.put(`http://localhost:8000/feedback/${params.id}`, updatedData)
-      .then(() => {
-        alert("Feedback details updated");
-        window.location.href = "/adminfeedbacklist";
-      })
-      .catch((error) => {
-        setError(error.message);
-      });
-  };
+    
 
 
 

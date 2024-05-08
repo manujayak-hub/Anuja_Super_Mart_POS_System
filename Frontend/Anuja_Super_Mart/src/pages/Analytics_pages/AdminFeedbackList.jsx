@@ -32,6 +32,7 @@ export default function AdminFeedbackList() {
       .then(res => {
         // Update tags list after deletion
         setFeedbacks(feedbacks.filter(feedback => feedback._id !== id));
+        alert('success Feedback.')
       })
       .catch(err => {
         console.error(err);

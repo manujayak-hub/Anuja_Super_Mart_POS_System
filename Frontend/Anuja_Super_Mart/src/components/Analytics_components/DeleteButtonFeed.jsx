@@ -6,14 +6,14 @@ const DeleteButtonFeed = ({ id, onDelete }) => {
   const [visible, setVisible] = useState(false);
 
   const handleDelete = () => {
-    axios.delete(`http://localhost:8000/feedbacks/${id}`)
+    axios.delete(`http://localhost:8000/feedback/${id}`)
       .then(res => {
         onDelete(); // Callback to update the UI after successful deletion
         setVisible(false); // Close the modal after deletion
       })
       .catch(err => {
         console.error(err);
-        alert('Error deleting feedback.');
+        alert('Error deleting feedback.')
       });
   };
 

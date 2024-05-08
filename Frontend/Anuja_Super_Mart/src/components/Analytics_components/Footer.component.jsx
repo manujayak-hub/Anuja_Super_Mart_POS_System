@@ -25,7 +25,7 @@ export default class Footers extends Component{
                             textOverflow: "ellipsis",
                         }}
                     >
-                        Kavin | Enter IT Number
+                        Kavin | IT22315564
                     </span>
                 </Footer>
 

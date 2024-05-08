@@ -23,16 +23,25 @@ const Contact = () => {
     if (form.checkValidity() === false) {
       e.stopPropagation();
     }
-
+  
     setValidated(true);
-
+  
     try {
       const response = await axios.post('http://localhost:8000/feedback/', formData);
       console.log(response.data); // Assuming the API returns a success message
+  
+      // Reset form data after successful submission
+      setFormData({
+        username: '',
+        email: '',
+        comment: '',
+        reaction: ''
+      });
     } catch (error) {
       console.error('Error:', error);
     }
   };
+  
 
   return (
     <>
@@ -54,7 +63,7 @@ const Contact = () => {
                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
                 <Form.Group controlId="formBasicName">
                     <Form.Label>Your Name</Form.Label>
-                    <Form.Control type="text" placeholder="Enter your name" name="name" value={formData.name} onChange={handleChange} required />
+                    <Form.Control type="text" placeholder="Enter your name" name="username" value={formData.username} onChange={handleChange} required />
                     <Form.Control.Feedback type="invalid">
                       Please enter your name.
                     </Form.Control.Feedback>
