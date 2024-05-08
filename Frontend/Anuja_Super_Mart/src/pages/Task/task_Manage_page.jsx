@@ -101,55 +101,53 @@ function TaskManage() {
     });
     setIsModalVisible(true);
   };
-
-  const columns = [
-    {
-      title: "Supplier Name",
-      dataIndex: "supplierId",
-      key: "supplierId",
-      render: (supplier) => supplier?.suppliername,
-    },
-    {
-      title: "Product ID",
-      dataIndex: "productId",
-      key: "productId",
-      render: (product) => product?.productname,
-    },
-    {
-      title: "Product Quantity",
-      dataIndex: "productQuantity",
-      key: "productQuantity",
-    },
-    {
-      title: "Starting Date",
-      dataIndex: "startingDate",
-      key: "startingDate",
-      render: (text) => new Date(text).toLocaleDateString(), // Format the date
-    },
-    {
-      title: "Expire Date",
-      dataIndex: "expireDate",
-      key: "expireDate",
-      render: (text) => new Date(text).toLocaleDateString(), // Format the date
-    },
-    {
-      title: "Action",
-      key: "action",
-      render: (_, record) => (
-        <>
-          <Button icon={<EditOutlined />} onClick={() => handleEdit(record)} />
-          <Popconfirm
-            title="Are you sure to delete this task?"
-            onConfirm={() => handleDelete(record._id)}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Button icon={<DeleteOutlined />} />
-          </Popconfirm>
-        </>
-      ),
-    },
-  ];
+// display form
+const columns = [
+  {
+    title: "Supplier Name",
+    dataIndex: "suppliername",
+    key: "suppliername",
+  },
+  {
+    title: "Product Name",
+    dataIndex: "productname",
+    key: "productname",
+  },
+  {
+    title: "Product Quantity",
+    dataIndex: "productQuantity",
+    key: "productQuantity",
+  },
+  {
+    title: "Starting Date",
+    dataIndex: "startingDate",
+    key: "startingDate",
+    render: (text) => new Date(text).toLocaleDateString(), // Format the date
+  },
+  {
+    title: "Expire Date",
+    dataIndex: "expireDate",
+    key: "expireDate",
+    render: (text) => new Date(text).toLocaleDateString(), // Format the date
+  },
+  {
+    title: "Action",
+    key: "action",
+    render: (_, record) => (
+      <>
+        <Button icon={<EditOutlined />} onClick={() => handleEdit(record)} />
+        <Popconfirm
+          title="Are you sure to delete this task?"
+          onConfirm={() => handleDelete(record._id)}
+          okText="Yes"
+          cancelText="No"
+        >
+          <Button icon={<DeleteOutlined />} />
+        </Popconfirm>
+      </>
+    ),
+  },
+];
 
   return (
     <div style={{ margin: "20px" }}>
