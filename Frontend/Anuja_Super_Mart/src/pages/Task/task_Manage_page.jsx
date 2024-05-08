@@ -22,7 +22,8 @@ import { getsupplier } from "../../stores/task/supplierStore";
 import Title from "antd/es/typography/Title";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import * as yup from "yup";
-
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 const { Option } = Select;
 
@@ -49,10 +50,21 @@ function TaskManage() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [currentTask, setCurrentTask] = useState(null); // Used for edit
   const [form] = Form.useForm();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredTasks, setFilteredTasks] = useState([]);
 
   useEffect(() => {
     fetchData();
   }, []);
+
+  useEffect(() => {
+    // Filter tasks when search query changes
+    const filtered = tasks.filter(task =>
+      task.suppliername.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      task.productname.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setFilteredTasks(filtered);
+  }, [searchQuery, tasks]);
 
   const fetchData = async () => {
     try {
@@ -60,10 +72,10 @@ function TaskManage() {
       setTasks(fetchedTasks);
       const fetchedSuppliers = await getsupplier();
       setSuppliers(fetchedSuppliers);
-      const products = await getproducts();
-      setProducts(products);
+      const fetchedProducts = await getproducts();
+      setProducts(fetchedProducts);
     } catch (error) {
-      console.error("Failed to fetch tasks:", error);
+      console.error("Failed to fetch data:", error);
     }
   };
 
@@ -101,64 +113,119 @@ function TaskManage() {
     });
     setIsModalVisible(true);
   };
-// display form
-const columns = [
-  {
-    title: "Supplier Name",
-    dataIndex: "suppliername",
-    key: "suppliername",
-    render: (supplierName) => supplierName, // Render supplier name directly
-  },
-  {
-    title: "Product Name",
-    dataIndex: "productname",
-    key: "productname",
-    render: (productName) => productName, // Render product name directly
-  },
-  {
-    title: "Product Quantity",
-    dataIndex: "productQuantity",
-    key: "productQuantity",
-  },
-  {
-    title: "Starting Date",
-    dataIndex: "startingDate",
-    key: "startingDate",
-    render: (text) => new Date(text).toLocaleDateString(), // Format the date
-  },
-  {
-    title: "Expire Date",
-    dataIndex: "expireDate",
-    key: "expireDate",
-    render: (text) => new Date(text).toLocaleDateString(), // Format the date
-  },
-  {
-    title: "Action",
-    key: "action",
-    render: (_, record) => (
-      <>
-        <Button icon={<EditOutlined />} onClick={() => handleEdit(record)} />
-        <Popconfirm
-          title="Are you sure to delete this task?"
-          onConfirm={() => handleDelete(record._id)}
-          okText="Yes"
-          cancelText="No"
-        >
-          <Button icon={<DeleteOutlined />} />
-        </Popconfirm>
-      </>
-    ),
-  },
-];
+
+  const handlePDFGenerate = () => {
+    const doc = new jsPDF();
+
+    // Bootstrap-like styles
+    const styles = {
+      title: {
+        fontSize: 20,
+        fontWeight: "bold",
+        margin: [10, 10], // Top and left margins
+      },
+      tableHeader: {
+        fontSize: 12,
+        fontWeight: "bold",
+        textColor: "#ffffff", // White text color for headers
+        fillColor: "#007bff", // Bootstrap primary color for background
+      },
+      tableRow: {
+        fontSize: 10,
+      },
+    };
+
+    doc.setFont("helvetica");
+
+    // Title
+    doc.setTextColor("#000000"); // Black text color for title
+    doc.text("Tasks", 10, 10);
+
+    // Table headers
+    const headers = ["Supplier Name", "Product Name", "Product Quantity", "Starting Date", "Expire Date"];
+    const data = filteredTasks.map(task => [task.suppliername, task.productname, task.productQuantity, new Date(task.startingDate).toLocaleDateString(), new Date(task.expireDate).toLocaleDateString()]);
+
+    doc.autoTable({
+      head: [headers],
+      body: data,
+      theme: "grid",
+      startY: 20, // Start position below the title
+      styles: {
+        cellPadding: 3,
+        fontSize: 10,
+      },
+      headStyles: {
+        fillColor: "#007bff",
+        textColor: "#ffffff",
+        fontStyle: "bold",
+      },
+    });
+
+    doc.save("tasks.pdf");
+  };
+
+  // Display form
+  const columns = [
+    {
+      title: "Supplier Name",
+      dataIndex: "suppliername",
+      key: "suppliername",
+      render: (supplierName) => supplierName, // Render supplier name directly
+    },
+    {
+      title: "Product Name",
+      dataIndex: "productname",
+      key: "productname",
+      render: (productName) => productName, // Render product name directly
+    },
+    {
+      title: "Product Quantity",
+      dataIndex: "productQuantity",
+      key: "productQuantity",
+    },
+    {
+      title: "Starting Date",
+      dataIndex: "startingDate",
+      key: "startingDate",
+      render: (text) => new Date(text).toLocaleDateString(), // Format the date
+    },
+    {
+      title: "Expire Date",
+      dataIndex: "expireDate",
+      key: "expireDate",
+      render: (text) => new Date(text).toLocaleDateString(), // Format the date
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (_, record) => (
+        <>
+          <Button icon={<EditOutlined />} onClick={() => handleEdit(record)} />
+          <Popconfirm
+            title="Are you sure to delete this task?"
+            onConfirm={() => handleDelete(record._id)}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button icon={<DeleteOutlined />} />
+          </Popconfirm>
+        </>
+      ),
+    },
+  ];
 
   return (
     <div style={{ margin: "20px" }}>
       <Row justify={"space-between"}>
         <img src="logo.png" alt="Logo" style={{ margin: '10px', padding: '5px' }} />
         <Title style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto' }}>Tasks</Title>
-
-
-
+        
+        <Button
+          onClick={handlePDFGenerate}
+          style={{ backgroundColor: 'red', color: 'white', border: 'none', borderRadius: '4px', padding: '8px 16px' }}
+        >
+          Generate PDF
+        </Button>
 
         <Button
           onClick={() => {
@@ -171,18 +238,24 @@ const columns = [
           Create Task
         </Button>
 
+        <Input
+          placeholder="Search tasks"
+          onChange={(e) => setSearchQuery(e.target.value)}
+          style={{ width: 200 }}
+        />
       </Row>
+
       <Table
         columns={columns}
-        dataSource={Array.isArray(tasks) ? tasks.map((task) => ({ ...task, key: task._id })) : []}
+        dataSource={filteredTasks.map((task) => ({ ...task, key: task._id }))}
         rowKey="key"
       />
 
       <Modal
         title={`${currentTask ? "Edit" : "Add"} Task`}
-        open={isModalVisible}
+        visible={isModalVisible}
         onCancel={() => setIsModalVisible(false)}
-        onOk={() => form.submit()}
+        footer={null}
       >
         <Form form={form} onFinish={handleSubmit} layout="vertical">
           <Form.Item
@@ -240,6 +313,10 @@ const columns = [
           >
             <Input type="date" />
           </Form.Item>
+
+          <Button type="primary" htmlType="submit">
+            {`${currentTask ? "Update" : "Add"} Task`}
+          </Button>
         </Form>
       </Modal>
     </div>
