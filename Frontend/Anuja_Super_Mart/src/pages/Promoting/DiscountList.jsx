@@ -34,9 +34,9 @@ export default function DiscountList() {
     return (
         <>
             <NavBar />
-            <div style={{ textAlign: "center", color: "#FD204F", fontFamily: "serif", fontWeight: "bold", margin: "20px" }}>
-                <h3>Discount Delights</h3>
-                <h4>----------welcome to Discount Delights----------</h4>
+            <div style={{ textAlign: "center", color: "#198754", fontFamily: "serif", fontWeight: "bold", margin: "20px" }}>
+                <h2>Discount Delights</h2>
+                <h3>----------welcome to Discount Delights----------</h3><br></br>
                 <p style={{ color: "#000000" }}>Your ultimate destination for unbeatable saving! dive into a world of incredible deals and
                     discount curated just for you. Don't miss this chance. Hurry up and visit us!
                 </p>
@@ -84,7 +84,7 @@ export default function DiscountList() {
                                 actions={[
                                     <button
                                         style={{
-                                            backgroundColor: "#FD204F",
+                                            backgroundColor: "#198754",
                                             width: "50%",
                                             color: "white",
                                             borderRadius: "10px",

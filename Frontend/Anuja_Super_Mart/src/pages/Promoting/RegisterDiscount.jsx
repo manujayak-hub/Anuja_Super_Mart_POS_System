@@ -4,7 +4,7 @@ import "react-datepicker/dist/react-datepicker.css"
 import axios from 'axios';
 import { Col, Row } from "antd";
 import Footers from "../../components/promoting/Footer.component";
-import NavBar from "../../components/promoting/NavBar.component";
+import NavBar from "../../components/promoting/NavSalesManager.component";
 
 export default function RegisterDiscount(){
 

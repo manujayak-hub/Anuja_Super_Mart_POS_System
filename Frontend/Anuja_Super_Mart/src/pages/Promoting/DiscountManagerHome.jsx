@@ -5,7 +5,7 @@ import Meta from "antd/es/card/Meta";
 import { Link } from "react-router-dom";
 import { Popconfirm } from "antd";
 import Footers from "../../components/promoting/Footer.component";
-import NavBar from "../../components/promoting/NavBar.component";
+import NavBar from "../../components/promoting/NavSalesManager.component";
 import { DeleteFilled, EditOutlined, SearchOutlined, DownloadOutlined } from "@ant-design/icons";
 import { PDFDownloadLink, PDFViewer, Document, Page, View, Text } from '@react-pdf/renderer';
 

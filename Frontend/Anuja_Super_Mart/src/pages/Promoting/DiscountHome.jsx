@@ -25,7 +25,7 @@ export default function DiscountHome() {
                         fantastic savings!<br />
                             <br />
                         </p>
-                        <p style={{ textAlign: "center", color: "#FD204F", fontWeight: "bold", margin: "40px", fontSize: "16px" }}>
+                        <p style={{ textAlign: "center", color: "#198754", fontWeight: "bold", margin: "40px", fontSize: "16px" }}>
                             Hurry, don't miss out on big savings! Explore our wide<br />
                             selection of products and enjoy great deals. <br />
                             Shop now and save big!<br />
@@ -40,7 +40,7 @@ export default function DiscountHome() {
                         <img
                             data-aos="flip-left" data-aos-duration="3000" 
                             //data-aos="fade-up" data-aos-duration="3000"
-                            src="https://img.freepik.com/free-photo/shopping-cart-full-products-inside-supermarket_123827-28165.jpg?t=st=1711396406~exp=1711400006~hmac=60db362a4fabfe8e33bb502bd55783742c67bacc146f24f424001f980c85a4ce&w=996"
+                            src="https://img.freepik.com/free-photo/shopping-cart-full-products-inside-supermarket_123827-28165.jpg?t=st=1715152868~exp=1715156468~hmac=258fb5c6443c484620ca5cdb6f037c47a0d73c0b6a5143f2b8bc456d8d5b8849&w=996"
                             style={{ width: "100%", borderRadius: "100px", padding: "40px" }}
                         ></img>
 
@@ -75,7 +75,7 @@ export default function DiscountHome() {
                             deliciousness!
                             <br />
                         </p>
-                        <p style={{ textAlign: "center", color: "#FD204F", fontWeight: "bold", margin: "40px", fontSize: "16px" }}>
+                        <p style={{ textAlign: "center", color: "#198754", fontWeight: "bold", margin: "40px", fontSize: "16px" }}>
                             Check out our exclusive discounts made <br/>just for you!...<br />
                         </p>
                         <Button type="primary" style={{ backgroundColor: "#198754",boxShadow: "0 2px 4px rgba(0,0,0,0.5)" }}><a href="/viewdiscount" style={{ textDecoration: "none" }}>Go to Discount</a></Button>

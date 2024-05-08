@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Col, Row, message } from "antd";
 import axios from "axios";
 import Footers from "../../components/promoting/Footer.component";
-import NavBar from "../../components/promoting/NavBar.component";
+import NavBar from "../../components/promoting/NavSalesManager.component";
 
 export default function SendMail() {
   const [email, setEmail] = useState("");

@@ -7,7 +7,39 @@ import { Link } from "react-router-dom";
 export default function NavBar(){
 
     const items = [
-       
+        {
+          key: "1",
+          label: <a href="/" style={{ textDecoration: "none" }}>Home</a>,
+        },
+        {
+          key: "2",
+          label: <a href="/viewdiscount" style={{ textDecoration: "none" }}>Customer Discounts List</a>,
+        },
+        {
+            key: "3",
+            label: <a href="/discountmanagerhome" style={{ textDecoration: "none" }}>Discount Manager Home</a>,
+          },
+          {
+            key: "4",
+            label: <a href="/registerdiscount" style={{ textDecoration: "none" }}>Create Discounts</a>,
+          },
+          {
+            key: "5",
+            label: <a href="/sendmail" style={{ textDecoration: "none" }}>Send Mail</a>,
+          },
+        {
+          key: "6",
+          label: (
+            <li
+              onClick={() => {
+                //localStorage.removeItem("user");
+                //window.location.href = "/login";
+              }}
+              style={{ textDecoration: "none" }}>
+              Logout
+            </li>
+          ),
+        },
       ];
     
     //   const adminItems = [
@@ -34,12 +66,12 @@ export default function NavBar(){
     //     },
     //   ];
 
-    /*dgdgg*/
+
 
     return(
         <>
         <div className="header bs1" style={{ boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
-        backgroundColor:"#198754"
+        backgroundColor:"#FD204F"
         }}>
         <Row  justify="center">
           <Col lg={20} sm={24} xs={24}>
@@ -59,7 +91,7 @@ export default function NavBar(){
                       marginTop: "5px",
                       textDecoration: "none",
                     }}
-                  >      
+                  >
                     <img
                       //src="https://res.cloudinary.com/desnqqj6a/image/upload/v1683886702/Daco_4348109_rszw3f.png"
                       src="https://res.cloudinary.com/dljyf8xev/image/upload/v1710944952/car_images/logo_ahq5pi.png"
@@ -91,7 +123,16 @@ export default function NavBar(){
                     cursor: "pointer",
                   }}
                 >
-                 
+                  <img
+                    src="https://res.cloudinary.com/desnqqj6a/image/upload/v1683887268/User-Profile-PNG-High-Quality-Image_mwetdc.png"
+                    style={{
+                      width: "40px",
+                      height: "40px",
+                      borderRadius: "50%",
+                      marginRight: "10px",
+                    }}
+                  />
+                  <p style={{color:'white'}}>Sales Manager</p>
                 </div>
               </Dropdown>
             </div>
