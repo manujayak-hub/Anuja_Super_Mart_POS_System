@@ -67,6 +67,8 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
           
             generatePDFReceipt(orderId, currentDate);
 
+            await updateInventory(orderItems);
+
            
             setRefreshKey(prevKey => prevKey + 1);
 
@@ -75,6 +77,38 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
             setMessage("Failed to place order.");
         }
     };
+    const handleUpdate = async (updatedItem) => {
+        try {
+            // Assuming your backend API expects a PATCH request to update the inventory item
+            await axios.patch(`/inventory/${updatedItem._id}`, updatedItem);
+            // Optionally, you can handle success cases here if needed
+        } catch (error) {
+            console.error("Error updating inventory item:", error);
+            // Handle errors appropriately
+            throw error; // Optionally, rethrow the error to handle it in the caller
+        }
+    };
+    
+
+    const updateInventory = async (items) => {
+        try {
+            // Iterate through each item in the order
+            for (const item of items) {
+                // Assuming you have an endpoint like '/inventory/:id' to update a specific item by its ID
+                // Construct the updated item object with the decreased quantity
+                const updatedItem = {
+                    ...item,
+                    quantityInStock: item.quantityInStock - 1 // Decrease the quantity by 1 for each item sold
+                };
+    
+                // Make a PATCH request to update the inventory item
+                await handleUpdate(updatedItem);
+            }
+        } catch (error) {
+            console.error("Error updating inventory:", error);
+        }
+    };
+    
 
     const generatePDFReceipt = (orderId, currentDate) => {
         const doc = new jsPDF();
@@ -113,6 +147,7 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
         // Save PDF
         doc.save(`receipt_${orderId}.pdf`);
     };
+    
 
     return (
         <div key={refreshKey} className="OrderSec">
