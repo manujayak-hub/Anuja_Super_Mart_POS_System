@@ -94,6 +94,9 @@ function NavBar() {
               <li className="nav-item">
                 <Link className="nav-link text-white" to="/categories">Categories</Link>
               </li>
+              <li className="nav-item">
+                <Link className="nav-link text-white" to="/discount">Promoting</Link>
+              </li>
             </ul>
             <div className="navbar-right">
             <button
