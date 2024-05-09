@@ -4,9 +4,6 @@ import About from './pages/About'
 import Contact from './pages/Contact'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
-import Form from './pages/Task/Form';
-import SProfile from './pages/Task/SProfile';
-import SDetails from './pages/Task/SDetails';
 import Categories from './pages/Customer_pages/Categories';
 import { useStore } from './stores/authStore'
 import TransactionForm from './pages/Accountant/Add_new_form'
@@ -26,6 +23,9 @@ import InventoryRoute from './Routes/InvRoute'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import OrderRoute from './Routes/OrderRoute'
+
+
+import TaskManage from './pages/Task/task_Manage_page'
 
 import AdminHome from './pages/Analytics_pages/AdminHome';
 import AdminReport from './pages/Analytics_pages/AdminReport';
@@ -60,9 +60,6 @@ function App() {
             <Route path="Transactions" element={<TransactionsList/>}/>
             <Route path="UserProfile" element={<UserProfile/>}/>
             
-            <Route path="Form" element={<Form/>}/>
-            <Route path="SProfile" element={<SProfile/>}/>
-            <Route path="SDetails" element={<SDetails/>}/>
             <Route path="Categories" element={<Categories/>} />
             <Route path="Dash" element={<Dash/>}/>
 
@@ -79,6 +76,9 @@ function App() {
             <Route path="PickupOrders" element={<PickupOrders/>} />
 
 
+            <Route path="TaskManage" element={<TaskManage/>}/>
+
+
             <Route path="/discount" element={<DiscountHome />} />
             <Route path="/discountmanagerhome" element={<DiscountManagerHome />} />
             <Route path="/edit/:id" element={<UpdateDiscount />} />
@@ -92,16 +92,6 @@ function App() {
             <Route path="/feedback" element={<CustomerFeedback />} />
             <Route path="/adminfeedbacklist" element={<AdminFeedbackList />} />
             <Route path="/adminfeedbacklist/edit/:id" element={<EditFeedback />} />
-
-
-            
-
-
-
-            
-            
-
-
             {user && <Route exact path="/About" render={() => <About />} />}
             
 
