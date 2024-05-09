@@ -13,7 +13,7 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
     }); 
     const [customerId, setCustomerId] = useState(""); 
     const [paymentAmount, setPaymentAmount] = useState(0); 
-    const [refreshKey, setRefreshKey] = useState(0); // Key to force component refresh
+    const [refreshKey, setRefreshKey] = useState(0); 
 
     useEffect(() => {
         localStorage.setItem("orderIdCounter", orderIdCounter.toString());
@@ -64,10 +64,10 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
             await useOrderStore.getState().addOrder(newOrder);
             setMessage("Order placed successfully.");
 
-            // Generate and download PDF receipt
+          
             generatePDFReceipt(orderId, currentDate);
 
-            // Increment refresh key to force component refresh
+           
             setRefreshKey(prevKey => prevKey + 1);
 
         } catch (error) {
@@ -81,36 +81,46 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
         
         const pageWidth = doc.internal.pageSize.getWidth();
         const pageHeight = doc.internal.pageSize.getHeight();
+
+        // Draw border
         doc.rect(5, 5, pageWidth - 10, pageHeight - 10);
 
+        // Title
         doc.setFontSize(18);
-        doc.text("Anuja Super Mart", doc.internal.pageSize.getWidth() / 2, 10, 'center');
+        doc.text("Anuja Super Mart", doc.internal.pageSize.getWidth() / 2, 15, 'center');
 
+        // Subtitle
         doc.setFontSize(14);
-        doc.text("Order Receipt", doc.internal.pageSize.getWidth() / 2, 20, 'center');
+        doc.text("Order Receipt", doc.internal.pageSize.getWidth() / 2, 25, 'center');
 
+        // Order ID and Date
         doc.setFontSize(12);
-        doc.text(`Order ID: ${orderId}`, 10, 30,);
-        doc.text(`Date: ${currentDate}`, 10, 40);
+        doc.text(`Order ID: ${orderId}`, 10, 35);
+        doc.text(`Date: ${currentDate}`, 10, 45);
 
-        let y = 50;
+        // Items
+        let y = 55;
         orderItems.forEach((item, index) => {
             doc.text(`${index + 1}. ${item.productName} - Rs ${item.wholesalePrice}`, 10, y);
             y += 10;
         });
 
+        // Total, Payment, Balance
         doc.text(`Total: Rs ${totalPrice}`, 10, y);
         doc.text(`Payment: Rs ${paymentAmount}`, 10, y + 10);
         doc.text(`Balance: Rs ${balance}`, 10, y + 20);
 
+        // Save PDF
         doc.save(`receipt_${orderId}.pdf`);
     };
 
     return (
         <div key={refreshKey} className="OrderSec">
+            {/* Order header */}
             <div name="order_header">
                 <h1>Order</h1>
             </div>
+            {/* Table of order items */}
             <table className="itemlist_order">
                 <thead>
                     <tr>
@@ -136,43 +146,43 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
                     ))}
                 </tbody>
             </table>
+            {/* Total price and payment input */}
             <div className="totalprice">
                 <h5 style={{marginRight:'10px'}}>Total: Rs {totalPrice}</h5>
                 <h5 style={{marginRight:'10px'}}>Balance: Rs {balance}</h5>
                 <input 
-                 type="number" 
-                 placeholder="Enter Payment Amount" 
-                 value={paymentAmount} 
-                 onChange={(e) => {
-                 const inputValue = parseInt(e.target.value);
-                 if (!isNaN(inputValue) && inputValue >= 0) {
-                 setPaymentAmount(inputValue);
-                 }
-                 }} 
-                 style={{marginRight:'10px'}}
+                    type="number" 
+                    placeholder="Enter Payment Amount" 
+                    value={paymentAmount} 
+                    onChange={(e) => {
+                        const inputValue = parseInt(e.target.value);
+                        if (!isNaN(inputValue) && inputValue >= 0) {
+                            setPaymentAmount(inputValue);
+                        }
+                    }} 
+                    style={{marginRight:'10px'}}
                 />
-
-                
             </div>
+            {/* Customer ID input */}
             <div className="customer_input">
-    <input 
-        type="text" 
-        placeholder="Enter Customer ID" 
-        value={customerId} 
-        onChange={(e) => {
-            const inputValue = e.target.value;
-            // Check if the input consists only of digits and has a length of 10
-            if (/^\d{0,10}$/.test(inputValue)) {
-                setCustomerId(inputValue);
-            }
-        }} 
-        style={{marginRight:'1px'}} 
-    />
-</div>
-
+                <input 
+                    type="text" 
+                    placeholder="Enter Customer ID" 
+                    value={customerId} 
+                    onChange={(e) => {
+                        const inputValue = e.target.value;
+                        if (/^\d{0,10}$/.test(inputValue)) {
+                            setCustomerId(inputValue);
+                        }
+                    }} 
+                    style={{marginRight:'1px'}} 
+                />
+            </div>
+            {/* Confirm order button */}
             <div className="addorder">
                 <button onClick={handleConfirmOrder}>Confirm Order</button>
             </div>
+            {/* Display message */}
             {message && <div className="message">{message}</div>}
         </div>
     );
