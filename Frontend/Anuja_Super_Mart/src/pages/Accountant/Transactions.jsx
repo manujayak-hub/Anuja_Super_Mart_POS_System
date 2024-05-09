@@ -17,7 +17,7 @@ const TransactionList = () => {
     const [showModal, setShowModal] = useState(false);
     const [deleteTransactionId, setDeleteTransactionId] = useState(null);
     const [totalAmounts, setTotalAmounts] = useState({});
-    const [typeTotals, setTypeTotals] = useState([]); // Define typeTotals state
+    const [typeTotals, setTypeTotals] = useState([]); 
     const transactionStore = useTransactionStore();
 
     useEffect(() => {
@@ -26,7 +26,7 @@ const TransactionList = () => {
                 const response = await axios.get('/transactions');
                 setTransactions(response.data);
                 calculateTotalAmounts(response.data);
-                fetchTypeTotals(); // Fetch type totals
+                fetchTypeTotals(); 
             } catch (error) {
                 setError(error.message);
             } finally {
@@ -152,7 +152,9 @@ const TransactionList = () => {
         <div>
             <Sidebar />
             <div className="transaction-list-container" style={{ backgroundColor: 'lightgray', minHeight: '100vh' }}>
-                <h1 className="text-danger">Accountant Dashboard</h1>
+            <div className="text-danger" style={{ textAlign: 'center', paddingLeft: '20px', fontSize: '2rem', fontWeight: 'bold' }}>Accountant Dashboard</div>
+
+
                 <div className="search-bar-container " >
                     <input
                         type="text"

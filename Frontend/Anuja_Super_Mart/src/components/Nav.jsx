@@ -17,24 +17,27 @@ const Header = () => {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav me-auto">
               <li className="nav-item">
-                <Link className="nav-link" to="/">Home</Link>
+                <Link className="nav-link text-white" to="/">Home</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/about">About</Link>
+                <Link className="nav-link text-white" to="/about">About</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/contact">Contact</Link>
+                <Link className="nav-link text-white" to="/contact">Contact</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/categories">Categories</Link>
+                <Link className="nav-link text-white" to="/categories">Categories</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link text-white" to="/discount">Promoting</Link>
               </li>
             </ul>
             <ul className="navbar-nav">
               <li className="nav-item">
-                <Link className="nav-link" to="/signup"><span className="glyphicon glyphicon-user"></span> Sign Up</Link>
+                <Link className="nav-link text-white" to="/signup"><span className="glyphicon glyphicon-user"></span> Sign Up</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/login"><span className="glyphicon glyphicon-log-in"></span> Login</Link>
+                <Link className="nav-link text-white" to="/login"><span className="glyphicon glyphicon-log-in"></span> Login</Link>
               </li>
             </ul>
           </div>

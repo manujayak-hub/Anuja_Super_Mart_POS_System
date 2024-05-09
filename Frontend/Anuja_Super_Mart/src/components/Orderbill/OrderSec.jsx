@@ -12,6 +12,8 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
         return storedOrderIdCounter ? parseInt(storedOrderIdCounter) : 1;
     }); 
     const [customerId, setCustomerId] = useState(""); 
+    const [paymentAmount, setPaymentAmount] = useState(0); 
+    const [refreshKey, setRefreshKey] = useState(0); 
 
     useEffect(() => {
         localStorage.setItem("orderIdCounter", orderIdCounter.toString());
@@ -29,6 +31,7 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
     };
 
     const totalPrice = orderItems.reduce((total, item) => total + item.wholesalePrice, 0);
+    const balance = paymentAmount - totalPrice;
 
     const handleRemoveFromOrder = (index) => {
         removeFromOrder(index);
@@ -40,6 +43,11 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
 
     const handleConfirmOrder = async () => {
         try {
+            if (orderItems.length === 0) {
+                setMessage("Please add items to the order before confirming.");
+                return;
+            }
+
             const orderId = generateOrderId(); 
             const currentDate = getCurrentDate(); 
 
@@ -56,8 +64,11 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
             await useOrderStore.getState().addOrder(newOrder);
             setMessage("Order placed successfully.");
 
-            // Generate and download PDF receipt
+          
             generatePDFReceipt(orderId, currentDate);
+
+           
+            setRefreshKey(prevKey => prevKey + 1);
 
         } catch (error) {
             console.error("Error placing order:", error);
@@ -67,62 +78,111 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
 
     const generatePDFReceipt = (orderId, currentDate) => {
         const doc = new jsPDF();
+        
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const pageHeight = doc.internal.pageSize.getHeight();
+
+        // Draw border
+        doc.rect(5, 5, pageWidth - 10, pageHeight - 10);
+
+        // Title
         doc.setFontSize(18);
-        doc.text("Anuja Super Mart", doc.internal.pageSize.getWidth() / 2, 10, 'center');
+        doc.text("Anuja Super Mart", doc.internal.pageSize.getWidth() / 2, 15, 'center');
 
+        // Subtitle
         doc.setFontSize(14);
-        doc.text("Order Receipt", doc.internal.pageSize.getWidth() / 2, 20, 'center');
+        doc.text("Order Receipt", doc.internal.pageSize.getWidth() / 2, 25, 'center');
 
+        // Order ID and Date
         doc.setFontSize(12);
-        doc.text(`Order ID: ${orderId}`, 10, 30);
-        doc.text(`Date: ${currentDate}`, 10, 40);
+        doc.text(`Order ID: ${orderId}`, 10, 35);
+        doc.text(`Date: ${currentDate}`, 10, 45);
 
-        let y = 50;
+        // Items
+        let y = 55;
         orderItems.forEach((item, index) => {
             doc.text(`${index + 1}. ${item.productName} - Rs ${item.wholesalePrice}`, 10, y);
             y += 10;
         });
 
+        // Total, Payment, Balance
         doc.text(`Total: Rs ${totalPrice}`, 10, y);
+        doc.text(`Payment: Rs ${paymentAmount}`, 10, y + 10);
+        doc.text(`Balance: Rs ${balance}`, 10, y + 20);
 
+        // Save PDF
         doc.save(`receipt_${orderId}.pdf`);
     };
 
     return (
-        <div className="OrderSec">
+        <div key={refreshKey} className="OrderSec">
+            {/* Order header */}
             <div name="order_header">
                 <h1>Order</h1>
             </div>
-            <div name="itemlist_order">
-                {orderItems.map((item, index) => (
-                    <div key={index}>
-                        <p>{item.productName}
-                        <button 
-                           name="remove" 
-                           onClick={() => handleRemoveFromOrder(index)} 
-                           style={{ 
-                           float: 'right', 
-                           fontSize: '12px', 
-                           padding: '5px' 
-                             }}
->
-                          Remove
-                        </button>
-
-                        </p>
-                        <p>Rs: {item.wholesalePrice}</p>
-                    </div>
-                ))}
-            </div>
+            {/* Table of order items */}
+            <table className="itemlist_order">
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Price</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {orderItems.map((item, index) => (
+                        <tr key={index}>
+                            <td>{item.productName}</td>
+                            <td>Rs: {item.wholesalePrice}</td>
+                            <td>
+                                <button 
+                                    name="remove" 
+                                    onClick={() => handleRemoveFromOrder(index)}
+                                >
+                                    Remove
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+            {/* Total price and payment input */}
             <div className="totalprice">
-                <h5>Total: Rs {totalPrice}</h5>
+                <h5 style={{marginRight:'10px'}}>Total: Rs {totalPrice}</h5>
+                <h5 style={{marginRight:'10px'}}>Balance: Rs {balance}</h5>
+                <input 
+                    type="number" 
+                    placeholder="Enter Payment Amount" 
+                    value={paymentAmount} 
+                    onChange={(e) => {
+                        const inputValue = parseInt(e.target.value);
+                        if (!isNaN(inputValue) && inputValue >= 0) {
+                            setPaymentAmount(inputValue);
+                        }
+                    }} 
+                    style={{marginRight:'10px'}}
+                />
             </div>
+            {/* Customer ID input */}
             <div className="customer_input">
-                <input type="text" placeholder="Enter Customer ID" value={customerId} onChange={(e) => setCustomerId(e.target.value)} />
+                <input 
+                    type="text" 
+                    placeholder="Enter Customer ID" 
+                    value={customerId} 
+                    onChange={(e) => {
+                        const inputValue = e.target.value;
+                        if (/^\d{0,10}$/.test(inputValue)) {
+                            setCustomerId(inputValue);
+                        }
+                    }} 
+                    style={{marginRight:'1px'}} 
+                />
             </div>
+            {/* Confirm order button */}
             <div className="addorder">
                 <button onClick={handleConfirmOrder}>Confirm Order</button>
             </div>
+            {/* Display message */}
             {message && <div className="message">{message}</div>}
         </div>
     );

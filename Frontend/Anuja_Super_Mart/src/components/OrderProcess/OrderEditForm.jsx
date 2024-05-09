@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import './OrderEditForm.scss';
-import useOrderStore from "../../stores/useOrderStore"; // Import the useOrderStore
+import useOrderStore from "../../stores/useOrderStore"; 
 
 const OrderEditForm = ({ order }) => {
     const [updatedOrder, setUpdatedOrder] = useState({ ...order });
-    const [updateStatus, setUpdateStatus] = useState(null); // State to track update status
-    const updateOrder = useOrderStore(state => state.updateOrder); // Get the updateOrder method from the store
+    const [updateStatus, setUpdateStatus] = useState(null); 
+    const updateOrder = useOrderStore(state => state.updateOrder); 
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -15,12 +15,12 @@ const OrderEditForm = ({ order }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await updateOrder(updatedOrder); // Call the updateOrder method from the store
+            await updateOrder(updatedOrder); 
             setUpdateStatus("success");
         } catch (error) {
             console.error("Error updating order:", error);
             setUpdateStatus("error");
-        }
+        }9
     };
 
     return (
@@ -39,7 +39,7 @@ const OrderEditForm = ({ order }) => {
             </label>
             <label>
                 Total Amount:
-                <input type="text" name="totalAmount" value={updatedOrder.totalAmount} onChange={handleChange} required />
+                <input type="text" name="TotalAmount" value={updatedOrder.TotalAmount|| ''} onChange={handleChange} required />
             </label>
             <button type="submit">Update</button>
             {/* Display update status message */}

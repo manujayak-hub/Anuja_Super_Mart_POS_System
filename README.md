@@ -5,41 +5,43 @@ Welcome to our MERN (MongoDB, Express.js, React.js, Node.js) based POS (Point of
 
 ## Team Members
 - [Kamburugammuwa K.V.M.S](https://github.com/manujayak-hub)
-- [Yasodara S.A.D.S]()
+
+- [Yasodara S.A.D.S](https://github.com/Shehanii)
+
 - [Bandara R.M.S.P](https://github.com/sahanpramuditha22)
 - [Jayawardana N.G.U.D](https://github.com/UdariDevindi)
 - [Imalka T.A.D.D](https://github.com/XdulanX)
-- [Wijesinghe M.A.T.N]()
+- [Wijesinghe M.A.T.N](https://github.com/Nethranjalee)
 - [Jayawardana L.P.G.K](https://github.com/KavinJ3344)
-- [Hewavitharana U.I]()
+- [Hewavitharana U.I](https://github.com/InduwariHW)
 
 ## Features
-1. **User Authentication**: Secure login and registration system for authorized access.
-2. **Product Management**: Add, edit, and delete products in the inventory.
-3. **Sales Management**: Record and manage sales transactions efficiently.
-4. **Inventory Tracking**: Keep track of available stock and receive low stock alerts.
-5. **Reporting**: Generate sales reports, inventory reports, etc.
-6. **Customer Management**: Manage customer information and track purchase history.
-7. **Payment Processing**: Integration with payment gateways for seamless transactions.
-8. **Responsive Design**: Optimized for various devices for accessibility.
-9. **User Permissions**: Different access levels for administrators, managers, and staff.
-10. **Search Functionality**: Easily search for products, customers, or transactions.
+- Customer Management System
+- Order Processing System 
+- Employee Management System
+- Promoting and Discount System
+- Company Task Management System
+- Revenue Management
+- Sales and Analytics Management 
+- Inventory Management 
+
 
 ## Tech Stack
 - **Frontend**: React.js
 - **Backend**: Node.js, Express.js
 - **Database**: MongoDB
 - **Authentication**: JSON Web Tokens (JWT)
-- **Payment Integration**: (Specify payment gateway if applicable)
+
 
 ## Installation
 1. Clone the repository: `git clone <repository-url>`
 2. Navigate to the project directory: `cd <project-folder>`
 3. Install dependencies for frontend and backend:
    ```bash
-   cd frontend
-   npm install
+   cd frontend/anujaSupuerMart
+   yarn install
    cd ../backend
-   npm install
+   yarn install
+
 
 

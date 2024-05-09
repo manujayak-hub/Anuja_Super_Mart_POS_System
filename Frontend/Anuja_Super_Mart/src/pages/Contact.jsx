@@ -1,19 +1,47 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Nav';
+import axios from 'axios';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 
 const Contact = () => {
   const [validated, setValidated] = useState(false);
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    comment: '',
+    reaction: '',
+    
+  });
 
-  const handleSubmit = (e) => {
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     const form = e.currentTarget;
     if (form.checkValidity() === false) {
-      e.preventDefault();
       e.stopPropagation();
     }
-
+  
     setValidated(true);
+  
+    try {
+      const response = await axios.post('http://localhost:8000/feedback/', formData);
+      console.log(response.data); // Assuming the API returns a success message
+  
+      // Reset form data after successful submission
+      setFormData({
+        username: '',
+        email: '',
+        comment: '',
+        reaction: ''
+      });
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
+  
 
   return (
     <>
@@ -33,28 +61,40 @@ const Contact = () => {
               </div>
               <div className="col-lg-7">
                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
-                  <Form.Group controlId="formBasicName">
+                <Form.Group controlId="formBasicName">
                     <Form.Label>Your Name</Form.Label>
-                    <Form.Control type="text" placeholder="Enter your name" required />
+                    <Form.Control type="text" placeholder="Enter your name" name="username" value={formData.username} onChange={handleChange} required />
                     <Form.Control.Feedback type="invalid">
                       Please enter your name.
                     </Form.Control.Feedback>
                   </Form.Group>
 
+
                   <Form.Group controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" required />
+                    <Form.Control type="email" placeholder="Enter email" name="email" value={formData.email} onChange={handleChange} required />
                     <Form.Control.Feedback type="invalid">
                       Please enter a valid email address.
                     </Form.Control.Feedback>
                   </Form.Group>
 
                   <Form.Group controlId="formBasicMessage">
-                    <Form.Label>Message</Form.Label>
-                    <Form.Control as="textarea" rows={5} placeholder="Enter your message" required />
+                    <Form.Label>Comment</Form.Label>
+                    <Form.Control as="textarea" rows={5} placeholder="Enter your message" name="comment" value={formData.comment} onChange={handleChange} required />
                     <Form.Control.Feedback type="invalid">
                       Please enter your message.
                     </Form.Control.Feedback>
+                  </Form.Group>
+
+                  <Form.Group controlId="formBasicReaction">
+                    <Form.Label>Reaction</Form.Label>
+                    <Form.Control as="select" name="reaction" value={formData.reaction} onChange={handleChange}>
+                      <option>Choose...</option>
+                      <option>Bad</option>
+                      <option>Not bad</option>
+                      <option>Good</option>
+                      <option>Excellent</option>
+                    </Form.Control>
                   </Form.Group>
 
                   <Button variant="primary" type="submit">

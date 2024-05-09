@@ -75,6 +75,12 @@ const InventoryDash = () => {
 
     // Function to generate and download PDF report
     const generatePDF = () => {
+        // Check if inventory is defined and not empty
+        if (!Array.isArray(inventory) || inventory.length === 0) {
+            console.error("Inventory data is missing or empty.");
+            return; // Exit the function early if inventory data is missing or empty
+        }
+    
         // Use the entire inventory instead of just the currentItems
         const inventoryData = inventory.map(item => ({
             ProductId: item.productId,
@@ -100,7 +106,7 @@ const InventoryDash = () => {
                     style: 'table',
                     table: {
                         headerRows: 1,
-                        widths: ['auto', '*', 70, 70, 70, '*', '*', 'auto', 'auto'],
+                        widths: ['auto', '*', 70, 70, 70, '*', 50, 70, 70],
                         body: [
                             [
                                 { text: 'Product ID', style: 'tableHeader' },
@@ -158,12 +164,9 @@ const InventoryDash = () => {
     const sendEmail = () => {
         axios.get('/inventory/lowstock')
             .then(response => {
-                const lowStockItems = response.data;
-                if (lowStockItems.length > 0) {
-                    // If there are low stock items, send email
-                    const emailContent = generateEmailContent(lowStockItems);
-                    // Assuming there's a function to send email, replace this with your email sending logic
-                    sendEmailFunction(emailContent);
+                const isSuccess = response.data.success;
+                if (isSuccess !== undefined && isSuccess !== null && isSuccess) {
+                    
                     toast.success('Email sent successfully'); // Show success message
                 } else {
                     // If no low stock items, show message
