@@ -4,8 +4,6 @@ import cors from "cors"
 import MongoConnect from "./configs/DB_Connection"
 import session from 'express-session';
 import transaction_routes from "./api/routes/transactions_routes"
-import Discount_route from "./api/routes/Discount_route"
-import ctask_route from "./api/routes/ctask_route"
 import employee_route from "./api/routes/employee_route"
 import cusRoute from "./api/routes/customer_routes"
 import CartRoute from "./api/routes/Cart_route"
@@ -56,8 +54,7 @@ next()
 app.use('/transactions', transaction_routes)
 //Supplier_Task
 
-//discount
-app.use('/Discount',Discount_route)
+
 
 //employee
 app.use('/emp', employee_route)
