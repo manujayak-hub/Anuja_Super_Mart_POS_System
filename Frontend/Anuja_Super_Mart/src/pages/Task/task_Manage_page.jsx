@@ -9,6 +9,7 @@ import {
   Table,
   Popconfirm,
   notification,
+  Space,
 } from "antd";
 import "antd/dist/reset.css";
 import {
@@ -20,10 +21,11 @@ import {
 import { getproducts } from "../../stores/task/productStore";
 import { getsupplier } from "../../stores/task/supplierStore";
 import Title from "antd/es/typography/Title";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import * as yup from "yup";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import logo from '../../assets/Accountant/logo.png'
 
 const { Option } = Select;
 
@@ -200,15 +202,17 @@ function TaskManage() {
       key: "action",
       render: (_, record) => (
         <>
-          <Button icon={<EditOutlined />} onClick={() => handleEdit(record)} />
-          <Popconfirm
-            title="Are you sure to delete this task?"
-            onConfirm={() => handleDelete(record._id)}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Button icon={<DeleteOutlined />} />
-          </Popconfirm>
+          <Space>
+            <Button icon={<EditOutlined />} onClick={() => handleEdit(record)} />
+            <Popconfirm
+              title="Are you sure to delete this task?"
+              onConfirm={() => handleDelete(record._id)}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button type="primary" danger icon={<DeleteOutlined />} />
+            </Popconfirm>
+          </Space>
         </>
       ),
     },
@@ -216,33 +220,23 @@ function TaskManage() {
 
   return (
     <div style={{ margin: "20px" }}>
-      <Row justify={"space-between"}>
-        <img src="logo.png" alt="Logo" style={{ margin: '10px', padding: '5px' }} />
-        <Title style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto' }}>Tasks</Title>
-        
+      <Row justify={"space-between"} align="middle">
+        <img src={logo} alt="Logo" style={{ margin: '10px', padding: '5px' }} />
+        <Title level={2}style={{ margin:'0 auto'}}>Tasks</Title>
+        <Space>
         <Button
+          type="primary"
           onClick={handlePDFGenerate}
-          style={{ backgroundColor: 'red', color: 'white', border: 'none', borderRadius: '4px', padding: '8px 16px' }}
+          icon={<PlusOutlined/>}
+          
         >
           Generate PDF
         </Button>
 
-        <Button
-          onClick={() => {
-            setCurrentTask(null);
-            form.resetFields();
-            setIsModalVisible(true);
-          }}
-          style={{ backgroundColor: 'red', color: 'white', border: 'none', borderRadius: '4px', padding: '8px 16px' }}
-        >
-          Create Task
-        </Button>
+        <Button type="primary" onClick={() => { setCurrentTask(null); form.resetFields(); setIsModalVisible(true); }} icon={<PlusOutlined />}>Create Task</Button>
 
-        <Input
-          placeholder="Search tasks"
-          onChange={(e) => setSearchQuery(e.target.value)}
-          style={{ width: 200 }}
-        />
+        <Input.Search placeholder="Search tasks" onChange={(e) => setSearchQuery(e.target.value)} style={{ width: 200 }} />
+        </Space>
       </Row>
 
       <Table
@@ -265,9 +259,9 @@ function TaskManage() {
           >
             <Select>
               {Array.isArray(suppliers) && suppliers.map((supplier) => (
-                <Select.Option key={supplier._id} value={supplier.supname}>
+                <Option key={supplier._id} value={supplier.supname}>
                   {supplier.supname}
-                </Select.Option>
+                </Option>
               ))}
             </Select>
           </Form.Item>
@@ -279,9 +273,9 @@ function TaskManage() {
           >
             <Select>
               {Array.isArray(products) && products.map((product) => (
-                <Select.Option key={product._id} value={product.productName}>
+                <Option key={product._id} value={product.productName}>
                   {product.productName}
-                </Select.Option>
+                </Option>
               ))}
             </Select>
           </Form.Item>
@@ -295,6 +289,7 @@ function TaskManage() {
           >
             <Input type="number" />
           </Form.Item>
+
           <Form.Item
             name="startingDate"
             label="Starting Date"
