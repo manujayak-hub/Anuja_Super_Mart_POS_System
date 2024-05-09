@@ -89,12 +89,9 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
         }
     };
     
-
     const updateInventory = async (items) => {
         try {
-            // Iterate through each item in the order
-            for (const item of items) {
-                // Assuming you have an endpoint like '/inventory/:id' to update a specific item by its ID
+            await Promise.all(items.map(async (item) => {
                 // Construct the updated item object with the decreased quantity
                 const updatedItem = {
                     ...item,
@@ -103,11 +100,14 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
     
                 // Make a PATCH request to update the inventory item
                 await handleUpdate(updatedItem);
-            }
+            }));
         } catch (error) {
             console.error("Error updating inventory:", error);
+            // Handle errors appropriately
+            throw error; // Optionally, rethrow the error to handle it in the caller
         }
     };
+    
     
 
     const generatePDFReceipt = (orderId, currentDate) => {
