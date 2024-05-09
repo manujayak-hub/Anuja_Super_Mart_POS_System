@@ -32,11 +32,14 @@ const AddSupplierForm = () => {
         validationSchema: Yup.object({
             SupId: Yup.string().required('Required'),
             supname: Yup.string().required('Required'),
-            Contactno: Yup.string().required('Required'),
+            Contactno: Yup.string()
+                .matches(/^\+?\d{1,4}\s?\d{3}\s?\d{6}$/, 'Invalid phone number')
+                .required('Required'),
             email: Yup.string().email('Invalid email').required('Required'),
             supstatus: Yup.string().required('Required'),
             note: Yup.string()
         }),
+        
         onSubmit: async (values, { setSubmitting, resetForm }) => {
             try {
                 // Make API request to add supplier
