@@ -119,6 +119,8 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
         // Draw border
         doc.rect(5, 5, pageWidth - 10, pageHeight - 10);
 
+        
+
         // Title
         doc.setFontSize(18);
         doc.text("Anuja Super Mart", doc.internal.pageSize.getWidth() / 2, 15, 'center');
