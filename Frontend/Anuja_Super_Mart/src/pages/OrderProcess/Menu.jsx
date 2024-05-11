@@ -13,7 +13,7 @@ const Menu = () => {
     const [selectedCategory, setSelectedCategory] = useState('Beverages')
     const categories = [
         {
-            name:'baby_products',
+            name:'Baby_products',
         },
         {
             name:'Beverages',

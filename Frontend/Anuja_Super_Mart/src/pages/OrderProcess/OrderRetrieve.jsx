@@ -93,7 +93,7 @@ const OrderRetrieve = () => {
                                     <p>Order ID: {order.orderId}</p>
                                     <p>Customer ID: {order.customerId}</p>
                                     <p>Date: {order.date}</p>
-                                    <p>Items: {order.ItemName}</p> {/* Display item names */}
+                                    <p>Items: {order.ItemName}</p> 
                                     <p>Total Amount: {order.TotalAmount}</p>
                                     <button onClick={() => handleDeleteOrder(order._id)} style={{ color: 'white', marginLeft: '500px', border: '2', background: '#FD204F', cursor: 'pointer' }}>Delete</button>
                                     <button onClick={() => handleEditOrder(order)} style={{ color: 'white', marginLeft: '10px', border: '2', background: '#FD204F', cursor: 'pointer' }}>Edit</button>
