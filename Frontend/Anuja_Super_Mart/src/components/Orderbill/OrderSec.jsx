@@ -3,6 +3,7 @@ import './OrderSec.scss';
 import useOrderStore from "../../stores/useOrderStore";
 import axios from '../../api/axios';
 import jsPDF from 'jspdf';
+import logo from '../../assets/Accountant/logo.png'
 
 const OrderSec = ({ orderItems, removeFromOrder }) => {
     const [message, setMessage] = useState(""); 
@@ -15,6 +16,7 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
     const [paymentAmount, setPaymentAmount] = useState(0); 
     const [refreshKey, setRefreshKey] = useState(0); 
 
+
     useEffect(() => {
         localStorage.setItem("orderIdCounter", orderIdCounter.toString());
     }, [orderIdCounter]);
@@ -25,12 +27,15 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
         return orderId;
     };
 
+
+
+
     const getCurrentDate = () => {
         const now = new Date();
         return now.toISOString(); 
     };
 
-    const totalPrice = orderItems.reduce((total, item) => total + item.wholesalePrice, 0);
+    const totalPrice = orderItems.reduce((total, item) => total + item.retailPrice, 0);
     const balance = paymentAmount - totalPrice;
 
     const handleRemoveFromOrder = (index) => {
@@ -113,13 +118,16 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
     const generatePDFReceipt = (orderId, currentDate) => {
         const doc = new jsPDF();
         
+        const logoWidth = 30;
+        const logoHeight = 30;
         const pageWidth = doc.internal.pageSize.getWidth();
         const pageHeight = doc.internal.pageSize.getHeight();
 
         // Draw border
         doc.rect(5, 5, pageWidth - 10, pageHeight - 10);
 
-        
+    
+        doc.addImage(logo, 'jpg', 10, 5,logoWidth,logoHeight);
 
         // Title
         doc.setFontSize(18);
@@ -137,7 +145,7 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
         // Items
         let y = 55;
         orderItems.forEach((item, index) => {
-            doc.text(`${index + 1}. ${item.productName} - Rs ${item.wholesalePrice}`,  doc.internal.pageSize.getWidth() / 2, y, 'center');
+            doc.text(`${index + 1}. ${item.productName} - Rs ${item.retailPrice}`,  doc.internal.pageSize.getWidth() / 2, y, 'center');
             y += 10;
         });
 
@@ -170,7 +178,7 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
                     {orderItems.map((item, index) => (
                         <tr key={index}>
                             <td>{item.productName}</td>
-                            <td>Rs: {item.wholesalePrice}</td>
+                            <td>Rs: {item.retailPrice}</td>
                             <td>
                                 <button 
                                     name="remove" 
@@ -197,7 +205,7 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
                             setPaymentAmount(inputValue);
                         }
                     }} 
-                    style={{marginRight:'10px'}}
+                    style={{marginRight:'10px', width:'240px'}}
                 />
             </div>
             {/* Customer ID input */}
@@ -215,6 +223,7 @@ const OrderSec = ({ orderItems, removeFromOrder }) => {
                     style={{marginRight:'1px'}} 
                 />
             </div>
+         
             {/* Confirm order button */}
             <div className="addorder">
                 <button onClick={handleConfirmOrder}>Confirm Order</button>
