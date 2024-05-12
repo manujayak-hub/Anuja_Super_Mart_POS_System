@@ -3,6 +3,7 @@ import axios from '../../api/axios';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import SideBar from '../../components/EmployeeComponents/empSideBar';
+import logo from '../../assets/Accountant/logo.png'
 
 const Emp_Salary = () => {
   const [employees, setEmployees] = useState([]);
@@ -68,7 +69,13 @@ const Emp_Salary = () => {
 
   const handleDownloadPDF = () => {
     const doc = new jsPDF();
-    doc.text('Salary Report', 10, 10);
+
+    const logoWidth = 10;
+    const logoHeight = 10;
+
+
+    doc.addImage(logo, 'jpg', 180, 3, logoWidth, logoHeight)
+    doc.text('Salary Report - Anuja Super Mart', 10, 10);
     doc.autoTable({
       head: [['Employee ID', 'Name', 'Basic Salary', 'OT Hours', 'Bonuses', 'Final Salary']],
       body: employees.map(emp => [
