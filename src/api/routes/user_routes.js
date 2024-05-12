@@ -1,20 +1,16 @@
-import express from 'express'
-const router = express.Router();
+// Import necessary packages
+import express from 'express';
+import { signupUser, loginUser, logoutUser,getUserDetails } from '../controllers/User_controller';
 
-// controller functions
-import {signupUser, loginUser } from '../controllers/User_controller'
 
-const User_route = express.Router()
+// Create an instance of express router
+const User_route = express.Router();
 
-// login route
-User_route.post('/login', loginUser)
+// Define routes
+User_route.post('/login', loginUser);    // Login route
+User_route.post('/signup', signupUser);  // Signup route
+User_route.get('/logout', logoutUser);   // Logout route
+User_route.get('/details', getUserDetails); // New endpoint to get user details
 
-// signup route
-User_route.post('/signup', signupUser)
-
-router.get('/logout', (req, res) => {
-    req.session.destroy(); // Clear the session
-    res.status(200).json({ message: 'Logout successful' });
-  });
-
-module.exports = User_route
+// Export the router
+export default User_route;
