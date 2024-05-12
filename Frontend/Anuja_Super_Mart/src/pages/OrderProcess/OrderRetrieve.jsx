@@ -4,6 +4,7 @@ import useOrderStore from "../../stores/useOrderStore";
 import axios from '../../api/axios';
 import "./OrderRetrieve.scss";
 import OrderEditForm from "../../components/OrderProcess/OrderEditForm";
+import {  Button } from 'react-bootstrap';
 
 const OrderRetrieve = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -95,8 +96,8 @@ const OrderRetrieve = () => {
                                     <p>Date: {order.date}</p>
                                     <p>Items: {order.ItemName}</p> 
                                     <p>Total Amount: {order.TotalAmount}</p>
-                                    <button onClick={() => handleDeleteOrder(order._id)} style={{ color: 'white', marginLeft: '500px', border: '2', background: '#FD204F', cursor: 'pointer' }}>Delete</button>
-                                    <button onClick={() => handleEditOrder(order)} style={{ color: 'white', marginLeft: '10px', border: '2', background: '#FD204F', cursor: 'pointer' }}>Edit</button>
+                                    <Button onClick={() => handleDeleteOrder(order._id)} style={{ color: 'white', marginLeft: '500px', border: '2', background: '#FD204F', cursor: 'pointer' }}>Delete</Button>
+                                    <Button onClick={() => handleEditOrder(order)} style={{ color: 'white', marginLeft: '10px', border: '2', background: '#FD204F', cursor: 'pointer' }}>Edit</Button>
 
                                 </div>
                             ))
