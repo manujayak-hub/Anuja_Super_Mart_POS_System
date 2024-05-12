@@ -220,14 +220,6 @@ function CheckoutPage({ cartItems }) {
                         {/* Calculate total price */}
                         <h5>Rs. {cartItems.reduce((acc, item) => acc +  item.ItemPrice, 0)}</h5>
                       </div>
-                      <h5 className="text-uppercase mb-3">Give code</h5>
-
-                      <div className="mb-5">
-                        <div className="form-outline">
-                          <input type="text" id="form3Examplea2" className="form-control form-control-lg" />
-                          <label className="form-label" htmlFor="form3Examplea2">Enter your code</label>
-                        </div>
-                      </div>
 
                       <hr className="my-4" />
 
