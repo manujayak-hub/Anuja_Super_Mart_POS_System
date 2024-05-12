@@ -7,7 +7,7 @@ const EmployeeSchema = new Schema({
     empRole: { type: String, required: true },
     empAddress: { type: String },
     empContactNum: { type: String },
-    empJoinedDate: { type: Date },
+    empJoinedDate: { type: String },
     empBasicSalary: { type: Number },
     empRemainingLeaves: { type: Number },
     empFinalSalary: { type: Number }

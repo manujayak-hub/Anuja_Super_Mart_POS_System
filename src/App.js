@@ -36,10 +36,13 @@ app.use(cors({
     origin: 'http://localhost:5173', 
 optionsSuccessStatus: 200} ))
 
+
+// Session middleware
 app.use(session({
-    secret: SECRET, 
+    secret: SECRET,
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: { secure: false } // You might want to set secure to true if you're using HTTPS
 }));
 
 //middleware

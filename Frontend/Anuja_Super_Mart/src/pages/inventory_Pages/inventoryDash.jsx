@@ -4,6 +4,7 @@ import useInventoryStore from '../../stores/inventoryStore';
 import Sidebar from '../../components/InventoryComponents/InvSideBar';
 import InvSupNav from '../../components/InventoryComponents/invSupNav';
 import crossicon from '../../assets/inventory/icons8-cross-50.png';
+
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Table, Pagination, Button, Row, Col } from 'react-bootstrap';
@@ -102,6 +103,11 @@ const InventoryDash = () => {
                     text: 'Inventory Report',
                     style: 'header'
                 },
+                {
+                    text: 'Anuja Super Mart', // Add your company name here
+                    style: 'companyName'
+                },
+                
                 {
                     style: 'table',
                     table: {

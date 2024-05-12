@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './PickupOrders.scss';
 import MenuNav from '../../components/OrderProcess/MenuNavbar';
 import axios from 'axios';
+import {  Table } from 'react-bootstrap';
 
 const PickupOrders = () => {
   const [pickup, setPickups] = useState([]);
@@ -30,7 +31,7 @@ const PickupOrders = () => {
       ) : (
         pickup.map((pickupItem, index) => (
           <div key={index} style={{ width: '400px' }}> {/* Set the width for each table */}
-            <table key={index} className="pickup-table" style={{ borderCollapse: 'collapse', border: '1px solid black', width: '100%', tableLayout: 'fixed' }}>
+            <Table key={index} className="pickup-table" style={{ borderCollapse: 'collapse', border: '1px solid black', width: '100%', tableLayout: 'fixed' }}>
               <thead>
                 <tr>
                   <th style={{ border: '1px solid black', width: '33%' }}>Item Name</th>
@@ -47,7 +48,7 @@ const PickupOrders = () => {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </Table>
             <p>Total Price: {pickupItem.TotalPrice}</p>
           </div>
         ))
