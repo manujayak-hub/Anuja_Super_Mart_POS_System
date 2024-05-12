@@ -55,7 +55,7 @@ export default function DiscountHome() {
                         <img
                             data-aos="flip-left" data-aos-duration="3000"
                             //data-aos="fade-up" data-aos-duration="3000"
-                            src="https://img.freepik.com/free-photo/delicious-food-groups-arrangement_23-2149235821.jpg?t=st=1711398569~exp=1711402169~hmac=894d684ce20e7adfc0e681f9931fdc408d9ea9c2b770314bb909773a3c9ad77f&w=996"
+                            src="https://img.freepik.com/free-photo/man-woman-with-medical-masks-out-grocery-shopping-with-shopping-cart_23-2149483200.jpg?t=st=1715496687~exp=1715500287~hmac=0ddcf6052d18b0bcb61730ac256f07fa6335d3a713614c1336adc4c8b10a264f&w=996"
                             style={{ width: "100%", borderRadius: "100px", padding: "40px" }}
                         ></img>
 
@@ -78,7 +78,7 @@ export default function DiscountHome() {
                         <p style={{ textAlign: "center", color: "#198754", fontWeight: "bold", margin: "40px", fontSize: "16px" }}>
                             Check out our exclusive discounts made <br/>just for you!...<br />
                         </p>
-                        <Button type="primary" style={{ backgroundColor: "#198754",boxShadow: "0 2px 4px rgba(0,0,0,0.5)" }}><a href="/viewdiscount" style={{ textDecoration: "none" }}>Go to Discount</a></Button>
+                       
 
                     </Col>
 
@@ -97,6 +97,11 @@ export default function DiscountHome() {
 
                             <br />
                         </p>
+                        <p style={{ textAlign: "center", color: "#198754", fontWeight: "bold", margin: "40px", fontSize: "16px" }}>
+                            Hurry, don't miss out on big savings! Explore our wide<br />
+                            selection of products and enjoy great deals. <br />
+                            Shop now and save big!<br />
+                        </p>
                         <Button type="primary" style={{ backgroundColor: "#198754",boxShadow: "0 2px 4px rgba(0,0,0,0.5)" }}><a href="/viewdiscount" style={{ textDecoration: "none" }}>Go to Discount</a></Button>
 
 
@@ -107,7 +112,7 @@ export default function DiscountHome() {
                         <img
                             data-aos="flip-left" data-aos-duration="3000" 
                             //data-aos="fade-up" data-aos-duration="3000"
-                            src="https://img.freepik.com/free-photo/plateau-with-sweet-cupcake-desserts-with-frosting-top_23-2150679602.jpg?t=st=1711400087~exp=1711403687~hmac=48a7128cc22ed4f2c7e8245f962da1fc2b63359fc69fd3180ccaa7f4d27729cf&w=1380"
+                            src="https://img.freepik.com/free-photo/smiling-family-choosing-groceries-showing-ok-gesture_171337-2355.jpg?t=st=1715496909~exp=1715500509~hmac=0833722bde086871cc91d050dad0eb30efe872561f935cfcea6e5b57a9873652&w=996"
                             style={{ width: "100%", borderRadius: "100px", padding: "40px" }}
                         ></img>
 
