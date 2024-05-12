@@ -11,8 +11,8 @@ import './invsidebar.scss';
 
 const Sidebar = () => {
     return (
-        <div className="invSidebar">
-            <div className="position-fixed top-0 start-0 bottom-0 sidebar">
+        <div className="invSidebarmanujaya">
+            <div className="position-fixed top-0 start-0 bottom-0 sidebarmanujaya">
                 <div className="text-center p-3">
                     <img src={logo} alt="Logo" className="img-fluid mb-3" />
                 </div>

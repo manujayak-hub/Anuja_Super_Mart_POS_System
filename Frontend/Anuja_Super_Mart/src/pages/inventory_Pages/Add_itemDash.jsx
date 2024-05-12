@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from '../../api/axios';
@@ -14,13 +15,30 @@ import '../../styles/additem.scss'
 const AddItem = () => {
     const [showPopup, setShowPopup] = useState(false); // State for showing/hiding the popup
     const [popupMessage, setPopupMessage] = useState(''); // State for the popup message
+    const [supplierIds, setSupplierIds] = useState([]);
 
     const handleClosePopup = () => {
         setShowPopup(false);
         setPopupMessage('');
     };
-
+    const today = new Date();
+    const fourYearsAgo = new Date(today);
+    fourYearsAgo.setFullYear(fourYearsAgo.getFullYear() - 4);
     // Define formik form values, validation schema, and submit function
+
+    useEffect(() => {
+        async function fetchSupplierIds() {
+            try {
+                const response = await axios.get('/supplier');
+                setSupplierIds(response.data.map(supplier => supplier.SupId));
+            } catch (error) {
+                console.error('Error fetching supplier IDs:', error);
+            }
+        }
+
+        fetchSupplierIds();
+    }, []);
+
     const formik = useFormik({
         initialValues: {
             productId: '',
@@ -34,18 +52,32 @@ const AddItem = () => {
             expireDate: null,
             imageUrl: '',
         },
+
+
         validationSchema: Yup.object({
             productId: Yup.string().required('Required'),
             productName: Yup.string().required('Required'),
-            wholesalePrice: Yup.number().required('Required'),
-            retailPrice: Yup.number().required('Required'),
-            quantityInStock: Yup.number().required('Required'),
+            wholesalePrice: Yup.number()
+                .required('Required')
+                .min(0, 'Wholesale price must be a positive number'),
+            retailPrice: Yup.number()
+                .required('Required')
+                .min(0, 'Retail price must be a positive number'),
+            quantityInStock: Yup.number()
+                .required('Required')
+                .min(0, 'Quantity in stock must be a non-negative number'),
             category: Yup.string().required('Required'),
             supplierId: Yup.string().required('Required'),
-            manufactureDate: Yup.date().required('Required'),
-            expireDate: Yup.date().required('Required'),
+            manufactureDate: Yup.date()
+                .required('Required')
+                .max(today, 'Manufacture date cannot be a future date')
+                .min(fourYearsAgo, 'Manufacture date cannot be more than four years in the past'),
+            expireDate: Yup.date()
+                .required('Required')
+                .min(today, 'Expire date cannot be a past date from today'),
             imageUrl: Yup.string().required('Required'),
         }),
+
         onSubmit: async (values, { setSubmitting, resetForm }) => {
             try {
                 const response = await axios.post('/inventory', values);
@@ -196,15 +228,19 @@ const AddItem = () => {
 
                             <div className="mb-3">
                                 <label htmlFor="supplierId" className="form-label">SupplierID</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
+                                <select
+                                    className="form-select"
                                     id="supplierId"
                                     name="supplierId"
                                     value={formik.values.supplierId}
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
-                                />
+                                >
+                                    <option value="">Select Supplier ID</option>
+                                    {supplierIds.map(SupId => (
+                                        <option key={SupId} value={SupId}>{SupId}</option>
+                                    ))}
+                                </select>
                                 {formik.touched.supplierId && formik.errors.supplierId ? (
                                     <div className="text-danger">{formik.errors.supplierId}</div>
                                 ) : null}
@@ -220,7 +256,9 @@ const AddItem = () => {
                                         selected={formik.values.manufactureDate}
                                         onChange={(date) => formik.setFieldValue('manufactureDate', date)}
                                         onBlur={formik.handleBlur}
-                                        dateFormat="MM/dd/yyyy" // Customize date format if needed
+                                        dateFormat="MM/dd/yyyy"
+                                        maxDate={today} // Max date is today (cannot select future dates)
+                                        minDate={fourYearsAgo} // Min date is four years ago from today
                                     />
                                     {formik.touched.manufactureDate && formik.errors.manufactureDate ? (
                                         <div className="text-danger">{formik.errors.manufactureDate}</div>
@@ -236,7 +274,8 @@ const AddItem = () => {
                                         selected={formik.values.expireDate}
                                         onChange={(date) => formik.setFieldValue('expireDate', date)}
                                         onBlur={formik.handleBlur}
-                                        dateFormat="MM/dd/yyyy" // Customize date format if needed
+                                        dateFormat="MM/dd/yyyy"
+                                        minDate={today} // Min date is today (cannot select past dates)
                                     />
                                     {formik.touched.expireDate && formik.errors.expireDate ? (
                                         <div className="text-danger">{formik.errors.expireDate}</div>

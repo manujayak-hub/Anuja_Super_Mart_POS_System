@@ -1,23 +1,46 @@
-import React from 'react';
-import { Container, Row, Col, Image, Button } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
 
-const Profile = () => {
-  return (
-    <Container>
-      <Row className="mt-5">
-        <Col md={4}>
-          <Image src="https://via.placeholder.com/150" roundedCircle />
-        </Col>
-        <Col md={8}>
-          <h2>John Doe</h2>
-          <p>Email: john.doe@example.com</p>
-          <p>Location: New York, USA</p>
-          <p>Bio: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget metus nec dolor volutpat tempor vel vel ex.</p>
-          <Button variant="primary">Edit Profile</Button>
-        </Col>
-      </Row>
-    </Container>
-  );
-};
+function UserProfile() {
+    const [user, setUser] = useState(null);
 
-export default Profile;
+    useEffect(() => {
+        async function fetchUserDetails() {
+            try {
+                const response = await fetch('/auth/details', {
+                    method: 'GET',
+                    credentials: 'include' // Include cookies for session
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch user details');
+                }
+
+                const userData = await response.json();
+                setUser(userData);
+            } catch (error) {
+                console.error(error);
+                // Handle errors, e.g., redirect to login page
+            }
+        }
+
+        fetchUserDetails();
+    }, []); // Empty dependency array ensures the effect runs only once on component mount
+
+    return (
+        <div>
+            {user ? (
+                <div>
+                    <h2>User Profile</h2>
+                    <p>ID: {user._id}</p>
+                    <p>Email: {user.email}</p>
+                    <p>Name: {user.fname} {user.lname}</p>
+                    <p>Mobile: {user.mobile}</p>
+                </div>
+            ) : (
+                <p>Loading user profile...</p>
+            )}
+        </div>
+    );
+}
+
+export default UserProfile;

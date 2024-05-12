@@ -25,7 +25,8 @@ const UserProfile = () => {
                                 <img src={userProfileImage} alt="User Avatar" style={{ maxWidth: '100%', borderRadius: '50%' }} />
                             </div>
                             <div>
-                                <h1 className="text-danger text-center mb-2">User Profile</h1> {/* Centered heading */}
+                            <div className="text-danger" style={{ textAlign: 'center', paddingLeft: '20px', fontSize: '2rem', fontWeight: 'bold' }}>User Profile</div>
+
                                 <p>Name: {userProfile.name}</p>
                                 <p>Email: {userProfile.email}</p>
                                 <p>Emp ID: {userProfile.id}</p>
