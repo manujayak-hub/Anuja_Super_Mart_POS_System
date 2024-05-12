@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import Sidebar from '../../components/AccountantComponents/Sidebar';
 import userProfileImage from '../../assets/Accountant/User Male.png'; 
 
@@ -8,8 +8,12 @@ const UserProfile = () => {
     const userProfile = {
         name: "Udari Devindi",
         email: "udaridevindi@gmail.com",
-        occupation: "Accountant",
-        id: "Emp 001 "
+        
+    };
+
+    const handleLogout = () => {
+        // Redirect to the logout page
+        window.location.href = 'http://localhost:5173';
     };
 
     return (
@@ -25,12 +29,10 @@ const UserProfile = () => {
                                 <img src={userProfileImage} alt="User Avatar" style={{ maxWidth: '100%', borderRadius: '50%' }} />
                             </div>
                             <div>
-                            <div className="text-danger" style={{ textAlign: 'center', paddingLeft: '20px', fontSize: '2rem', fontWeight: 'bold' }}>User Profile</div>
-
+                                <div className="text-danger" style={{ textAlign: 'center', paddingLeft: '20px', fontSize: '2rem', fontWeight: 'bold' }}>User Profile</div>
                                 <p>Name: {userProfile.name}</p>
                                 <p>Email: {userProfile.email}</p>
-                                <p>Emp ID: {userProfile.id}</p>
-                                <p>Occupation: {userProfile.occupation}</p>
+                                <Button variant="danger" onClick={handleLogout}>Logout</Button>
                             </div>
                         </div>
                     </Col>
