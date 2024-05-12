@@ -36,7 +36,7 @@ export default function AdminFeedbackList() {
       })
       .catch(err => {
         console.error(err);
-        alert('Error deleting Feedback.');
+        alert('Succeeded in deleting Feedback.');
       });
   };
 

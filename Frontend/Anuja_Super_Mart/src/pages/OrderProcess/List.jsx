@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import MenuNav from "../../components/OrderProcess/MenuNavbar";
 import './List.scss';
+import { Table } from 'react-bootstrap';
 
 function List() {
     const [inventory, setInventory] = useState([]);
@@ -35,7 +36,7 @@ function List() {
                     <p className="loading-message-custom">Loading...</p>
                 ) : (
                     <div className="table-container-custom">
-                        <table className="table-custom">
+                        <Table className="table-custom">
                             <thead>
                                 <tr>
                                     <th className="th-custom">ProductID</th>
@@ -54,7 +55,7 @@ function List() {
                                     </tr>
                                 ))}
                             </tbody>
-                        </table>
+                        </Table>
                     </div>
                 )}
             </div>

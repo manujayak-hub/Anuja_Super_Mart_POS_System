@@ -20,10 +20,7 @@ export default function NavBar(){
             key: "3",
             label: <a href="/adminfeedbacklist" style={{ textDecoration: "none" }}>Feedback List</a>,
           },
-          {
-            key: "4",
-            label: <a href="/feedback" style={{ textDecoration: "none" }}>create cus Feedback</a>,
-          },
+         
         {
           key: "5",
           label: (

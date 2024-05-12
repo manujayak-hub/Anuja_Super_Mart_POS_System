@@ -81,30 +81,7 @@ export default function DiscountList() {
                                         }}
                                     />
                                 }
-                                actions={[
-                                    <button
-                                        style={{
-                                            backgroundColor: "#198754",
-                                            width: "50%",
-                                            color: "white",
-                                            borderRadius: "10px",
-                                            padding: "5px",
-                                            border: "none",
-                                            marginBottom: "10px",
-                                            boxShadow: "0 2px 4px rgba(0,0,0,0.5)",
-                                        }}
-                                    >
-                                        <Link
-                                            to={`/products/${product._id}`}
-                                            style={{
-                                                color: "white",
-                                                textDecoration: "none",
-                                            }}
-                                        >
-                                            More Details
-                                        </Link>
-                                    </button>,
-                                ]}
+                               
                             >
                                 <Meta style={{ textAlign: "center" }}
                                     title={product.productName}

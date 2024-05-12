@@ -16,7 +16,7 @@ import DiscountList from './pages/Promoting/DiscountList';
 import DiscountManagerHome from './pages/Promoting/DiscountManagerHome';
 import DiscountHome from './pages/Promoting/DiscountHome';
 import Sendmail from './pages/Promoting/Sendmail';
-
+import Profile from './pages/Customer_pages/Profile'
 
 
 import InventoryRoute from './Routes/InvRoute'
@@ -61,6 +61,7 @@ function App() {
             <Route path="UserProfile" element={<UserProfile/>}/>
             
             <Route path="Categories" element={<Categories/>} />
+            <Route path="Profile" element={<Profile/>}/>
             <Route path="Dash" element={<Dash/>}/>
 
             

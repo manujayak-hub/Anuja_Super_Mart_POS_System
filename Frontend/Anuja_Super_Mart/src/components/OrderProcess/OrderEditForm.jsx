@@ -27,11 +27,19 @@ const OrderEditForm = ({ order }) => {
         <form className="OrderEditForm" onSubmit={handleSubmit}>
             <label>
                 Order ID:
-                <input type="text" name="orderId" value={updatedOrder.orderId} onChange={handleChange} required />
+                <input 
+                 type="text" 
+                 name="orderId" 
+                  value={updatedOrder.orderId} 
+                 onChange={handleChange} 
+                  readOnly
+                  required 
+                 />
+
             </label>
             <label>
                 Date:
-                <input type="text" name="date" value={updatedOrder.date} onChange={handleChange} required />
+                <input type="date" name="date" value={updatedOrder.date} onChange={handleChange} required />
             </label>
             <label>
                 Items:
@@ -39,7 +47,23 @@ const OrderEditForm = ({ order }) => {
             </label>
             <label>
                 Total Amount:
-                <input type="text" name="TotalAmount" value={updatedOrder.TotalAmount|| ''} onChange={handleChange} required />
+                <input 
+                 type="text" 
+                 name="TotalAmount" 
+                 value={updatedOrder.TotalAmount || ''} 
+                 onChange={handleChange} 
+                 onKeyPress={(event) => {
+                if (!/[0-9.]/.test(event.key)) {
+                event.preventDefault();
+                }
+                 }}
+                 onBlur={(event) => {
+                  const value = parseFloat(event.target.value);
+                 event.target.value = isNaN(value) || value < 0 ? '' : value.toFixed(2);
+                  }}
+                 required 
+            />
+
             </label>
             <button type="submit">Update</button>
             {/* Display update status message */}
