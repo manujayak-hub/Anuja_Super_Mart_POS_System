@@ -6,7 +6,8 @@ import Sidebar from '../../components/AccountantComponents/Sidebar';
 import UpdateTransaction from './UpdateTransaction';
 import TransactionReport from './TransactionReport';
 import * as XLSX from 'xlsx'; 
-import { Card } from 'react-bootstrap';
+import jsPDF from 'jspdf';
+
 
 const TransactionList = () => {
     const [loading, setLoading] = useState(true);
@@ -126,6 +127,46 @@ const TransactionList = () => {
         }
     };
 
+    const handleDownload = () => {
+        const doc = new jsPDF();
+    
+        // Get current date and time
+        const currentDate = new Date();
+        const formattedDate = `${currentDate.toLocaleDateString()} ${currentDate.toLocaleTimeString()}`;
+    
+        // Add report title
+        const titleText = 'Transaction Data Report';
+        const titleWidth = doc.getTextDimensions(titleText).w;
+        const titleX = (doc.internal.pageSize.width - titleWidth) / 2;
+        doc.text(titleText, titleX, 10);
+    
+        // Add generated date and time
+        const dateText = `Generated on: ${formattedDate}`;
+        const dateWidth = doc.getTextDimensions(dateText).w;
+        const dateX = (doc.internal.pageSize.width - dateWidth) / 2;
+        doc.text(dateText, dateX, 20);
+    
+        // Set table header style
+        doc.setTextColor(255, 255, 255); // White color for header text
+        doc.setFillColor(220, 53, 69); // "Danger" color for header background
+    
+        // Generate the table
+        doc.autoTable({
+            head: [['Transaction ID', 'Date Time', 'Type', 'Amount', 'Method']],
+            body: filteredTransactions.map(transaction => [
+                transaction.transactionID,
+                transaction.transactionDateTime,
+                transaction.transactionType,
+                transaction.transactionAmount,
+                transaction.transactionMethod
+            ]),
+            startY: 30 // Set the Y position for the table
+        });
+    
+        // Save the PDF
+        doc.save('transaction_data_report.pdf');
+    };
+
     const exportToExcel = () => {
         const workbook = XLSX.utils.book_new();
     
@@ -223,7 +264,7 @@ const TransactionList = () => {
                         saveTypeTotal('yourType');
                         alert('Transaction Summary Added Successfully');
                     }}>Save Summary</button>
-                    <button className="btn btn-primary" onClick={exportToExcel}>Export to Excel</button>
+                    <button className="btn btn-primary" onClick={handleDownload}>Download PDF</button>
                 </div>
             </div>
         </div>
