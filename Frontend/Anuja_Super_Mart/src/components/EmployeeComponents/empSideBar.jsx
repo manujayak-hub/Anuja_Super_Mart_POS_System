@@ -2,6 +2,7 @@ import React from 'react';
 import { Nav } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import './empSideBar.scss';
+import LogoutButton from '../logout'
 
 const empSidebar = () => {
   return (
@@ -27,7 +28,9 @@ const empSidebar = () => {
           <span className="d-inline-block text">Payroll</span>
         </Nav.Link>
       </Nav.Item>
-      
+      <div style={{marginTop:'200px',marginLeft:'20px'}}>
+        <LogoutButton/>
+      </div>
       
     </Nav>
   );
