@@ -59,7 +59,7 @@ function Dash() {
         setLastFetchDateTime(currentDateTime);
     };
 
-    // Chart data for inventory and sales
+    // Chart 
     const inventoryChartData = {
         labels: ['Inventory'],
         datasets: [

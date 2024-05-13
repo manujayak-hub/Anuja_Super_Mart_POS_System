@@ -18,7 +18,7 @@ const TransactionForm = () => {
     },
     validationSchema: Yup.object({
       transactionID: Yup.string().required('Transaction ID is required'),
-      transactionDateTime: Yup.date().required('Transaction date and time is required'),
+      transactionDateTime: Yup.date().required('Transaction date and time is required').max(new Date(), 'Transaction date cannot be in the future'),
       transactionType: Yup.string().required('Transaction type is required'),
       transactionAmount: Yup.number().required('Transaction amount is required').positive('Transaction amount must be positive'),
       transactionMethod: Yup.string().required('Transaction method is required'),
@@ -41,10 +41,7 @@ const TransactionForm = () => {
     <div style={{ display: 'flex', height: '100vh',backgroundColor: 'lightgray' }}>
       <Sidebar />
       <div style={{ flex: 1, padding: '20px', overflowY: 'auto' }}>
-      <div className="text-danger" style={{  paddingLeft: '100px', fontSize: '2rem', fontWeight: 'bold' }}>Add New Transactions</div>
-
-
-
+        <div className="text-danger" style={{  paddingLeft: '100px', fontSize: '2rem', fontWeight: 'bold' }}>Add New Transactions</div>
         <div className="card" style={{ maxWidth: '1000px', margin: '0 auto', marginLeft: '300px', height: '80vh' }}>
           <div className="card-body" style={{ maxWidth: '1000px', height: '80%' }}>
             <form onSubmit={formik.handleSubmit} style={{ height: '900px' }}>
