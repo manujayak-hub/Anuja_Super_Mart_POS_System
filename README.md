@@ -4,16 +4,14 @@
 Welcome to our MERN (MongoDB, Express.js, React.js, Node.js) based POS (Point of Sale) system project! This application is designed to facilitate sales transactions and inventory management for businesses. It offers a range of features to enhance efficiency and streamline operations.
 
 ## Team Members
-- [Kamburugammuwa K.V.M.S](https://github.com/manujayak-hub)
-
-- [Yasodara S.A.D.S](https://github.com/Shehanii)
-
-- [Bandara R.M.S.P](https://github.com/sahanpramuditha22)
-- [Jayawardana N.G.U.D](https://github.com/UdariDevindi)
-- [Imalka T.A.D.D](https://github.com/XdulanX)
-- [Wijesinghe M.A.T.N](https://github.com/Nethranjalee)
-- [Jayawardana L.P.G.K](https://github.com/KavinJ3344)
-- [Hewavitharana U.I](https://github.com/InduwariHW)
+- [Manujaya Kamburugammuwa (Team Lead)](https://github.com/manujayak-hub)
+- [Shehani Samarathunga](https://github.com/Shehanii)
+- [Sahan Pramuditha Bandara](https://github.com/sahanpramuditha22)
+- [Udari Jayawardana](https://github.com/UdariDevindi)
+- [Dulan Imalka](https://github.com/XdulanX)
+- [Thakshila Nethranjalee](https://github.com/Nethranjalee)
+- [Kavin Jayawardana](https://github.com/KavinJ3344)
+- [Induwari Hewavitharana](https://github.com/InduwariHW)
 
 ## Features
 - Customer Management System
